@@ -7,6 +7,8 @@ function init() {
   obtener_modo_pago();
   listar();
   fecha_actual();
+ desahabilitar_controles(true)
+  //desahabilitar_botones();
   //llenamos combo modo de pago
 }
 //lista de comprobantes
@@ -63,22 +65,28 @@ function marcarImpuesto() {
   if (tipo_comprobante == 0) {
     $("#serie_comprobante").val("");
     $("#num_comprobante").val("");
-  }
+   $("#tb_detalle tbody").empty();
+  
+  }else if(tipo_comprobante==3){
+    alert("hol");
+     $("#stotal").hide();
+  }else{
   $.post(
     "../controller/ventas.php?op=obtener_series_numero",
     { tipo_comprobante: tipo_comprobante },
     function (data, status) {
-      console.log(data);
+  
       resa = JSON.parse(data);
       console.log(resa);
       $("#serie_comprobante").val(resa.num_serie);
 
       var serie = resa.num_serie;
-      console.log(serie);
+  
       obtener_generar_correlativo(serie);
     }
   );
-
+}
+}
   function obtener_generar_correlativo(serie_comprobante) {
     console.log("metodod_generar " + serie_comprobante);
     $.post(
@@ -91,7 +99,7 @@ function marcarImpuesto() {
       }
     );
   }
-}
+
 function fecha_actual() {
   var now = new Date();
   var day = ("0" + now.getDate()).slice(-2);
@@ -113,6 +121,7 @@ function mostrar_lista(flag) {
 }
 function mostrar_detalle(idmesa) {
   // clearTable();
+ desahabilitar_controles(false);
   id_mesa = idmesa;
   console.log("id mesa para librera "+ id_mesa);
   $.ajax({
@@ -126,6 +135,7 @@ function mostrar_detalle(idmesa) {
         console.log(dataJson[i]);
         agregarDetalle(
           dataJson[i].id_menu,
+          dataJson[i].cantidad,
           dataJson[i].nombre,
           dataJson[i].precio
         );
@@ -138,8 +148,8 @@ var impuesto = 18;
 var cont = 0;
 var detalles = 0;
 
-function agregarDetalle(idarticulo, articulo, precio_venta) {
-  var cantidad = 1;
+function agregarDetalle(idarticulo,cantidad, articulo, precio_venta) {
+  
   if (idarticulo != "") {
     var subtotal = cantidad * precio_venta;
       console.log(subtotal);
@@ -147,18 +157,18 @@ function agregarDetalle(idarticulo, articulo, precio_venta) {
       '<tr class="filas" id="fila' +
       cont +
       '">' +
-      '<td><input type="text" class="form-control form-control-sm" name="cantidad[]" id="cantidad" value="' +
+      '<td><input type="text" class="form-control form-control-sm" readonly name="cantidad[]" id="cantidad" value="' +
       cantidad +
-      '"></td>' +
+      '" ></td>' +
       '<td><input type="hidden" name="idarticulo[]" value="' +
       idarticulo +
       '">' +
       articulo +
       "</td>" +
-      '<td><input type="text" class="form-control form-control-sm" name="precio_venta[]" id="precio_venta"  value="' +
+      '<td><input type="text" class="form-control form-control-sm" readonly name="precio_venta[]" id="precio_venta"  value="' +
       precio_venta +
       '"></td>' +
-      '<td><input type="text"class="form-control form-control-sm" name="total[]" id="total" value="' +
+      '<td><input type="text"class="form-control form-control-sm" readonly name="total[]" id="total" value="' +
       subtotal +
       '"></td>' +
       "</tr>";
@@ -341,7 +351,8 @@ function reset_form_clientes() {
 }
 // funcion para guardar en la base de datos
 $("#btn_guardar_venta").click(function () {
-  guardar_venta();
+  validar_ingreso();
+ 
 });
 function guardar_venta() {
   var formData = new FormData($("#form_venta")[0]);
@@ -357,6 +368,7 @@ function guardar_venta() {
     $.notify(data, "success");
     liberar_mesa();
      location.reload();
+     desahabilitar_controles(true);
     
 //  for (var pair of formData.entries()) {
 //    console.log(pair[0] + ": " + pair[1]);
@@ -371,6 +383,44 @@ function liberar_mesa() {
     console.log(data);
     
   });
+}
+function desahabilitar_controles(flag) {
+  if (flag == true) {
+    $("#btn_guardar_venta").prop("disabled", true);
+    $("#tipo_comprobante").prop("disabled", true);
+    $("#nro_documento").prop("disabled", true);
+    $("#btn_buscar_ruc_dni").prop("disabled", true);
+    $("#modo_pago").prop("disabled", true);
+  } else {
+    $("#btn_guardar_venta").prop("disabled", false);
+    $("#tipo_comprobante").prop("disabled", false);
+    $("#nro_documento").prop("disabled", false);
+    $("#btn_buscar_ruc_dni").prop("disabled", false);
+    $("#modo_pago").prop("disabled", false);
+  }
+}
+function validar_ingreso() {
+  var tipo_comprobante = $("#tipo_comprobante").val();
+  var nro_documento = $("#nro_documento").val();
+  var modo_pago = $("#modo_pago").val();
+  if (tipo_comprobante == 0) {
+    $.notify("Seleccione el tipo de comprobante", "error");
+    return false;
+  }else if (nro_documento == "") {
+    $.notify("Ingrese el numero de documento", "error");
+    return false;
+  }else if (modo_pago == 0) {
+    $.notify("Seleccione el modo de pago", "error");
+    return false;
+  }else{
+    guardar_venta();
+  }
+  
+
+}
+function open_pdf_prueba() {
+  var url = "../controller/pdf_ticket.php";
+  window.open(url, "_blank");
 }
 
 init();

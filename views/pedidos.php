@@ -418,6 +418,16 @@ body {
     <!-- Custom Theme Scripts -->
     <script src="../public/build/js/custom.min.js"></script>
     <script src="scripts/pedidos.js"></script>
+    <script src="scripts/webusb-receipt-printer.umd.js"></script>
+    <script>
+        const receiptPrinter = new WebUSBReceiptPrinter();
+        function conectar() {
+            console.log("sss");            
+            receiptPrinter.connect();
+            console.log(receiptPrinter.connect());
+            
+        }
+    </script>
 </body>
 
 </html>

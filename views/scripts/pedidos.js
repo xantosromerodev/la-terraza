@@ -6,6 +6,120 @@ function init() {
  // listar_mesas();
 }
 
+// function imprimirTicket() {
+//   const contenidoTicket = `
+//     <pre>
+//     ********* TICKET *********
+//     Producto: Pan
+//     Precio: $20.00
+//     Fecha: sicha
+//     </pre>
+//   `;
+
+//   // Abrir la ventana de impresión
+//   const ventana = window.open("", "", "width=600,height=600");
+//   ventana.document.write(contenidoTicket);
+//   ventana.document.close();
+//   ventana.print();
+// }
+
+function imprimirMesa(codigo) {
+  // $.ajax({
+  // url:url,
+  // type:"POST",
+  // dataType:"json",
+  // data:{id:codigo},
+  // success:function(datas){
+  // datas.detalles.cantidad="["+datas.detalles.cantidad+"]";
+
+  // var JSONString = JSON.stringify(datas.detalles);
+  //FOR PRINT A CADENA OF OBJETS
+  //  var json = JSON.parse(JSONString);
+  console.log("sicha");
+  
+
+  var commandsToPrint1 =
+    "<BOLD><CENTER>TU MEJOR OPCION<BR>" +
+    "<CENTER>SICHA SOFT<BR>" +
+    "<BOLD><CENTER>11111111<BR>" +
+    "<BOLD><CENTER>NUMERO<BR>" +
+    "<BOLD><CENTER>001<BR>" +
+    "<BOLD>  SICHA ROMAN<BR>" +
+    "<NORMAL>  MESA: 12<BR>" +
+    "<BOLD>  FECHA EMISIÓN: " +
+    "<NORMAL>02-02-2025<BR>";
+
+  var commandsToPrint2 = "";
+  var commandsToPrint21 = "";
+  var commandsToPrint22 = "";
+  var commandsToPrint23 = "";
+
+  var separacion =
+    "  ----------------------------------------------<BR>" +
+    "<BOLD>   [CANT.] DESCRIPCIÓN              P/U  TOTAL<BR>";
+
+  commandsToPrint3 = "";
+
+  //  $.each(json, function(i,item){
+
+  //    //agregar parametro
+  //    if(quitar_codigoItem == 'NO'){
+  // 		var product = " ["+item.cantidad+" "+item.unidadmedi+"] "+item.codigo+" "+item.descripcion;
+  //    }else{
+  //    		var product = " ["+item.cantidad+" "+item.unidadmedi+"]  "+item.descripcion;
+  //    }
+
+  //    //var product = "  ["+item.cantidad+" "+item.unidadmedi+"] "+""+" "+item.descripcion
+  //    var montos =  verMonto(item.valor_unitario)+" "+verMonto(item.subtotal)
+
+  //    // console.log(montos)
+  //    var total = 45;
+
+  //       var cantItem = Number(product.length)
+  //       var mon = Number(montos.toString().length);
+  //       var falta = total - (cantItem + mon)
+  //       var espacios = '';
+
+  //       for (var i = 0; i < falta; i++) {
+  //          espacios = espacios + ' '
+  //       }
+
+  //       commandsToPrint3 +=product.substring(0,34)+" "+espacios+montos+"<BR>";
+
+  //  });
+  commandsToPrint3 = "PRUEBA DEMO 1<BR>";
+
+  var commandsToPrint4 =
+    "  ----------------------------------------------<BR>" +
+    "<CENTER><BOLD>¡PRUEBA!<BR>";
+
+  var commandsToPrint5 =
+    "<BR>" + "<BR>" + "<BR>" + "<BR>\n" + "<CUT>\n" + "<DRAWER>\n";
+
+  var textEncoded1 = encodeURI(commandsToPrint1);
+  var textEncoded2 = encodeURI(commandsToPrint2);
+  commandsToPrint21 = encodeURI(commandsToPrint21);
+  commandsToPrint22 = encodeURI(commandsToPrint22);
+  commandsToPrint23 = encodeURI(commandsToPrint23);
+  var separacion = encodeURI(separacion);
+  var textEncoded3 = encodeURI(commandsToPrint3);
+  var textEncoded4 = encodeURI(commandsToPrint4);
+  var textEncoded5 = encodeURI(commandsToPrint5);
+
+  // window.location.href ="intent://" +    textEncoded1 +    textEncoded2 +    commandsToPrint21 +
+  //   commandsToPrint22 +
+  //   commandsToPrint23 +
+  //   separacion +
+  //   textEncoded3 +
+  //   textEncoded4 +
+  //   textEncoded5 +
+  //   "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
+
+  window.location.href = "intent://" + textEncoded1 +  "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
+  // }
+  // });
+}
+
 function open_modal_pedidos(id_mesa,mesa) {
 
   $("#modal_pedidos").modal("show");
@@ -165,7 +279,9 @@ function calcularTotales() {
 
 $("#btn_comandar").on("click",function(e){
   e.preventDefault();
-  insertar_pedido();
+  conectar();
+  // imprimirMesa('12');
+  // insertar_pedido();
 });
 
 function insertar_pedido(){

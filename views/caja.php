@@ -101,30 +101,34 @@ if (strlen(session_id()) < 1)
 
     <!--lista de mesas--->
     <div class="container-fluit mt-2 ml-1 mr-1" id="ventana_generrar_comprobante">
-            <input type="hidden" name="id_pedido" id="id_pedido">
-            <input type="hidden" name="id_mesa" id="id_mesa">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-info btn-sm" onclick="mostrar_lista(true)"
-                            id="btn_ver_lista"><i class="fa fa-check-circle" aria-hidden="true"></i> ver lsita de
-                            comprobantes</button>
-                    </div>
-
+        <input type="hidden" name="id_pedido" id="id_pedido">
+        <input type="hidden" name="id_mesa" id="id_mesa">
+        <div class="card">
+            <div class="card-header ">
+                <div class="d-flex justify-content-center ">
+                    <button type="button" class="btn  btn-sm m-1" id="btn_guardar_venta"
+                        style="background-color:#2A3F54; color:white"><i class="fa fa-check-circle"
+                            aria-hidden="true"></i> Generar</button>
+                    <button type="button" class="btn btn-info btn-sm m-1" onclick="mostrar_lista(true)"
+                        id="btn_ver_lista"><i class="fa fa-check-circle" aria-hidden="true"></i> ver lsita de
+                        comprobantes</button>
 
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!--primera columna para mesas-->
-                        <div class="col-lg-4 col-md-6 col-sm-12" id="div_mesas">
-                            <div class="card">
-                                <div class="card-header " style="background-color:#fb4e36; color: white;">
-                                    Mesa Seleccionada: <span class="badge badge-danger" id="mesa_select">Sin
-                                        Seleccionar</span>
-                                </div>
-                                <div class="card-body">
 
-                                    <?php 
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!--primera columna para mesas-->
+                    <div class="col-lg-4 col-md-6 col-sm-12" id="div_mesas">
+                        <div class="card">
+                            <div class="card-header " style="background-color:#2A3F54; color: white;">
+                                Mesa Seleccionada: <span class="badge badge-danger" id="mesa_select">Sin
+                                    Seleccionar</span>
+                            </div>
+                            <div class="card-body">
+
+                                <?php 
 					                    require_once "../models/Ventas.php";
 					                    $ventas= new Ventas();
                         
@@ -133,143 +137,139 @@ if (strlen(session_id()) < 1)
 										
 					                ?>
 
-                                    <div class="row float-left d-flex justify-content-center align-content-center m-1">
+                                <div class="row float-left d-flex justify-content-center align-content-center m-1">
 
-                                        <div class="dropdown bg-info">
-                                            <button class="btn btn-danger " type="button" id="dropdownMenuButton"
-                                                onclick="mostrar_detalle(<?=  $mesa->id?>)">
-                                                <?php echo $mesa->numero?>
-                                            </button>
-
-                                        </div>
+                                    <div class="dropdown bg-info">
+                                        <button class="btn btn-danger " type="button" id="dropdownMenuButton"
+                                            onclick="mostrar_detalle(<?=  $mesa->id?>)">
+                                            <?php echo $mesa->numero?>
+                                        </button>
 
                                     </div>
-                                    <?php } ?>
-
-
 
                                 </div>
+                                <?php } ?>
+
+
+
                             </div>
                         </div>
-                        <!--segunda columna para detalle-->
-                        <div class="col-lg-8 col-md-6 col-sm-12">
+                    </div>
+                    <!--segunda columna para detalle-->
+                    <div class="col-lg-8 col-md-6 col-sm-12">
 
-                            <div class="card">
-                                <div class="card-header " style="background-color:#fb4e36; color: white;">
-                                    COMPROBANTE DE PAGO
-                                </div>
-                                <div class="card-body">
-                                    <form name="form_venta" id="form_venta" method="POST">
-                                        <div class="row">
-                                            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
-                                                <input type="text" hidden="" name="idventa" id="idventa">
-                                                <input type="hidden" name="idcliente" id="idcliente">
-                                                <label for="">Tipo Documento</label>
-                                                <select name="tipo_comprobante" id="tipo_comprobante"
-                                                    class="form-control  form-control-sm">
-                                                    <option value="0">Seleccione</option>
-                                                </select>
+                        <div class="card">
+                            <div class="card-header " style="background-color:#2A3F54; color: white;">
+                                COMPROBANTE DE PAGO
+                            </div>
+                            <div class="card-body">
+                                <form name="form_venta" id="form_venta" method="POST">
+                                    <div class="row">
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
+                                            <input type="text" hidden="" name="idventa" id="idventa">
+                                            <input type="hidden" name="idcliente" id="idcliente">
+                                            <label for="">Tipo Documento</label>
+                                            <select name="tipo_comprobante" id="tipo_comprobante"
+                                                class="form-control  form-control-sm">
+                                                <option value="0">Seleccione</option>
+                                            </select>
 
-                                            </div>
-                                            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
-
-                                                <label for="">Serie</label>
-                                                <input type="text" class="form-control form-control-sm"
-                                                    name="serie_comprobante" id="serie_comprobante">
-
-                                            </div>
-                                            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
-
-                                                <label for="">Numero</label>
-                                                <input type="text" class="form-control form-control-sm"
-                                                    name="num_comprobante" id="num_comprobante">
-
-                                            </div>
-                                            <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
-
-                                                <label for="">Fecha Emisión</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    name="fecha_emision" id="fecha_emision">
-
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-8 col-md-12 col-sm-12 col-xs-6">
-                                                <label for="">Cliente</label>
-                                                <input type="hidden" name="id_user" id="id_user">
-                                                <div class="input-group">
-                                                    <input type="text"
-                                                        class="form-control text-uppercase form-control-sm"
-                                                        name="nro_documento" id="nro_documento" require>
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-primary btn-sm" type="button"
-                                                            id="btn_buscar_ruc_dni">Buscar</button>
-                                                    </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
+
+                                            <label for="">Serie</label>
+                                            <input type="text" readonly class="form-control form-control-sm"
+                                                name="serie_comprobante" id="serie_comprobante">
+
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
+
+                                            <label for="">Numero</label>
+                                            <input type="text" class="form-control form-control-sm" readonly
+                                                name="num_comprobante" id="num_comprobante">
+
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-3">
+
+                                            <label for="">Fecha Emisión</label>
+                                            <input type="date" class="form-control form-control-sm" name="fecha_emision"
+                                                id="fecha_emision">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-8 col-md-12 col-sm-12 col-xs-6">
+                                            <label for="">Cliente</label>
+                                            <input type="hidden" name="id_user" id="id_user">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-uppercase form-control-sm"
+                                                    name="nro_documento" id="nro_documento" require>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary btn-sm" type="button"
+                                                        id="btn_buscar_ruc_dni">Buscar</button>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-lg-4 col-md-6 col-sm-12 col-xs-6">
-
-                                                <label for="">Forma de Pago</label>
-                                                <select name="modo_pago" id="modo_pago"
-                                                    class="form-control form-control-sm">
-                                                    <option value="0" disabled>Seleccione</option>
-                                                </select>
-
-                                            </div>
                                         </div>
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-12 col-xs-6">
 
+                                            <label for="">Forma de Pago</label>
+                                            <select name="modo_pago" id="modo_pago"
+                                                class="form-control form-control-sm">
+                                                <option value="0">Seleccione</option>
+                                            </select>
 
-
-                                        <table class="table table-sm   " id="tb_detalle">
-                                            <thead style="background-color:#2A3F54; color:white">
-                                                <th style="width:5%;">Cant.</th>
-                                                <th style="width:30%;">Menu</th>
-                                                <th style="width:5%;">Precio</th>
-                                                <th style="width:5%;">Importe</th>
-                                                <th style="width:3%;"></th>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tr>
-                                                <td align="right" colspan="3">Sub Total: S/.</td>
-                                                <td align="center" class="subtotal"><input type="text"
-                                                        class="form-control form-control-sm" readonly
-                                                        name="total_gravada" id="total_gravada"></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="right" colspan="3">Total IGV (18%): S/</td>
-                                                <td align="center" class="subtotal"><input type="text"
-                                                        class="form-control form-control-sm" readonly name="total_igv"
-                                                        id="total_igv"></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="right" colspan="3">Total a Pagar: S/.</td>
-                                                <td align="center" class="subtotal"><input type="text"
-                                                        class="form-control form-control-sm" readonly
-                                                        name="total_a_pagar" id="total_a_pagar"></td>
-                                            </tr>
-                                        </table>
-
-
-
-                                        <div class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-info btn-sm" id="btn_guardar_venta"><i
-                                                    class="fa fa-check-circle" aria-hidden="true"></i> Generar</button>
                                         </div>
+                                    </div>
 
 
-                                    </form>
-                                </div>
+
+                                    <table class="table table-sm   " id="tb_detalle">
+                                        <thead style="background-color:#2A3F54; color:white">
+                                            <th style="width:5%;">Cant.</th>
+                                            <th style="width:30%;">Menu</th>
+                                            <th style="width:5%;">Precio</th>
+                                            <th style="width:5%;">Importe</th>
+                                            <th style="width:3%;"></th>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tr>
+                                            <td align="right" colspan="3">Sub Total: S/.</td>
+                                            <td align="center" class="sub-total" id="stotal"><input type="text"
+                                                    class="form-control form-control-sm" readonly name="total_gravada"
+                                                    id="total_gravada"></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" colspan="3">Total IGV (18%): S/</td>
+                                            <td align="center" class="subtotal"><input type="text"
+                                                    class="form-control form-control-sm" readonly name="total_igv"
+                                                    id="total_igv"></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" colspan="3">Total a Pagar: S/.</td>
+                                            <td align="center" class="subtotal"><input type="text"
+                                                    class="form-control form-control-sm" readonly name="total_a_pagar"
+                                                    id="total_a_pagar"></td>
+                                        </tr>
+                                    </table>
+
+
+
+
+
+
+                                </form>
                             </div>
-
                         </div>
 
                     </div>
 
-
-
                 </div>
+
+
+
             </div>
+        </div>
     </div>
 
     <!--creamos el modal de pedidos y lo mostramos-->
@@ -279,27 +279,27 @@ if (strlen(session_id()) < 1)
     <!-- Modal -->
     <div class="container-fluid m-lg-2" id="lista_conetenedora">
         <div class="card text-center">
-            <div class="card-header" style="background-color:#fb4e36; color: white;">
+            <div class="card-header" style="background-color:#2A3F54; color:white">
                 COMPROBANTES DE PAGO
             </div>
             <div class="card-body">
-               <div class="row">
-                <div class="col-lg-12">
-                     <table class="table table-sm table-bordered table-hover " id="tb_comprobantes">
-                    <thead style="background-color:#2A3F54; color:white">
-                        <th>N°</th>
-                        <th>FECHA</th>
-                        <th>TIPO DOCUMENTO</th>
-                        <th>NUMERO</th>
-                        <th>CLIENTE</th>
-                        <th>F. PAGO</th>
-                        <th>TOTAL</th>
-                        <th>ESTADO SUNAT</th>
-                        <th>OPCIONES</th>
-                    </thead>
-                </table>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-sm table-bordered table-hover " id="tb_comprobantes">
+                            <thead style="background-color:#2A3F54; color:white">
+                                <th>N°</th>
+                                <th>FECHA</th>
+                                <th>TIPO DOCUMENTO</th>
+                                <th>NUMERO</th>
+                                <th>CLIENTE</th>
+                                <th>F. PAGO</th>
+                                <th>TOTAL</th>
+                                <th>ESTADO SUNAT</th>
+                                <th>OPCIONES</th>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-               </div>
             </div>
             <div class="card-footer text-muted">
                 <button class="btn btn-danger btn-sm" id="btn_cancelar_lista" onclick="mostrar_lista(false)"><i

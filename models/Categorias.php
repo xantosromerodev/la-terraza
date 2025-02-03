@@ -5,15 +5,19 @@
         public function __construct(){
             
         }
-
-        public function insertar($nombre){
-            $sql = "call sp_crear_categoria_menu('$nombre')";
+        public function obtener_categorias(){
+            $sql = "CALL SP_OBETENER_CATEGORIA_MENU_GENERAL()";
             return ejecutarConsulta($sql);
         }
 
-        public function editar($idcategoria, $nombre){
-            $sql = "call sp_actualizar_categoria_menu('$idcategoria', '$nombre')";
-           // echo $sql;
+        public function insertar($datos){
+            $sql = "CALL SP_CREAR_CATEGORIA_MENU('$datos[0]','$datos[1]')";
+            return ejecutarConsulta($sql);
+        }
+
+        public function editar($datos){
+            $sql = "call sp_actualizar_categoria_menu('$datos[0]', '$datos[1]',$datos[2])";
+            echo $sql;
             return ejecutarConsulta($sql);
         }
 

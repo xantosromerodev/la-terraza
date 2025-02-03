@@ -43,8 +43,8 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <table id="datatable-responsive" class="table table-bordered  dt-responsive nowrap table-sm" cellspacing="0"
-                            width="100%">
+                        <table id="datatable-responsive" class="table table-bordered  dt-responsive nowrap table-sm"
+                            cellspacing="0" width="100%">
                             <thead style="background-color:#2A3F54; color:white">
                                 <tr>
                                     <th>NRO</th>
@@ -53,8 +53,8 @@
                                     <th>EMPRESA</th>
                                     <th>DOMICILIO</th>
                                     <!--<th>TEL. FIJO</th>-->
-                                    <th>CELULAR</th>
-                                    <th>CORREO</th>
+                                    <th>MODO</th>
+                                    <th>ESTADO</th>
                                     <th>LOGO</th>
                                     <!--<th>ESTADO</th>-->
                                     <th>OPCIONES</th>
@@ -87,55 +87,108 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" id="frm_empresa" method="POST">
+                <form action="" id="frm_empresa" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="idempresa">RUC</label>
-                             <input type="hidden"  name="idempresa" id="idempresa">
+                            <label for="">RUC</label>
+                            <input type="hidden" name="idempresa" id="idempresa">
                             <div class="input-group">
-                              <input type="text" class="form-control text-uppercase form-control-sm" name="ruc"
-                                id="ruc" require>
+                                <input type="text" class="form-control text-uppercase form-control-sm" name="ruc"
+                                    id="ruc" require>
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary btn-sm" type="button" id="btn_buscar_ruc">Buscar</button>
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                        id="btn_buscar_ruc">Buscar</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="nempresa">EMPRESA</label>
-                            <input type="text" class="form-control text-uppercase form-control-sm" name="nempresa"
-                                id="nempresa" require>
+                            <label for="nempresa">RAZON SOCIAL</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="razon_social"
+                                id="razon_social" require>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="celular">CELULAR</label>
-                            <input type="text" class="form-control form-control-sm" name="celular"
-                                id="celular" require>
+                            <label for="celular">NOMBRE COMERCIAL</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre_comercial" id="nombre_comercial" require>
                         </div>
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="correo">CORREO</label>
+                            <label for="correo">DOMICILIO FISCAL</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="domicilio_fiscal"
+                                id="domicilio_fiscal" require>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <label for="domicilio">TELEFONO - CELULAR</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="telefono_movil"
+                                id="telefono_movil" require>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            <label for="domicilio">DEPARTAMENTO - PROVINCIA - DISTRITO</label>
+                            <select class=" form-control form-control-sm" name="id_ubigeo" id="id_ubigeo">
+                                <option value="0">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <label for="domicilio">UBIGEO</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="ubigeo"
+                                id="ubigeo" require>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            <label for="domicilio">CORREO</label>
                             <input type="text" class="form-control text-uppercase form-control-sm" name="correo"
                                 id="correo" require>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="domicilio">DOMICILIO</label>
-                            <input type="text" class="form-control text-uppercase form-control-sm" name="domicilio"
-                                id="domicilio" require>
+                            <label for="domicilio">MODO</label>
+                            <select class="form-control form-control-sm" name="modo" id="modo">
+                                <option value="0">BETA</option>
+                                <option value="1">PRODUCCION</option>
+                            </select>
                         </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            <label for="domicilio">USUARIO SECUNDARIO</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="usuario_secundario"
+                                id="usuario_secundario" require>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        	
-                            <label for="logo">LOGO</label>
-                            
-                            <input type="file" class="form-control text-uppercase form-control-sm" name="logofile"
-                                id="logofile" require>
-                                
-                            <input type="text" class="form-control text-uppercase form-control-sm" name="logotext"
-                                id="logotext" require>
-                                
-                            <img src="" alt="logo" width="50" height="50"></img>
+                            <label for="domicilio">PASSWORD SECUNDARIO</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="password_secundario"
+                                id="password_secundario" require>
                         </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            <label for="domicilio">LINK DEL SISTEMA</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="link_sistema"
+                                id="link_sistema" require>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <label for="domicilio">CUENTA DETRACCION</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="cuenta_detraccion"
+                                id="cuenta_detraccion" require>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            <label for="">Imagen:</label>
+                            <input class="form-control" type="file" name="imagen" id="imagen">
+                            <input type="hidden" name="imagenactual" id="imagenactual">
+                            <img src="" alt="" width="100px" height="100" id="imagenmuestra">
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <label for="domicilio">ESTADO SUNAT</label>
+                            <input type="text" class="form-control text-uppercase form-control-sm" name="estado_sunat"
+                                id="estado_sunat" require>
+                        </div>
+                       
                     </div>
             </div>
             <div class="modal-footer">

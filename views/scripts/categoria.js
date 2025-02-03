@@ -3,9 +3,19 @@ var tabla;
 //Función que se ejecuta al inicio
 function init(){
     listar();
+	llenar_combo_categoria_gen();
 }
 
-
+function llenar_combo_categoria_gen(){
+	$.post("../controller/categoria.php?op=obtener_categoria_general",
+		function(data,status){
+			dataJson=JSON.parse(data);
+			for(var i=0; i<dataJson.length; i++){
+			$("#id_cate").append("<option value='"+dataJson[i].id_cate+"'>"+dataJson[i].descripcion+"</option>");
+		}
+	}
+	);
+}
 function listar()
 {
 	tabla = $("#datatable-responsive").DataTable({
@@ -46,18 +56,19 @@ $("#btn-guardar").click(function(e){
 
 		actualizar();	
 	}
-	$("#exampleModal").modal("hide");
+	//$("#exampleModal").modal("hide");
 	
 });
 function guardar(){
 	var nombre = $("#nombre").val();
+	var id_cate=$("#id_cate").val();
 
 	$.ajax({
 		url: "../controller/categoria.php?op=guardaryeditar",
 		type: "POST",
-		data: {nombre: nombre},
+		data: {id_cate:id_cate ,nombre: nombre},
 		success: function(data){
-			mensaje(data,"","success");
+			$.notify(data,"success");
 			listar();
 			limpiar();
 		}
@@ -66,12 +77,14 @@ function guardar(){
 function actualizar(){
 	var id = $("#idcategoria").val();
 	var nombre = $("#nombre").val();
+	var id_cate=$("#id_cate").val();
 	$.ajax({
 		url: "../controller/categoria.php?op=guardaryeditar",
 		type: "POST",
-		data: {idcategoria: id, nombre: nombre},
+		data: {idcategoria: id, nombre: nombre, id_cate:id_cate},
 		success: function(data){
-			mensaje(data,"","success");
+			console.log(data);
+			$.notify(data,"success");
 			listar();
 			limpiar();
 		},
@@ -86,7 +99,8 @@ function mostrar(id){
 		console.log(data);	
 		$("#exampleModal").modal("show");
 		$("#idcategoria").val(data.id);
-		$("#nombre").val(data.numero);
+		$("#id_cate").val(data.id_cate);
+		$("#nombre").val(data.nombre);
 	});
 }
 function eliminar(id){

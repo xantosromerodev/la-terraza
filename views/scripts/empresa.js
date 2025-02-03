@@ -2,29 +2,60 @@
 var tabla;
 //Función que se ejecuta al inicio
 function init(){
-    listar();
+   listar();
+   llenar_combo_region();
 }
 
 
 //API SUNAT
 function obtenerRuc(){
 	var ruc = $('#ruc').val();
-	
+	console.log(ruc);
 	$.ajax({
       type: "POST",
       url: "../controller/consultaRuc.php",
       data: "ruc=" + ruc,
       dataType: "json",
       success: function (data) {
-      	$('#nempresa').val(data.nombre);
-      	$('#domicilio').val(data.direccion);
+		console.log(data);
+      	$('#razon_social').val(data.nombre);
+		$("#nombre_comercial").val(data.nombre);
+
+      	$('#domicilio_fiscal').val(data.direccion);
+		$("#estado_sunat").val(data.estado);
+
+		//$("#deparatamento_provicia_distrito").append(data.departamento + " - " + data.provincia + " - " + data.distrito);
       	// $('#estado').val(data.estado);
         // console.log(data);
       }
 	});
 }
-
+function llenar_combo_region() {
+  $.post("../controller/empresa.php?op=obtener_region", function (r) {
+    
+    var dataJson = JSON.parse(r);
+    for (var i = 0; i < dataJson.length; i++) {
+      var option =
+        "<option value='" +
+        dataJson[i].id_ubigeo +
+        "'>" +
+        dataJson[i].region +
+        "</option>";
+      $("#id_ubigeo").append(option);
+    }
+  });
+}
+$("#id_ubigeo").change(function () {
+  var opcionSeleccionada = $(this).val();
+ $.post("../controller/empresa.php?op=obtener_ubigeo",{id_ubigeo:opcionSeleccionada},
+	function(data,status){
+		data=JSON.parse(data);
+		$("#ubigeo").val(data.codigo_ubigeo);
+	}
+ )
+});
 $('#btn_buscar_ruc').on('click', function(){
+	
 	obtenerRuc();
 });
 
@@ -63,15 +94,15 @@ function listar()
 }
 $("#btn-guardar").click(function(e){
 	e.preventDefault();
-	if($("#idempresa").val() == ""){
-		guardar();
-		listar();
-		limpiar();
-	}else{
-		actualizar();
-		listar();
-		limpiar();
-	}
+	if ($("#idempresa").val() == "") {
+    guardar();
+    listar();
+    limpiar();
+  } else {
+    actualizar();
+    listar();
+    limpiar();
+  }
 	$("#exampleModal").modal("hide");
 	
 });
@@ -167,4 +198,11 @@ function mensaje(title, text, icon){
 		icon: icon
 	  });
 }
+$("#imagen").change(function () {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    $("#imagenmuestra").attr("src", e.target.result);
+  };
+  reader.readAsDataURL(this.files[0]);
+});
 init();

@@ -181,7 +181,7 @@ class Ventas{
 	   
 }
 
-// Función generar formato PDF
+
 
 
 ?>
