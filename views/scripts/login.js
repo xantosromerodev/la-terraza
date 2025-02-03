@@ -5,6 +5,7 @@ $("#btn-ingresar").on("click", function (e) {
         password: $("#password").val()
     }
     $.post("../controller/usuario.php?op=login", data, function (e) {
+        console.log(e);
        data = JSON.parse(e);
        console.log(data);
         if (data.rol == "ADMINISTRADOR"){
