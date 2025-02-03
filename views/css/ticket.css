@@ -1,0 +1,82 @@
+ table.detalle-ticket{
+            border-collapse: collapse;
+            font-size: 12px;
+            font-family: monospace;
+            /*width: 350px*/
+        }
+        .top{
+            margin-top: 10px
+        }
+        .print{
+            font-size: 13px;
+            font-family: monospace;
+            color: #000;
+        }
+        .print span{
+            display: block;
+        }
+        .print p{
+            line-height: 12px
+        }
+        .impremeTicket{
+            height: auto;
+            /*width: 377px;*/
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            float: left;
+            font-style: normal;
+            line-height: normal;
+            font-weight: normal;
+            font-variant: normal;
+            color: #000;
+        }
+        
+        .modal-body:after{
+           content: ''; 
+           font: oblique bold 120% cursive;
+          font-size: 8em;  
+          color: rgba(251, 110, 82, 0.5);
+          z-index: 9999;
+         
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+            
+          -webkit-pointer-events: none;
+          -moz-pointer-events: none;
+          -ms-pointer-events: none;
+          -o-pointer-events: none;
+          pointer-events: none;
+        
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -o-user-select: none;
+          user-select: none;
+        
+          -webkit-transform: rotate(-45deg);  
+              -moz-transform: rotate(-45deg);  
+              -ms-transform: rotate(-45deg);  
+              -o-transform: rotate(-45deg);  
+              transform: rotate(-45deg);  
+               
+              -webkit-transform-origin: 50% 50%;  
+              -moz-transform-origin: 50% 50%;  
+              -ms-transform-origin: 50% 50%;  
+              -o-transform-origin: 50% 50%;  
+              transform-origin: 50% 50%;  
+               
+        }
+        
+        .btnImprimir{
+            margin:1;
+        }
+        
+        table.detalle-ticket>thead th{padding: 5px;border-bottom: 1px solid #333;}
+        table.detalle-ticket>tbody tr:last-child td{padding: 5px;border-bottom: 1px solid #333;}
