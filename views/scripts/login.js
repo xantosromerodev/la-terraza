@@ -1,10 +1,12 @@
 $("#btn-ingresar").on("click", function (e) {
     e.preventDefault();
     var data = {
-        email: $("#dni").val(),
+        dni: $("#dni").val(),
         password: $("#password").val()
     }
     $.post("../controller/usuario.php?op=login", data, function (e) {
+        console.log(e);
+
        data = JSON.parse(e);
        console.log(data);
         if (data.rol == "ADMINISTRADOR"){
@@ -19,6 +21,7 @@ $("#btn-ingresar").on("click", function (e) {
             $(location).attr("href", "caja.php");
         }
     });
+    
 });
 
 

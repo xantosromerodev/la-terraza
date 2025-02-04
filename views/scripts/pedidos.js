@@ -1,27 +1,40 @@
 var tabla;
 function init() {
   mostrar_mesas();
-  obtener_categoria_menu();
+  listar_subcategorias(2);
+  //obtener_categoria_menu();
 //refrescar_pagina();
  // listar_mesas();
 }
 
-// function imprimirTicket() {
-//   const contenidoTicket = `
-//     <pre>
-//     ********* TICKET *********
-//     Producto: Pan
-//     Precio: $20.00
-//     Fecha: sicha
-//     </pre>
-//   `;
+ function imprimirTicket() {
+   $.ajax({
+     url: "../controller/pedidos.php?op=listar_pedido",
+     type: "POST",
+     data: { id_mesa: id_mesa },
+     success: function (datos) {
+      
+       for (var i = 0; i < dataJson.length; i++) {
+         //console.log(dataJson[i][4])
+      
+       }
+     },
+   });
+  const contenidoTicket = `
+    <pre>
+     ********* TICKET *********
+    Producto: Pan
+    Precio: $20.00
+    Fecha: sicha
+    </pre>
+   `;
 
-//   // Abrir la ventana de impresión
-//   const ventana = window.open("", "", "width=600,height=600");
-//   ventana.document.write(contenidoTicket);
-//   ventana.document.close();
-//   ventana.print();
-// }
+   // Abrir la ventana de impresión
+   const ventana = window.open("", "", "width=600,height=600");
+   ventana.document.write(contenidoTicket);
+   ventana.document.close();
+   ventana.print();
+}
 
 function imprimirMesa(codigo) {
   // $.ajax({
@@ -131,27 +144,7 @@ function open_modal_pedidos(id_mesa,mesa) {
 }
 
 
-function obtener_categoria_menu() {
-  $.ajax({
-    url: "../controller/pedidos.php?op=mostrar_categoria_menu",
-    type: "POST",
-    success: function (data) {
-      jsonData = JSON.parse(data);
-     
-      for (var i = 0; i < jsonData.length; i++) {
-        console.log(jsonData[i].nombre);
-        console.log(jsonData[i].id);
-        $("#lcategorias_m").append(
-          '<a  style="cursor:pointer"  onclick="obtener_menu(' +
-          jsonData[i].id +
-          ')" class="list-group-item list-group-item-action">' +
-          jsonData[i].nombre +
-          "</a>"
-        );
-      }
-    },
-  });
-}
+
 function mostrar_mesas() {
   $.ajax({
     url: "../controller/pedidos.php?op=mostrar_mesas",
@@ -279,9 +272,10 @@ function calcularTotales() {
 
 $("#btn_comandar").on("click",function(e){
   e.preventDefault();
-  conectar();
+
   // imprimirMesa('12');
-  // insertar_pedido();
+  insertar_pedido();
+  imprimirTicket();
 });
 
 function insertar_pedido(){
@@ -395,6 +389,38 @@ function limpiar(){
 document.getElementById("mesa_select").innerHTML='Sin Seleccionar';
 	
 }
+$("#btn_platillos").on("click",function(e){
+  e.preventDefault();
+   $("#lcategorias_m").empty();
+ listar_subcategorias(2);
+});
+$("#btn_bebidas").on("click", function (e) {
+  e.preventDefault();
+    $("#lcategorias_m").empty();
+ listar_subcategorias(1);
+});
 
+// funcion para obtener las subacategorias
+function listar_subcategorias(id_categoria) {
+  $.ajax({
+    url: "../controller/pedidos.php?op=listar_subcategorias",
+    type: "POST",
+    data: { idcategoria: id_categoria },
+    success: function (data, status) {
+     // console.log(data);
+      dataJson = JSON.parse(data);
+      for(var i=0; i<dataJson.length;i++){
+        console.log(dataJson[i])
+         $("#lcategorias_m").append(
+           '<a  style="cursor:pointer"  onclick="obtener_menu(' +
+             dataJson[i].id +
+             ')" class="list-group-item list-group-item-action">' +
+             dataJson[i].nombre +
+             "</a>"
+         );
+      }
+    },
+  });
+}
 
 init();

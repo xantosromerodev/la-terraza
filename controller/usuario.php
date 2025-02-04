@@ -87,7 +87,7 @@ switch ($_GET["op"]) {
         case 'login':
             $dni = isset($_POST["dni"]) ? limpiarCadena($_POST["dni"]) : "";
             $clave = isset($_POST["password"]) ? limpiarCadena($_POST["password"]) : "";
-            $respuesta = $usuario->login($email, $clave);
+            $respuesta = $usuario->login($dni, $clave);
             $fetch = $respuesta->fetch_object();
             if (isset($fetch)) {
                 $_SESSION['id'] = $fetch->id;

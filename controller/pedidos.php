@@ -125,6 +125,18 @@ switch ($_GET["op"]) {
             
             echo json_encode($data);
             break;
+      //function para listar las subcategorias segun categoria general
+      case 'listar_subcategorias':
+        $idcategoria = $_POST['idcategoria'];
+        $respuesta = $pedido->obtener_subcategorias($idcategoria);
+        $data = Array();
+        if($respuesta->num_rows>0){
+              while($rows=$respuesta->fetch_object()){
+                $data[]=$rows;
+              }
+        }
+        echo json_encode($data);
+        break;
 }
 
 ?>

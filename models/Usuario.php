@@ -34,6 +34,7 @@ public function eliminar($id){
 //definimos la consulta para que el usuario se loguee
 public function login($dni,$clave){
     $sql="CALL SP_LOGIN('$dni','$clave')";
+   // echo $sql;
     return ejecutarConsulta($sql);
 
 }

@@ -9,7 +9,7 @@ if (strlen(session_id()) < 1)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Terraza</title>
-      <!-- Bootstrap -->
+    <!-- Bootstrap -->
     <link href="../public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../public/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -17,23 +17,23 @@ if (strlen(session_id()) < 1)
     <link href="../public/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="../public/iCheck/skins/flat/green.css" rel="stylesheet">
-	
+
     <!-- bootstrap-progressbar -->
     <link href="../public/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="../public/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <link href="../public/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="../public/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Bootstrap Select-->
     <link href="../public/bootstrap/dist/css/bootstrap-select.min.css" rel="stylesheet">
-<!-- Datatables -->
-    
+    <!-- Datatables -->
+
     <link href="../public/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="../public/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="../public/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="../public/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../public/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-     <link href="css/ticket.css" rel="stylesheet">
+    <link href="css/ticket.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <!-- <link href="../public/build/css/custom.min.css" rel="stylesheet">-->
     <style>
@@ -49,21 +49,20 @@ if (strlen(session_id()) < 1)
 
 
     }
+
     @font-face {
-	font-family: 'Glyphicons Halflings';
-	src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
-	src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg")
-}
+        font-family: 'Glyphicons Halflings';
+        src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
+        src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg")
+    }
 
-body {
-	color: #73879C;
-	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-	font-size: 13px;
-	font-weight: 400;
-	line-height: 1.471
-}
-
-    
+    body {
+        color: #73879C;
+        font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.471
+    }
     </style>
 </head>
 
@@ -121,9 +120,10 @@ body {
                     <div class="row">
                         <!--primera columna para mesas-->
                         <div class="col-lg-6 col-md-6 col-sm-12" id="div_mesas">
-                            <div class="card" >
+                            <div class="card">
                                 <div class="card-header " style="background-color:#fb4e36; color: white;">
-                                    Mesa Seleccionada: <span class="badge badge-danger" id="mesa_select">Sin Seleccionar</span>
+                                    Mesa Seleccionada: <span class="badge badge-danger" id="mesa_select">Sin
+                                        Seleccionar</span>
                                 </div>
                                 <div class="card-body">
 
@@ -134,32 +134,34 @@ body {
 					                    while($mesa = $mesas->fetch_object()){
 										
 					                ?>
-					              <?php if($mesa->estado=="OCUPADO"){
+                                    <?php if($mesa->estado=="OCUPADO"){
 					                    
 					              ?>
-					                <div class="row float-left d-flex justify-content-center align-content-center m-1">
+                                    <div class="row float-left d-flex justify-content-center align-content-center m-1">
 
                                         <div class="dropdown bg-info">
-                                            <button  class="btn btn-danger btn-sm dropdown-toggle" type="button"
+                                            <button class="btn btn-danger btn-sm dropdown-toggle" type="button"
                                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
                                                 <?php echo $mesa->numero?>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item  " href="#" onclick="obtener_idpedido('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
-                                                        class="fa fa-book" aria-hidden="true" ></i> Agregar Pedido</a>
-                                                <a class="dropdown-item  " href="#" onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
+                                                <a class="dropdown-item  " href="#"
+                                                    onclick="obtener_idpedido('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
+                                                        class="fa fa-book" aria-hidden="true"></i> Agregar Pedido</a>
+                                                <a class="dropdown-item  " href="#"
+                                                    onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
                                                         class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
                                             </div>
                                         </div>
 
-                                    </div> 
-                                   
-									<?php }else if($mesa->estado=="LIBRE"){?>
-									<div class="row float-left d-flex justify-content-center align-content-center m-1">
+                                    </div>
+
+                                    <?php }else if($mesa->estado=="LIBRE"){?>
+                                    <div class="row float-left d-flex justify-content-center align-content-center m-1">
 
                                         <div class="dropdown bg-info">
-                                            <button  class="btn btn-info btn-sm dropdown-toggle " type="button"
+                                            <button class="btn btn-info btn-sm dropdown-toggle " type="button"
                                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
                                                 <?php echo $mesa->numero?>
@@ -168,13 +170,13 @@ body {
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="open_modal_pedidos('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
                                                         class="fa fa-plus" aria-hidden="true"></i> Nuevo Pedido</a>
-           
-                                               
+
+
                                             </div>
                                         </div>
 
-                                    </div> 
-								    <?php }?>
+                                    </div>
+                                    <?php }?>
                                     <?php }?>
 
                                 </div>
@@ -243,13 +245,24 @@ body {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4">
+                    <div class="row  ">
+                        <div class="col-lg-12 d-flex align-justify-content-center">
+                            <div class="button-group ">
+                                <button type="button" class="btn btn-info btn-sm " id="btn_platillos">
+                                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                                    PLATILLOS</button>
+                                <button type="button" class="btn btn-warning btn-sm text-white" id="btn_bebidas"><i
+                                        class="fa fa-beer" aria-hidden="true"></i>
+                                    BEBIDAS</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-4" id="refresh">
 
                             <div class="list-group scroll-list-group list-btn-group-sm" id="lcategorias_m"
                                 data-spy="scroll">
-                                <a href="#" class="list-group-item list-group-item-action active"> <i
-                                        class="fa fa-cubes" aria-hidden="true"></i> Categorias </a>
+
 
                             </div>
                         </div>
@@ -278,12 +291,12 @@ body {
                 </div>
             </div>
         </div>
-    
+
     </div>
 
     <!-- modal de detalle de pedidos -->
-       <div class="modal fade" id="modal_detalle_pedidos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <div class="modal fade" id="modal_detalle_pedidos" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#2A3F54; color:white">
@@ -293,49 +306,50 @@ body {
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <div class="row">
-                       
+
                         <div class="col-lg-12">
-                           
-                           <div class="card text-center">
-							  <div class="card-header">
-							    <span id="mesa_name"></span> <span id="id_fecha"></span>
-							  </div>
-							  <div class="card-body">
-								
-								 <table class="detalle-ticket" width="100%" id="tb_detalle_pedido">
-                <thead>
-                    <tr>
-                        <th class="text-center">CANT</th>
-                        <th>DESCRIPCIÓN</th>
-                        <th class="text-center">PRECIO</th>
-                        <th class="text-center">IMPORTE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                                                
-                 </tbody>
-                  <tfoot>
-                    
-                    
-                    
-                    
-                                       
-                       <tr>
-                        <td align="right" colspan="3">TOTAL A PAGAR</td>
-                        <td align="center" class="subtotal">
-                           0.00                               </td>
-                    </tr>
-            
-                   
-                </tfoot>
-            </table>
-						
-							  </div>
-							  <div class="card-footer text-muted">
-							    <button type="button" class="btn btn-warning text-white">Imprimir</button>
-							  </div>
-							</div>
+
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <span id="mesa_name"></span> <span id="id_fecha"></span>
+                                </div>
+                                <div class="card-body">
+
+                                    <table class="detalle-ticket" width="100%" id="tb_detalle_pedido">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">CANT</th>
+                                                <th>DESCRIPCIÓN</th>
+                                                <th class="text-center">PRECIO</th>
+                                                <th class="text-center">IMPORTE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+
+
+
+
+
+                                            <tr>
+                                                <td align="right" colspan="3">TOTAL A PAGAR</td>
+                                                <td align="center" class="subtotal">
+                                                    0.00 </td>
+                                            </tr>
+
+
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <button type="button" class="btn btn-warning text-white">Imprimir</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -346,7 +360,7 @@ body {
                 </div>
             </div>
         </div>
-    
+
     </div>
 
     <!-- FIN PRUEBA CARD CON ESTILO -->
@@ -397,7 +411,7 @@ body {
     <script src="../public/bootstrap/dist/js/bootstrap-select.min.js"></script>
 
     <!-- Datatables -->
-   <!-- Datatables -->
+    <!-- Datatables -->
     <script src="../public/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../public/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="../public/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -420,13 +434,14 @@ body {
     <script src="scripts/pedidos.js"></script>
     <script src="scripts/webusb-receipt-printer.umd.js"></script>
     <script>
-        const receiptPrinter = new WebUSBReceiptPrinter();
-        function conectar() {
-            console.log("sss");            
-            receiptPrinter.connect();
-            console.log(receiptPrinter.connect());
-            
-        }
+    const receiptPrinter = new WebUSBReceiptPrinter();
+
+    function conectar() {
+        console.log("sss");
+        receiptPrinter.connect();
+        console.log(receiptPrinter.connect());
+
+    }
     </script>
 </body>
 
