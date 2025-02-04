@@ -1,29 +1,5 @@
 $("#btn-ingresar").on("click", function (e) {
     e.preventDefault();
-<<<<<<< HEAD
-    var data = {
-        dni: $("#dni").val(),
-        password: $("#password").val()
-    }
-    $.post("../controller/usuario.php?op=login", data, function (e) {
-        console.log(e);
-
-       data = JSON.parse(e);
-       console.log(data);
-        if (data.rol == "ADMINISTRADOR"){
-            
-            $(location).attr("href", "home.php");  
-           
-        }else if(data.rol == "AZAFATA"){
-           
-            $(location).attr("href", "pedidos.php");
-        }else if(data.rol == "CAJA"){
-           
-            $(location).attr("href", "caja.php");
-        }
-    });
-    
-=======
 
     document.getElementById('dniError').style.display = 'none';
     document.getElementById('passwordError').style.display = 'none';
@@ -68,7 +44,6 @@ $("#btn-ingresar").on("click", function (e) {
             }
         });
     }
->>>>>>> e09b22555810be5dab2c868ad27e46b20f3cc03a
 });
 
 
