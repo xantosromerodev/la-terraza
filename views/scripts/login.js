@@ -28,7 +28,7 @@ $("#btn-ingresar").on("click", function (e) {
     
      if (isValid) {
         var data = {
-            email: $("#dni").val(),
+            dni: $("#dni").val(),
             password: $("#password").val(),
         };
         $.post("../controller/usuario.php?op=login", data, function (e) {
