@@ -152,6 +152,7 @@ if (strlen(session_id()) < 1)
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
                                                         class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
+                                                        <pre id="ticket"></pre>
                                             </div>
                                         </div>
 
@@ -347,7 +348,7 @@ if (strlen(session_id()) < 1)
 
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <button type="button" class="btn btn-warning text-white">Imprimir</button>
+                                    <button type="button" class="btn btn-warning text-white" id="btn_imprimir_deta">Imprimir</button>
                                 </div>
                             </div>
                         </div>

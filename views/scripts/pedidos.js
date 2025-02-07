@@ -1,39 +1,94 @@
 var tabla;
+var idMesa=0;
+var nom_mesa="";
+var total_a_pagar=0;
 function init() {
   mostrar_mesas();
   listar_subcategorias(2);
+  
+$("#ticket").hide();
   //obtener_categoria_menu();
 //refrescar_pagina();
  // listar_mesas();
 }
+$("#btn_imprimir_deta").on("click", function (e) {
+  e.preventDefault();
+  imprimirTicket(idMesa);
+  //imprimirMesa("")
+ 
 
- function imprimirTicket() {
+});
+ function imprimirTicket(id_mesa) {
+
+ let ticket="";
    $.ajax({
      url: "../controller/pedidos.php?op=listar_pedido",
      type: "POST",
      data: { id_mesa: id_mesa },
      success: function (datos) {
+      dataJson = JSON.parse(datos);
+       ticket+=
+      `<h3 style="text-align:center; margin-bottom:0px">${nom_mesa}</h3> 
+      <table style="width:100%; font-size:12px;padding:0px;margin:0px;">
+      <thead>
+      <th  style="width:5%">Cant</th>
+       <th align="left" >Descripción</th>
+       <th style="width:5%">Precio</th>
+        <th style="width:5%">Importe</th>
+      </thead>
+      </table>  `;
+       dataJson.forEach(element => {
+        ticket+= 
+        `<table  style="width:100%; font-size:12px;padding:1px;margin:0px;">
+          <tr style="padding:2px;"> 
+          <td  align="center" style="width:5%">  ${element[0]}</td>
+           <td align="left">${element[1]}</td>
+           <td  style="width:7%">${element[2]}</td>
+          <td  style="width:7%">${element[3]}</td>
+          </tr>
+         
+        </table>`;
       
-       for (var i = 0; i < dataJson.length; i++) {
-         //console.log(dataJson[i][4])
-      
-       }
-     },
-   });
-  const contenidoTicket = `
-    <pre>
-     ********* TICKET *********
-    Producto: Pan
-    Precio: $20.00
-    Fecha: sicha
-    </pre>
-   `;
+       });
+       ticket+= `TOTAL A PAGAR S/.${total_a_pagar}`
+       let preTag = document.getElementById("ticket");
+       preTag.textContent = ticket;
 
-   // Abrir la ventana de impresión
-   const ventana = window.open("", "", "width=600,height=600");
-   ventana.document.write(contenidoTicket);
-   ventana.document.close();
-   ventana.print();
+       // Ajustar tamaño del ticket en pantalla
+       preTag.style.fontFamily = "Consolas, monospace";
+       preTag.style.fontSize = "14px";
+       preTag.style.padding = "0px";
+       preTag.style.border = "1px solid black";
+       preTag.style.backgroundColor = "#f8f8f8";
+       preTag.style.width = "280px"; // Ajustar ancho del ticket
+       preTag.style.whiteSpace = "pre-wrap";
+
+       let printWindow = window.open('', '', 'width=280,height=600');
+
+       // Definir tamaño de página al imprimir
+       let customStyle = `
+           <style>
+               @page { 
+                   size: 80mm 200mm; /* Ancho de ticket de 80mm y altura dinámica */
+                   margin: 0;
+               }
+               pre {
+                   font-size: 14px;
+                   px;
+                   width: 280px;
+                   font-family: Consolas, monospace;
+                   padding: 5px;
+               }
+           </style>
+       `;
+            printWindow.document.write(customStyle + '<pre>' + ticket + '</pre>');
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+      
+      }
+   });
+  
 }
 
 function imprimirMesa(codigo) {
@@ -127,8 +182,8 @@ function imprimirMesa(codigo) {
   //   textEncoded4 +
   //   textEncoded5 +
   //   "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
-
-  window.location.href = "intent://" + textEncoded1 +  "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
+ console.log(commandsToPrint1);
+ // window.location.href = "intent://" + textEncoded1 +  "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
   // }
   // });
 }
@@ -335,6 +390,7 @@ function pedido_cabecera(id_mesa){
 	function(data, status){
    dataJson=JSON.parse(data);
    console.log(dataJson);
+   total_a_pagar=dataJson.total;
 	$(".subtotal").html("S/. " + dataJson.total);
   $("#id_fecha").html(dataJson.fecha);
 		/*dataJson=JSON.parse(data);
@@ -347,8 +403,11 @@ function pedido_cabecera(id_mesa){
 }
 cont_2=0;
 function mostrar_modalDetalle(id_mesa,mesa){
+  
+  idMesa=id_mesa;
 	$("#tb_detalle_pedido tbody").empty();
 	pedido_cabecera(id_mesa)
+  nom_mesa=mesa;
   $("#mesa_select").html(mesa);
   $("#mesa_name").html(mesa)
  $.ajax({
@@ -371,6 +430,7 @@ function mostrar_modalDetalle(id_mesa,mesa){
         </tr>`
 
          cont_2++;
+         
  // detalles++;
   $("#tb_detalle_pedido").append(nueva_fila);
     }
