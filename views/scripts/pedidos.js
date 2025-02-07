@@ -330,7 +330,7 @@ $("#btn_comandar").on("click",function(e){
 
   // imprimirMesa('12');
   insertar_pedido();
-  imprimirTicket();
+  //imprimirTicket();
 });
 
 function insertar_pedido(){

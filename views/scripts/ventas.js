@@ -418,8 +418,8 @@ function validar_ingreso() {
   
 
 }
-function open_pdf_prueba() {
-  var url = "../controller/pdf_ticket.php";
+function open_pdf_prueba(idventa) {
+  var url = "../controller/enviar_sunat.php?idventa=" + idventa+"&op=imprime_ticket";
   window.open(url, "_blank");
 }
 

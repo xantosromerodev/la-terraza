@@ -178,6 +178,17 @@ class Ventas{
 		$sql="CALL SP_VENTAS_DIA()";
 		return ejecutarConsulta($sql);
 	}
+	// datos para los comprobantes en pdf
+
+	public function obtener_empresa(){
+        $sql="select * from empresas";
+        return ejecutarConsultaSimpleFila($sql);
+
+    }
+	public function obtener_venta($idventa){
+        $sql="CALL SP_OBTENER_VENTA('$idventa')";
+        return ejecutarConsultaSimpleFila($sql);
+    }
 	   
 }
 
