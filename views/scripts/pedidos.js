@@ -15,13 +15,37 @@ $("#ticket").hide();
 }
 $("#btn_imprimir_deta").on("click", function (e) {
   e.preventDefault();
-  imprimirTicket(idMesa);
+  imprimirTicket_cuenta(idMesa);
   //imprimirMesa("")
  
 
 });
- function imprimirTicket(id_mesa) {
-
+ function imprimirTicket_cuenta(id_mesa) {
+  $.post("../controller/pedidos.php?op=listar_pedido",{id_mesa: id_mesa},
+    function(data, status){
+      let $pre = $("<pre>").appendTo("body");
+      jsonData=JSON.parse(data);
+      console.log(jsonData)
+      let ticketText = nom_mesa +"\n";
+                
+                ticketText += "----------------------\n";
+                ticketText += "CANT  PRODUCTO            PRECIO           IMPORTE \n";
+          let total = 0;
+          jsonData.forEach(element => {
+            importe=element[0]*element[2];
+          let line=` ${element[0]}    ${element[1]}      ${element[2]}      ${importe} \n`;
+          ticketText += line;
+          total += element[0]*element[2]; ;
+        });
+        ticketText += "----------------------\n";
+                ticketText += "Total: $" + total.toFixed(2) + "\n";
+                ticketText += "----------------------\n";
+                $pre.text(ticketText);
+                console.log(ticketText);
+                imprimirTicket_c(ticketText)
+    }
+  )
+/*
  let ticket="";
    $.ajax({
      url: "../controller/pedidos.php?op=listar_pedido",
@@ -72,7 +96,7 @@ $("#btn_imprimir_deta").on("click", function (e) {
            <style>
                @page { 
                    size: 80mm 200mm; /* Ancho de ticket de 80mm y altura dinámica */
-                   margin: 0;
+           /*        margin: 0;
                }
                pre {
                    font-size: 14px;
@@ -90,7 +114,11 @@ $("#btn_imprimir_deta").on("click", function (e) {
       
       }
    });
-  
+  */
+}
+function imprimirTicket_c(ticketText) {
+  let rawBTURL = "intent://com.rawbt.printconsole#Intent;scheme=rawbt;package=com.rawbt.client;S.text=" + encodeURIComponent(ticketText) + ";end;";
+  window.location.href = rawBTURL;
 }
 
 function imprimirMesa(codigo) {
@@ -345,6 +373,7 @@ function insertar_pedido(){
     processData: false,
     success: function (datos) {
       $.notify(datos, "success");
+      obtener_detalle_pedido();
       reset_form();
       cambiar_estado();
       limpiar();
@@ -494,7 +523,8 @@ function obtener_cabecra_pedido(){
     }
   )
 }
-$("#btn_precuentado").on("click",function(e){
+$("#btn_precuenta").on("click",function(e){
+  alert("hola")
   e.preventDefault();
   obtener_detalle_pedido();
 });
