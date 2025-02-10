@@ -113,7 +113,7 @@ if (strlen(session_id()) < 1)
                     <button class="btn btn-info btn-sm" id="btn_comandar"><i class="fa fa-check-circle"
                             aria-hidden="true"></i>
                         Comandar</button>
-                    <button class="btn btn-warning btn-sm"><i class="fa fa-book" aria-hidden="true"></i>
+                    <button class="btn btn-warning btn-sm" id="btn_precuenta"><i class="fa fa-book" aria-hidden="true"></i>
                         Pre Cuenta</button>
                 </div>
                 <div class="card-body">

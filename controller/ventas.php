@@ -157,9 +157,7 @@ case 'ventas_del_dia':
 			'5'=>$reg->modo_pago_desc,
 			'6'=>$reg->total_venta,	
 			'7'=>$reg->estado,
-			'8'=>'<span class="badge bg-danger"><a  style="color:white;cursor:pointer" onclick="open_pdf_prueba('.$reg->idventa.')"><i class="fa fa-print" aria-hidden="true"></i></a></span>'
- 				.' '.'<span class="badge bg-success"><a  style="color:white;cursor:pointer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></span>'
-				
+			'8'=>'<span class="badge bg-danger"><a  style="color:white;cursor:pointer" onclick="open_pdf_prueba('.$reg->idventa.')"><i class="fa fa-print" aria-hidden="true"></i></a></span>'					
 			);
 			$cont++;
 		}

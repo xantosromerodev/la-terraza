@@ -2,10 +2,12 @@ var tabla;
 var idMesa=0;
 var nom_mesa="";
 var total_a_pagar=0;
+var mesa="";
 function init() {
   mostrar_mesas();
   listar_subcategorias(2);
-  
+  obtener_cabecra_pedido();
+  //obtener_detalle_pedido()
 $("#ticket").hide();
   //obtener_categoria_menu();
 //refrescar_pagina();
@@ -482,5 +484,44 @@ function listar_subcategorias(id_categoria) {
     },
   });
 }
+// funciones para craer ticket de pedidos
+function obtener_cabecra_pedido(){
+  $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",
+    function(data,status){
+      dataJson=JSON.parse(data);
+      mesa=dataJson.numero;
+      console.log(dataJson);
+    }
+  )
+}
+$("#btn_precuentado").on("click",function(e){
+  e.preventDefault();
+  obtener_detalle_pedido();
+});
+function obtener_detalle_pedido(){
+  $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
+    function(data,status){
+      dataJson=JSON.parse(data);
+      console.log(dataJson);
+      let $pre=$("<pre>").appendTo($("body"));
 
+      let ticketText ="     "+ mesa + "\n";
+               
+                ticketText += "----------------------\n";
+                ticketText += "CANT       DESCRIPCION   \n";
+             for (var i = 0; i < dataJson.length; i++) {
+               let line=` ${dataJson[i][0]}       ${dataJson[i][1]} \n`;
+               ticketText += line;
+             }
+             $pre.text(ticketText);
+                console.log(ticketText);
+              imprimirTicket(ticketText);
+    }
+  )
+}
+function imprimirTicket(ticketText) {
+  let rawBTURL = "intent://com.rawbt.printconsole#Intent;scheme=rawbt;package=com.rawbt.client;S.text=" + encodeURIComponent(ticketText) + ";end;";
+  console.log("..imprimiendo...");
+ window.location.href = rawBTURL;
+}
 init();

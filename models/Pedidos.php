@@ -104,6 +104,24 @@ class Pedidos{
         $sql="CALL sp_llenar_lista_categoria_menu('$idcategoria')";
         return ejecutarConsulta($sql);
     }
+    // datos para traer el diseñor del ticket de pedidos
+    public function obtener_ultimo_pedido($idusuario){
+        $sql="SELECT MAX(id) AS id FROM pedidos WHERE usuario_id='$idusuario'";;
+        return ejecutarConsultaSimpleFila($sql);
+    }
+    public function obtener_pedido_cabecera($idpedido){
+        $sql="CALL SP_OBTENER_PEDIDO_CABECERA('$idpedido')";
+        return ejecutarConsultaSimpleFila($sql);
+    }
+    public function obtener_detalle_pedido($idpedido){
+        $sql="SELECT menu.id AS id_menu, pedidos.id,detalles_pedido.cantidad ,menu.nombre,detalles_pedido.precio,
+		detalles_pedido.importe FROM pedidos INNER JOIN detalles_pedido
+		ON pedidos.id=detalles_pedido.pedido_id INNER JOIN mesas
+		ON pedidos.mesa_id=mesas.id INNER JOIN menu 
+		ON detalles_pedido.menu_id=menu.id
+		WHERE pedido_id='$idpedido'";
+        return ejecutarConsulta($sql);
+    }
    
 
 }

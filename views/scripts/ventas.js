@@ -68,7 +68,6 @@ function marcarImpuesto() {
    $("#tb_detalle tbody").empty();
   
   }else if(tipo_comprobante==3){
-    alert("hol");
      $("#stotal").hide();
   }else{
   $.post(
@@ -350,7 +349,8 @@ function reset_form_clientes() {
   });
 }
 // funcion para guardar en la base de datos
-$("#btn_guardar_venta").click(function () {
+$("#btn_guardar_venta").click(function (e) {
+  e.preventDefault();
   validar_ingreso();
  
 });
@@ -366,8 +366,9 @@ function guardar_venta() {
     processData: false,
     success: function (data) {
     $.notify(data, "success");
+    open_pdf_prueba(0);
     liberar_mesa();
-     location.reload();
+    // location.reload();
      desahabilitar_controles(true);
     
 //  for (var pair of formData.entries()) {
@@ -419,8 +420,13 @@ function validar_ingreso() {
 
 }
 function open_pdf_prueba(idventa) {
-  var url = "../controller/enviar_sunat.php?idventa=" + idventa+"&op=imprime_ticket";
+
+  $("#pdf_container").attr( "src","../controller/enviar_sunat.php?idventa=" + idventa+"&op=imprime_ticket");
+  $("#mdl_pdf").modal("show");
+ /*var url = "../controller/enviar_sunat.php?idventa=" + idventa+"&op=imprime_ticket";
   window.open(url, "_blank");
+  */
+  
 }
 
 init();

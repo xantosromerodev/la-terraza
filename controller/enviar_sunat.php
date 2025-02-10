@@ -23,12 +23,12 @@ $empresa=$obj_venta->obtener_empresa();
 if($idventa!=0){
 $venta=$obj_venta->obtener_venta($idventa);
 
-//$detalle=$obj_venta->obtener_detalle($idventa);
+$detalle=$obj_venta->obtener_detalle_pdf($idventa);
 }else{
     $venta_id=$obj_venta->obtener_id_venta();
     $idventa_1=$venta_id["id"];
     $venta=$obj_venta->obtener_venta($idventa_1);
-    //$detalle=$obj_venta->obtener_detalle($idventa_1);
+    $detalle=$obj_venta->obtener_detalle_pdf($idventa_1);
 }
 
 
@@ -46,7 +46,7 @@ switch($opc){
        
         break;
     case "imprime_ticket":
-       generar_pdf_ticket($empresa,$venta );
+       generar_pdf_ticket($empresa,$venta,$detalle );
      break;
      case 'anular':
         baja($idventa);
@@ -153,13 +153,13 @@ switch($opc){
        //echo $response;
        echo json_encode( $response,JSON_UNESCAPED_UNICODE);        
     }
- function generar_pdf_ticket( $empresa,$venta){
+ function generar_pdf_ticket( $empresa,$venta,$detalle){
 
 // Crear instancia de TCPDF
 $pdf = new TCPDF('P', 'mm', array(80, 250), true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('SICHASOFT');
-$pdf->SetTitle('Ticket de venta');
+$pdf->SetTitle($venta["razon_social"]."-".$venta["serie"]."-".$venta["numero"]);
 $pdf->SetMargins(5, 5, 5);
 $pdf->SetAutoPageBreak(true, 10);
 
@@ -185,7 +185,8 @@ $pdf->SetFont('helvetica', 'B', 12);
 $pdf->Cell(0, 5, $empresa["razon_social"], 0, 1, 'C');
 $pdf->SetFont('helvetica', '', 9);
 $pdf->Cell(0, 5, 'RUC: '.$empresa["ruc"], 0, 1, 'C');
-$pdf->Cell(0, 5, $empresa["domicilio_fiscal"], 0, 1, 'C');
+$pdf->MultiCell(0, 5, $empresa["domicilio_fiscal"], 0, 'C', false, 1, '', '', true);
+//$pdf->Cell(0, 5, $empresa["domicilio_fiscal"], 0, 1, 'C');
 $pdf->Cell(0, 5,'TEL/CEL. '. $empresa["telefono_movil"], 0, 1, 'C');
 $pdf->Ln(0);
 $pdf->Cell(0, 0, str_repeat('--', 48), 0, 1, 'C');
@@ -222,203 +223,104 @@ switch ($venta['cod_tipo_doc']) {
 } 
 $pdf->SetFont('helvetica', '', 9);
 $pdf->Cell(0, 5, $tipo_documento_cliente.": ".$venta["num_documento"], 0, 1, 'L');
+
 $pdf->Cell(0, 5, "RAZON SOCIAL: ".$venta["razon_social"], 0, 1, 'L');
-$pdf->Cell(0, 5, "DIRECCION: ".$venta["direccion"], 0, 1, 'L');
+//$pdf->Cell(0, 5, "DIRECCION: ".$venta["direccion"], 0, 1, 'L');
+$pdf->MultiCell(0, 6,"DIRECCION: ".$venta["direccion"], 0, 'L');
 $pdf->Cell(0, 5, "MONEDA: ".$venta["moneda"], 0, 1, 'L');
 $pdf->Cell(0, 5, "MODO PAGO: ".$venta["forma_pago"], 0, 1, 'L');
 // Detalle de la venta en tabla HTML
-$productos = [
-    ['nombre' => 'Producto A', 'cantidad' => 2, 'precio' => 5.00],
-    ['nombre' => 'Producto B', 'cantidad' => 1, 'precio' => 8.50],
-];
 
+$pdf->Cell(0, 0, str_repeat('--', 48), 0, 1, 'C');
+$pdf->Cell(0, 5,"DETALLE DE VENTA", 0, 1, 'C');
+
+$pdf->Cell(0, 0, str_repeat('--', 48), 0, 1, 'C');
 $total = 0;
-$html = '<table border="1" cellspacing="2" cellpadding="2" style="width:100%;">';
-$html .= '<tr style="font-weight:bold; text-align:center;">
-            <td>Producto</td>
-            <td>Cant</td>
-            <td>Precio</td>
-          </tr>';
+$pdf->SetFont('helvetica', '', 9);
+$pdf->Cell(10, 5, 'CANT', 0, 0, 'C');
+$pdf->Cell(30, 5, 'DESCRIPCION', 0, 0, 'L');
+$pdf->Cell(15, 5, 'PRECIO', 0, 0, 'R');
+$pdf->Cell(20, 5, 'IMPORTE', 0, 1, 'R');
+$pdf->Ln(1);
 
-foreach ($productos as $producto) {
-    $subtotal = $producto['cantidad'] * $producto['precio'];
+while ($item = $detalle->fetch_object()) {
+  $importe = $item->cantidad * $item->precio_venta;
+  $total += $importe;
+  $pdf->Cell(10, 4, $item->cantidad, 0, 0, 'C');
+  $yInicio = $pdf->GetY();
+  $pdf->MultiCell(30, 6, $item->nombre_producto, 0, 'L');
+  $yFin = $pdf->GetY();
+  $pdf->SetXY(45, $yInicio);
+  //$pdf->MultiCell(30, 4, $item->nombre_producto, 0, 'L', false, 1, '', '', true);
+  //$pdf->MultiCell(30, 5, $item->nombre_producto, 0, 0, 'L');
+  $pdf->Cell(15, 5, ' S/.'.number_format($item->precio_venta, 2) , 0, 0, 'C');
+  $pdf->SetXY(60, $yInicio);
+  $pdf->SetXY(60, $yInicio);
+  $pdf->Cell(20, 5, ' S/.'.number_format($importe, 2) , 0, 1, 'C');
+  $pdf->SetY($yFin);
+ //
+}
+$pdf->Ln(2);
+$pdf->Cell(70, 0, str_repeat('--', 40), 0, 1, 'C');
+$pdf->Ln(2);
+
+// Total
+$totalGrabada=$venta["total_venta"]/1.18;
+$igv=$venta["total_venta"]-$totalGrabada;
+if($venta["idtipo_doc"]==1 || $venta["idtipo_doc"]==3){
+    $pdf->Cell(50, 5, 'GRAVADA:', 0, 0, 'R');
+    $pdf->Cell(20, 5, ' S/.'.number_format($totalGrabada, 2)  , 0, 1, 'R');
+    $pdf->Cell(50, 5, 'IGV:', 0, 0, 'R');
+    $pdf->Cell(20, 5,' S/.'. number_format($igv, 2) , 0, 1, 'R');
+    $pdf->Cell(50, 5, 'TOTAL:', 0, 0, 'R');
+    $pdf->Cell(20, 5, ' S/.'. number_format($total, 2) , 0, 1, 'R');
+}else{
+  $pdf->Cell(50, 5, 'TOTAL:', 0, 0, 'R');
+    $pdf->Cell(20, 5, ' S/.'.number_format($total, 2) , 0, 1, 'R');
+}
+
+
+/*
+$html = '<table  cellspacing="2" cellpadding="2" style="width:100%;">';
+$html .= '<tr style="font-weight:bold; text-align:center;">
+            <td style="text-align:left;">Cant.</td>
+            <td>Descr.</td>
+            <td>Precio</td>
+            <td>Importe</td>
+          </tr>';
+     
+while ($item = $detalle->fetch_object()) {
+    $importe = $item->cantidad * $item->precio_venta;
     $html .= '<tr>
-                <td>' . $producto['nombre'] . '</td>
-                <td style="text-align:center;">' . $producto['cantidad'] . '</td>
-                <td style="text-align:right;">$' . number_format($subtotal, 2) . '</td>
+                <td style="text-align:left;">' . $item->cantidad . '</td>
+                <td style="text-align:left;">' .$item->nombre_producto. '</td>
+                <td style="text-align:center;">S/.' .$item->precio_venta. '</td>
+                <td style="text-align:center;">S/.' .$importe. '</td>
+                
               </tr>';
-    $total += $subtotal;
+   $total += $importe;
 }
 $html .= '</table>';
 //print_r($html);
 $pdf->writeHTML($html, true, false, false, false, '');
-
+*/
 // Total de la venta
-$pdf->Cell(0, 5, '--------------------------------------', 0, 1, 'C');
-$pdf->SetFont('helvetica', 'B', 10);
-$pdf->Cell(40, 5, 'TOTAL', 0);
-$pdf->Cell(35, 5, '$' . number_format($total, 2), 0, 0, 'R');
+//$pdf->Cell(0, 5, '--------------------------------------', 0, 1, 'C');
+
 
 // Código de barras
-$pdf->Ln(10);
-$pdf->write1DBarcode('1234567890', 'C128', '', '', 50, 10, 0.4, ['position' => 'C'], 'N');
+
 
 // Pie de página
 $pdf->Ln(5);
 $pdf->SetFont('helvetica', '', 8);
 $pdf->Cell(0, 5, 'Gracias por su compra', 0, 1, 'C');
 
-// Salida del PDF
-$pdf->Output('ticket.pdf', 'I');
+$nombre_pdf=$venta["razon_social"]."-".$venta["serie"]."-".$venta["numero"];
+$pdf->Output($nombre_pdf.".pdf","I");  
+//$pdf->Output("comprobantes/'".$nombre_pdf.".pdf","F"); 
 
-     //print_r($venta); 
-     /*
-$pdf = new fpdf('P', 'mm', array(80, 400));
-$pdf->AddPage();
-$pdf->SetMargins(5, 5, 5,5);
-$pdf->Image('../files/logos/'.$empresa['logo'], 10, 0, 65,65);
-$pdf->Ln(40);
-$pdf->SetFont('Arial', 'B', 9);
-$pdf->MultiCell(70, 5,  $empresa["nombre_comercial"], 0, 'C');
-$pdf->Ln(1);
-$pdf->SetFont('Arial', 'B', 9);
-$pdf->MultiCell(70, 5, "RUC: ".  $empresa["ruc"], 0, 'C');
-
-$pdf->Ln(1);
-$pdf->SetFont('Arial', 'B', 8);
-$pdf->MultiCell(70, 5, utf8_decode($empresa["domicilio_fiscal"]), 0, 'C');
- $pdf->MultiCell(70,5,"TEL/CEL: ".$empresa["telefono_fijo"]."-".$empresa["telefono_movil"],"0","C");
- $pdf->Ln(1);
- $pdf->Cell(74,1,"-----------------------------------------------------------------------------",0,0,'C');
-
-$pdf->Ln(1);
-switch ($venta['idtipo_doc']) {
-        case '01':
-            $tipo_documento = 'FACTURA';
-            break;  
-        case '02':
-            $tipo_documento='PROFORMA';
-            break;     
-        case '03':
-            $tipo_documento = 'BOLETA';
-            break;        
-    } 
-  //  $pdf->Cell(74,5,utf8_decode($tipo_documento." DE VENTA"),0,0,'C'); 
-     $pdf->Cell(74, 5, $tipo_documento." ELECTRONICA", 0, 0, 'C');
-    $pdf->Ln(4);
-    $pdf->Cell(74,5,utf8_decode($venta["serie"]."-".$venta["numero"]),0,0,'C');  
-     $pdf->Ln(4);
-    $pdf->Cell(74,5,utf8_decode("FECHA EMISION").": ".$venta["fecha_emision"],0,0,'L');
-     $pdf->Ln(4);
-    $pdf->Cell(74,5,"FECHA VENC.".": ".$venta["fecha_vencimiento"],0,0,'L');
-     $pdf->Ln(4);
-     $pdf->Cell(74,1,"-----------------------------------------------------------------------------",0,0,'C');
-// datos del cliente
- $pdf->Ln(2);
- $pdf->Cell(74,5,"DATOS DEL CLIENTE",0,0,'C');
- $pdf->Ln(2);
-  $pdf->Cell(74,5,"-----------------------------------------------------------------------------",0,0,'C');
- switch ($venta['cod_tipo_doc']) {
-        case '1':
-            $tipo_documento_cliente = 'DNI';
-            break;        
-        case '6':
-            $tipo_documento_cliente = 'RUC';
-            break;        
-    }    
-    $pdf->Cell(74, 5,utf8_decode($tipo_documento_cliente . ": ". $venta['num_documento']),0,1,'L');
-   //  $pdf->Ln(1);
-  $pdf->MultiCell(74,5,"RAZON SOCAL".": ".$venta["razon_social"],0,'L');
-// $pdf->Ln(1);
-     $pdf->MultiCell(74,5,"DIRECCION".": ".$venta["direccion"],0,'L');
-     $pdf->Cell(74,5,"MONEDA"." : ".strtoupper($venta["moneda"]),0,1,"L");
-     $pdf->Cell(74,5,"MODO DE PAGO"." : ".strtoupper($venta["forma_pago"]),0,1,"L");
-  $pdf->Ln(1);
-
-// detalles
-
-$pdf->Cell(70, 2, '-------------------------------------------------------------------------', 0, 1, 'L');
-$pdf->Cell(10, 4, 'CANT.', 0, 0, 'L');
-$pdf->Cell(30, 4, mb_convert_encoding('DESCRIPCION', 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
-$pdf->Cell(15, 4, 'PRECIO', 0, 0, 'C');
-$pdf->Cell(15, 4, 'IMPORTE', 0, 1, 'C');
-$pdf->Cell(70, 2, '-------------------------------------------------------------------------', 0, 1, 'L');
-// recorremos el array de  datos
-$data_=Array();
-while($item=$detalle->fetch_object()){
-  $pdf->Cell(10, 4, $item->cantidad, 0, 0, 'C');
-  $yInicio = $pdf->GetY();
-    $pdf->MultiCell(30, 4, mb_convert_encoding($item->nombre_producto, 'ISO-8859-1', 'UTF-8'), 0, 'L');
-    $yFin = $pdf->GetY();
-      $pdf->SetXY(45, $yInicio);
-    $pdf->Cell(15, 4,round($item->precio_venta*(1.18),2,PHP_ROUND_HALF_UP), 2, '.', ',', 0, 0, 'C');
-    $pdf->SetXY(60, $yInicio);
-
-    $pdf->SetXY(60, $yInicio);
-    $pdf->Cell(15, 4,($item->cantidad)*round($item->precio_venta*(1.18),2), 0, 1, 'C');
-    $pdf->SetY($yFin);
-    $nombre = $venta['serie'].'-'.$venta['numero'];
-    $data_[]=$item;
 }
-
- $fijo = 233 + 10;
-        $ancho = 8.4;
-        $numero_filas = count($data_);        
-        $total_y = $fijo + $ancho * $numero_filas; 
-// calculo de total grabada
-$totalGrabada=$venta["total_venta"]/1.18;
-$igv=$venta["total_venta"]-$totalGrabada;
-//----------
-$pdf->Ln(4);
-    $pdf->Cell(74,1,"-----------------------------------------------------------------------------",0,1,'C');
-    $pdf->SetFont('Arial', '', 9);
-    $pdf->Cell(30, 7, "", 0, 0, 'R');
-    $pdf->Cell(20, 7, "Gravada" , 0, 0, 'L');
-
-    $pdf->Cell(20, 7, "S/. " .number_format($totalGrabada,2,".",""), 0, 0, 'R');
-
-      $pdf->Ln(6);
-    
-    $pdf->Cell(30,7,"",0,0,'R');
-    $pdf->Cell(20,7,"IGV: 18% ",0,0,'L');
-    $pdf->Cell(20,7,"S/. ".number_format($igv,2,".",""),0,0,'R');
-    $pdf->Ln(7);
-
-    $pdf->Cell(30,7,"",0,0,'R');
-    $pdf->Cell(20,7,"Total:",0,0,'L');
-    $pdf->Cell(20,7,"S/. ".$venta["total_venta"],0,1,'R');
-
- $totalVenta = explode(".",  $venta['total_venta']);
-      // $venta['total_letras'] = $totalLetras.' con '.$totalVenta[1].'/100 '.$venta['moneda'];
-      $total =$venta['total_venta'];  
-      $letras='SON'.': '.strtoupper(NumeroALetras::convertir($total ,  $totalVenta[1].'/100 '.$venta['moneda'], mb_convert_encoding("céntimos",'ISO-8859-1', 'UTF-8')));
-        $pdf->MultiCell(50,6,$letras,"0","L");
-	
-          $nombre=$empresa['ruc']."-".$venta['codigo_documento']."-".$venta['serie']."-".$venta['numero'];
-	 
-	 $pdf->Ln(3);
-	 if($venta["estado"]=="Aceptado"){
-	 	$respuesta  = getFirma($nombre);
-	 	$pdf->Cell(200, 1, $respuesta, 0, 1, 'L');
-	 }
-	 
-	
-        $rutaqr=GetImgQr($venta,$empresa);
-        $tamano_x = 30;
-        $tamano_y = $variables_diversas_model->dimension_proporcion($rutaqr, $tamano_x);
-        //$pdf->Ln(150);
-        $pdf->Image($rutaqr, 25,$total_y - $tamano_y - 20,$tamano_x,$tamano_y);
-         $pdf->Ln(50);
-	$pdf->SetFont('Arial', '', 7);
-        $pdf->MultiCell(120,4, mb_convert_encoding("REPRESENTACIÓN IMPRESA DE LA ".$venta["nombre_tipo_doc"]." ELECTRÓNICA
-        PARA CONSULTAR EL DOCUMENTO VISITA",'ISO-8859-1', 'UTF-8'),"0","L");
-        $pdf->Ln(1);
-        $pdf->Cell(74, 5, $empresa["link_sistema"], "0","C");
-
-    $nombre_pdf=$venta["razon_social"]."-".$venta["serie"]."-".$venta["numero"];
-    $pdf->Output("I",$nombre_pdf.".pdf");
-*/
-    }
 
  function GetImgQr($venta, $empresa)  {
         $textoQR = '';
