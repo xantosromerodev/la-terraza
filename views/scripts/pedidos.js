@@ -117,8 +117,10 @@ $("#btn_imprimir_deta").on("click", function (e) {
   */
 }
 function imprimirTicket_c(ticketText) {
-  let rawBTURL = "intent://com.rawbt.printconsole#Intent;scheme=rawbt;package=com.rawbt.client;S.text=" + encodeURIComponent(ticketText) + ";end;";
-  window.location.href = rawBTURL;
+  var S = "#Intent;scheme=rawbt;";
+  var P =  "package=ru.a402d.rawbtprinter;end;";
+  var textEncoded = encodeURI(ticketText);
+   window.location.href="intent:"+textEncoded+S+P;
 }
 
 function imprimirMesa(codigo) {
@@ -291,32 +293,34 @@ function limpiarTabla() {
   
 }
 cont_detalle=0;
-detalle_detalle=0;
+detalle_detalle_1=0;
 
 function agregar_detalle(idmenu, menu, precio) {
   
   var cantidad = 1;
   importe = cantidad * precio;
-  var nueva_fila = `<tr class="filas" id="fila_detalle '${cont_detalle}'">
+  var nueva_fila = `<tr class="filas" id="fila_detalle ${cont_detalle}">
         <td><input class="form-control form-control-sm" type="text" name="cantidad[]" id="cantidad" value="${cantidad}"></td>
         <td><input class="form-control form-control-sm" type="hidden" name="idmenu[]" value="${idmenu}">${menu}</td>
         <td><input class="form-control form-control-sm"  type="text" name="precio_venta[]" id="precio_venta" value="${precio.toFixed(2)}"></td>
         <td><input class="form-control form-control-sm"  type="text" name="total[]" id="total[]" value="${importe.toFixed(2)}"></td>
-        <td><button type="button"  class="btn btn-danger btn-sm" onclick="eliminarDetalle(${cont_detalle})"> <i class="fa fa-times" aria-hidden="true"></i></button></td>
+        <td><button type="button" id="del"  class="btn btn-danger btn-sm"> <i class="fa fa-times" aria-hidden="true"></i></button></td>
         
         </tr>`;
   cont_detalle++;
-  detalle_detalle=detalle_detalle+1;
+  detalle_detalle_1=detalle_detalle_1+1;
   $("#tb_detalle").append(nueva_fila);
   $.notify("Pedido Agregado","success")
   calcular_totales();
 }
 
-function eliminarDetalle(indice) {
-	$("#fila_detalle"+indice).remove();
-	calcularTotales();
-	detalle_detalle=detalle_detalle-1;
-}
+$(document).ready(function() {
+  // Evento click para el botón de eliminar
+  $('#tb_detalle').on('click', '#del', function() {
+      $(this).closest('tr').remove();
+      calcular_totales();
+  });
+});
 
 $(document).on("keyup", "#cantidad", function () {
   calcular_totales();
@@ -550,8 +554,9 @@ function obtener_detalle_pedido(){
   )
 }
 function imprimirTicket(ticketText) {
-  let rawBTURL = "intent://com.rawbt.printconsole#Intent;scheme=rawbt;package=com.rawbt.client;S.text=" + encodeURIComponent(ticketText) + ";end;";
-  console.log("..imprimiendo...");
- window.location.href = rawBTURL;
+  var S = "#Intent;scheme=rawbt;";
+  var P =  "package=ru.a402d.rawbtprinter;end;";
+  var textEncoded = encodeURI(ticketText);
+   window.location.href="intent:"+textEncoded+S+P;
 }
 init();
