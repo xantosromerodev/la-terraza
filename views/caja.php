@@ -8,7 +8,7 @@ if (strlen(session_id()) < 1)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Terraza</title>
+    <title>Gestion de caja | La Terraza</title>
     <!-- Bootstrap -->
     <link href="../public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
