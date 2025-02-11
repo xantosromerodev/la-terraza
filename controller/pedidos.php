@@ -16,6 +16,8 @@ $total_pagar=isset($_POST["lbl_total"])?limpiarCadena($_POST["lbl_total"]):"";
 
 
 $pedido = new Pedidos();
+$idP=$pedido->obtener_ultimo_pedido($idusuario);
+$idPedido=$idP['id'];
 switch ($_GET["op"]) {
     case 'mostrar_categoria_menu':
         $respuesta = $pedido->obtener_categoria_menu();
@@ -137,6 +139,23 @@ switch ($_GET["op"]) {
         }
         echo json_encode($data);
         break;
+        case 'obtener_pedido_cabecera':
+          $rpta=$pedido->obtener_pedido_cabecera($idPedido);
+          echo json_encode($rpta);
+          break;
+        case 'obtener_pedido_detalle':
+          $rpta=$pedido->obtener_detalle_pedido($idPedido);
+          $data = Array();
+          while($reg = $rpta->fetch_object()){
+            $data[] = array(
+              "0" => $reg->cantidad,
+              "1" => $reg->nombre,
+    
+            );
+          }
+          echo json_encode($data);
+          break;
+        
 }
 
 ?>

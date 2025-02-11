@@ -1,39 +1,126 @@
 var tabla;
+var idMesa=0;
+var nom_mesa="";
+var total_a_pagar=0;
+var mesa="";
 function init() {
   mostrar_mesas();
   listar_subcategorias(2);
+  obtener_cabecra_pedido();
+  //obtener_detalle_pedido()
+$("#ticket").hide();
   //obtener_categoria_menu();
 //refrescar_pagina();
  // listar_mesas();
 }
+$("#btn_imprimir_deta").on("click", function (e) {
+  e.preventDefault();
+  imprimirTicket_cuenta(idMesa);
+  //imprimirMesa("")
+ 
 
- function imprimirTicket() {
+});
+ function imprimirTicket_cuenta(id_mesa) {
+  $.post("../controller/pedidos.php?op=listar_pedido",{id_mesa: id_mesa},
+    function(data, status){
+      let $pre = $("<pre>").appendTo("body");
+      jsonData=JSON.parse(data);
+      console.log(jsonData)
+      let ticketText = nom_mesa +"\n";
+                
+                ticketText += "----------------------\n";
+                ticketText += "CANT  PRODUCTO            PRECIO           IMPORTE \n";
+          let total = 0;
+          jsonData.forEach(element => {
+            importe=element[0]*element[2];
+          let line=` ${element[0]}    ${element[1]}      ${element[2]}      ${importe} \n`;
+          ticketText += line;
+          total += element[0]*element[2]; ;
+        });
+        ticketText += "----------------------\n";
+                ticketText += "Total: $" + total.toFixed(2) + "\n";
+                ticketText += "----------------------\n";
+                $pre.text(ticketText);
+                console.log(ticketText);
+                imprimirTicket_c(ticketText)
+    }
+  )
+/*
+ let ticket="";
    $.ajax({
      url: "../controller/pedidos.php?op=listar_pedido",
      type: "POST",
      data: { id_mesa: id_mesa },
      success: function (datos) {
+      dataJson = JSON.parse(datos);
+       ticket+=
+      `<h3 style="text-align:center; margin-bottom:0px">${nom_mesa}</h3> 
+      <table style="width:100%; font-size:12px;padding:0px;margin:0px;">
+      <thead>
+      <th  style="width:5%">Cant</th>
+       <th align="left" >Descripción</th>
+       <th style="width:5%">Precio</th>
+        <th style="width:5%">Importe</th>
+      </thead>
+      </table>  `;
+       dataJson.forEach(element => {
+        ticket+= 
+        `<table  style="width:100%; font-size:12px;padding:1px;margin:0px;">
+          <tr style="padding:2px;"> 
+          <td  align="center" style="width:5%">  ${element[0]}</td>
+           <td align="left">${element[1]}</td>
+           <td  style="width:7%">${element[2]}</td>
+          <td  style="width:7%">${element[3]}</td>
+          </tr>
+         
+        </table>`;
       
-       for (var i = 0; i < dataJson.length; i++) {
-         //console.log(dataJson[i][4])
-      
-       }
-     },
-   });
-  const contenidoTicket = `
-    <pre>
-     ********* TICKET *********
-    Producto: Pan
-    Precio: $20.00
-    Fecha: sicha
-    </pre>
-   `;
+       });
+       ticket+= `TOTAL A PAGAR S/.${total_a_pagar}`
+       let preTag = document.getElementById("ticket");
+       preTag.textContent = ticket;
 
-   // Abrir la ventana de impresión
-   const ventana = window.open("", "", "width=600,height=600");
-   ventana.document.write(contenidoTicket);
-   ventana.document.close();
-   ventana.print();
+       // Ajustar tamaño del ticket en pantalla
+       preTag.style.fontFamily = "Consolas, monospace";
+       preTag.style.fontSize = "14px";
+       preTag.style.padding = "0px";
+       preTag.style.border = "1px solid black";
+       preTag.style.backgroundColor = "#f8f8f8";
+       preTag.style.width = "280px"; // Ajustar ancho del ticket
+       preTag.style.whiteSpace = "pre-wrap";
+
+       let printWindow = window.open('', '', 'width=280,height=600');
+
+       // Definir tamaño de página al imprimir
+       let customStyle = `
+           <style>
+               @page { 
+                   size: 80mm 200mm; /* Ancho de ticket de 80mm y altura dinámica */
+           /*        margin: 0;
+               }
+               pre {
+                   font-size: 14px;
+                   px;
+                   width: 280px;
+                   font-family: Consolas, monospace;
+                   padding: 5px;
+               }
+           </style>
+       `;
+            printWindow.document.write(customStyle + '<pre>' + ticket + '</pre>');
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+      
+      }
+   });
+  */
+}
+function imprimirTicket_c(ticketText) {
+  var S = "#Intent;scheme=rawbt;";
+  var P =  "package=ru.a402d.rawbtprinter;end;";
+  var textEncoded = encodeURI(ticketText);
+   window.location.href="intent:"+textEncoded+S+P;
 }
 
 function imprimirMesa(codigo) {
@@ -127,8 +214,8 @@ function imprimirMesa(codigo) {
   //   textEncoded4 +
   //   textEncoded5 +
   //   "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
-
-  window.location.href = "intent://" + textEncoded1 +  "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
+ console.log(commandsToPrint1);
+ // window.location.href = "intent://" + textEncoded1 +  "#Intent;scheme=quickprinter;package=pe.diegoveloper.printerserverapp;end;";
   // }
   // });
 }
@@ -206,32 +293,34 @@ function limpiarTabla() {
   
 }
 cont_detalle=0;
-detalle_detalle=0;
+detalle_detalle_1=0;
 
 function agregar_detalle(idmenu, menu, precio) {
   
   var cantidad = 1;
   importe = cantidad * precio;
-  var nueva_fila = `<tr class="filas" id="fila_detalle '${cont_detalle}'">
+  var nueva_fila = `<tr class="filas" id="fila_detalle ${cont_detalle}">
         <td><input class="form-control form-control-sm" type="text" name="cantidad[]" id="cantidad" value="${cantidad}"></td>
         <td><input class="form-control form-control-sm" type="hidden" name="idmenu[]" value="${idmenu}">${menu}</td>
         <td><input class="form-control form-control-sm"  type="text" name="precio_venta[]" id="precio_venta" value="${precio.toFixed(2)}"></td>
         <td><input class="form-control form-control-sm"  type="text" name="total[]" id="total[]" value="${importe.toFixed(2)}"></td>
-        <td><button type="button"  class="btn btn-danger btn-sm" onclick="eliminarDetalle(${cont_detalle})"> <i class="fa fa-times" aria-hidden="true"></i></button></td>
+        <td><button type="button" id="del"  class="btn btn-danger btn-sm"> <i class="fa fa-times" aria-hidden="true"></i></button></td>
         
         </tr>`;
   cont_detalle++;
-  detalle_detalle=detalle_detalle+1;
+  detalle_detalle_1=detalle_detalle_1+1;
   $("#tb_detalle").append(nueva_fila);
   $.notify("Pedido Agregado","success")
   calcular_totales();
 }
 
-function eliminarDetalle(indice) {
-	$("#fila_detalle"+indice).remove();
-	calcularTotales();
-	detalle_detalle=detalle_detalle-1;
-}
+$(document).ready(function() {
+  // Evento click para el botón de eliminar
+  $('#tb_detalle').on('click', '#del', function() {
+      $(this).closest('tr').remove();
+      calcular_totales();
+  });
+});
 
 $(document).on("keyup", "#cantidad", function () {
   calcular_totales();
@@ -275,7 +364,7 @@ $("#btn_comandar").on("click",function(e){
 
   // imprimirMesa('12');
   insertar_pedido();
-  imprimirTicket();
+  //imprimirTicket();
 });
 
 function insertar_pedido(){
@@ -288,6 +377,7 @@ function insertar_pedido(){
     processData: false,
     success: function (datos) {
       $.notify(datos, "success");
+      obtener_detalle_pedido();
       reset_form();
       cambiar_estado();
       limpiar();
@@ -335,6 +425,7 @@ function pedido_cabecera(id_mesa){
 	function(data, status){
    dataJson=JSON.parse(data);
    console.log(dataJson);
+   total_a_pagar=dataJson.total;
 	$(".subtotal").html("S/. " + dataJson.total);
   $("#id_fecha").html(dataJson.fecha);
 		/*dataJson=JSON.parse(data);
@@ -347,8 +438,11 @@ function pedido_cabecera(id_mesa){
 }
 cont_2=0;
 function mostrar_modalDetalle(id_mesa,mesa){
+  
+  idMesa=id_mesa;
 	$("#tb_detalle_pedido tbody").empty();
 	pedido_cabecera(id_mesa)
+  nom_mesa=mesa;
   $("#mesa_select").html(mesa);
   $("#mesa_name").html(mesa)
  $.ajax({
@@ -371,6 +465,7 @@ function mostrar_modalDetalle(id_mesa,mesa){
         </tr>`
 
          cont_2++;
+         
  // detalles++;
   $("#tb_detalle_pedido").append(nueva_fila);
     }
@@ -422,5 +517,46 @@ function listar_subcategorias(id_categoria) {
     },
   });
 }
+// funciones para craer ticket de pedidos
+function obtener_cabecra_pedido(){
+  $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",
+    function(data,status){
+      dataJson=JSON.parse(data);
+      mesa=dataJson.numero;
+      console.log(dataJson);
+    }
+  )
+}
+$("#btn_precuenta").on("click",function(e){
+  alert("hola")
+  e.preventDefault();
+  obtener_detalle_pedido();
+});
+function obtener_detalle_pedido(){
+  $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
+    function(data,status){
+      dataJson=JSON.parse(data);
+      console.log(dataJson);
+      let $pre=$("<pre>").appendTo($("body"));
 
+      let ticketText ="     "+ mesa + "\n";
+               
+                ticketText += "----------------------\n";
+                ticketText += "CANT       DESCRIPCION   \n";
+             for (var i = 0; i < dataJson.length; i++) {
+               let line=` ${dataJson[i][0]}       ${dataJson[i][1]} \n`;
+               ticketText += line;
+             }
+             $pre.text(ticketText);
+                console.log(ticketText);
+              imprimirTicket(ticketText);
+    }
+  )
+}
+function imprimirTicket(ticketText) {
+  var S = "#Intent;scheme=rawbt;";
+  var P =  "package=ru.a402d.rawbtprinter;end;";
+  var textEncoded = encodeURI(ticketText);
+   window.location.href="intent:"+textEncoded+S+P;
+}
 init();

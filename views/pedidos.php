@@ -113,7 +113,8 @@ if (strlen(session_id()) < 1)
                     <button class="btn btn-info btn-sm" id="btn_comandar"><i class="fa fa-check-circle"
                             aria-hidden="true"></i>
                         Comandar</button>
-                    <button class="btn btn-warning btn-sm"><i class="fa fa-book" aria-hidden="true"></i>
+                    <button type="button" class="btn btn-warning btn-sm"  id="btn_precuenta"
+                    ><i class="fa fa-book" aria-hidden="true"></i>
                         Pre Cuenta</button>
                 </div>
                 <div class="card-body">
@@ -152,6 +153,7 @@ if (strlen(session_id()) < 1)
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
                                                         class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
+                                                        <pre id="ticket"></pre>
                                             </div>
                                         </div>
 
@@ -347,7 +349,7 @@ if (strlen(session_id()) < 1)
 
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <button type="button" class="btn btn-warning text-white">Imprimir</button>
+                                    <button type="button" class="btn btn-warning text-white" id="btn_imprimir_deta">Imprimir</button>
                                 </div>
                             </div>
                         </div>

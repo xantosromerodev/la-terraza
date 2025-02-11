@@ -57,6 +57,24 @@ if (strlen(session_id()) < 1)
         font-weight: 400;
         line-height: 1.471
     }
+    .modal-dialog {
+            max-width: 90%;
+            height: 90%;
+        }
+        .modal-content {
+            height: 100%;
+        }
+        .modal-body {
+            height: calc(100% - 56px); /* Ajuste por el header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+    .pdf-container {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -100,26 +118,20 @@ if (strlen(session_id()) < 1)
     </nav>
 
     <!--lista de mesas--->
-    <div class="container-fluit mt-2 ml-1 mr-1" id="ventana_generrar_comprobante">
-        <input type="hidden" name="id_pedido" id="id_pedido">
-        <input type="hidden" name="id_mesa" id="id_mesa">
-        <div class="card">
-            <div class="card-header ">
-                <div class="d-flex justify-content-center ">
-                    <button type="button" class="btn  btn-sm m-1" id="btn_guardar_venta"
-                        style="background-color:#2A3F54; color:white"><i class="fa fa-check-circle"
-                            aria-hidden="true"></i> Generar</button>
-                    <button type="button" class="btn btn-info btn-sm m-1" onclick="mostrar_lista(true)"
-                        id="btn_ver_lista"><i class="fa fa-check-circle" aria-hidden="true"></i> ver lsita de
-                        comprobantes</button>
-
-                </div>
-
-
+    <div class="container-fluid mt-3">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active " id="nav-home-tab" data-toggle="tab" data-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Emitir Comprobante</button>
+                <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button"
+                    role="tab" aria-controls="nav-profile" aria-selected="false">Lista de Comprobantes</button>
+                <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"
+                    role="tab" aria-controls="nav-contact" aria-selected="false">Cuadre de Caja</button>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <!--primera columna para mesas-->
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="row mt-lg-3">
                     <div class="col-lg-4 col-md-6 col-sm-12" id="div_mesas">
                         <div class="card">
                             <div class="card-header " style="background-color:#2A3F54; color: white;">
@@ -149,18 +161,18 @@ if (strlen(session_id()) < 1)
 
                                 </div>
                                 <?php } ?>
-
-
-
                             </div>
                         </div>
                     </div>
-                    <!--segunda columna para detalle-->
                     <div class="col-lg-8 col-md-6 col-sm-12">
 
                         <div class="card">
                             <div class="card-header " style="background-color:#2A3F54; color: white;">
-                                COMPROBANTE DE PAGO
+                                <div class="d-flex justify-content-lg-end">
+                                    <button type="button" class="btn  btn-sm m-1 btn-info" id="btn_guardar_venta"><i
+                                            class="fa fa-check-circle" aria-hidden="true"></i> Generar
+                                        Comprobante</button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <form name="form_venta" id="form_venta" method="POST">
@@ -221,8 +233,6 @@ if (strlen(session_id()) < 1)
                                         </div>
                                     </div>
 
-
-
                                     <table class="table table-sm   " id="tb_detalle">
                                         <thead style="background-color:#2A3F54; color:white">
                                             <th style="width:5%;">Cant.</th>
@@ -252,23 +262,34 @@ if (strlen(session_id()) < 1)
                                                     id="total_a_pagar"></td>
                                         </tr>
                                     </table>
-
-
-
-
-
-
                                 </form>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
-
-
-
             </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="row mt-3">
+                    <div class="col-lg-12">
+                        <table class="table table-sm  table-hover " id="tb_comprobantes">
+                            <thead style="background-color:#2A3F54; color:white">
+                                <th>N°</th>
+                                <th>FECHA</th>
+                                <th>TIPO DOCUMENTO</th>
+                                <th>NUMERO</th>
+                                <th>CLIENTE</th>
+                                <th>F. PAGO</th>
+                                <th>TOTAL</th>
+                                <th>ESTADO SUNAT</th>
+                                <th>OPCIONES</th>
+                            </thead>
+                        </table>
+                    </div>
+                </div>                         
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                hola3...</div>
         </div>
     </div>
 
@@ -345,9 +366,6 @@ if (strlen(session_id()) < 1)
                                 <label for="" class="form-label fw-bold">RUC/DNI(*):</label>
                                 <input type="text" class="form-control form-control-sm rounded-0 text-uppercase"
                                     name="nro_doc" id="nro_doc" required>
-
-
-
                             </div>
                         </div>
 
@@ -393,7 +411,31 @@ if (strlen(session_id()) < 1)
         </div>
     </div>
 
-    <!-- modal de detalle de pedidos -->
+    <!-- modal de vista previa en pdf      -->
+
+    <!-- Modal -->
+   <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="mdl_pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">TICKET DE VENTA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <iframe class="pdf-container" src="" id="pdf_container"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- FIN PRUEBA CARD CON ESTILO -->
