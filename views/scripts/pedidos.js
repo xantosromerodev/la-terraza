@@ -294,7 +294,7 @@ function limpiarTabla() {
 }
 cont_detalle=0;
 detalle_detalle_1=0;
-
+cont_detalle_dlivery=0;
 function agregar_detalle(idmenu, menu, precio) {
   
   var cantidad = 1;
@@ -314,6 +314,7 @@ function agregar_detalle(idmenu, menu, precio) {
   calcular_totales();
 }
 
+
 $(document).ready(function() {
   // Evento click para el botón de eliminar
   $('#tb_detalle').on('click', '#del', function() {
@@ -322,12 +323,17 @@ $(document).ready(function() {
   });
 });
 
+
 $(document).on("keyup", "#cantidad", function () {
   calcular_totales();
 });
 $(document).on("keyup", "#precio_venta", function () {
   calcular_totales();
 });
+
+// para delivery calculos
+
+// fin-----
 function calcular_totales() {
   var cant = document.getElementsByName("cantidad[]");
   var prec = document.getElementsByName("precio_venta[]");
@@ -344,6 +350,7 @@ function calcular_totales() {
   }
   calcularTotales();
 }
+
 function calcularTotales() {
   var tot = document.getElementsByName("total[]");
   var total = 0.0;
@@ -354,9 +361,6 @@ function calcularTotales() {
  
   $("#lbl_total").val(total.toFixed(2));
 }
-
-
-
 
 
 $("#btn_comandar").on("click",function(e){
@@ -517,6 +521,8 @@ function listar_subcategorias(id_categoria) {
     },
   });
 }
+// funcion para autocompletar menus
+
 // funciones para craer ticket de pedidos
 function obtener_cabecra_pedido(){
   $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",
