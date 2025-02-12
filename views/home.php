@@ -2,9 +2,17 @@
  require 'header.php';
 ?>
 
+<!-- libreria chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 .ft-icon {
     font-size: 25px;
+}
+
+.ft-dark-icon {
+    font-size: 20px;
+    color: #333;
 }
 </style>
 
@@ -55,15 +63,69 @@
     </div>
     <div class="row">
         <!-- grafico -->
-        <div class="col-md-6">
-
+        <div class="col-md-6 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart ft-dark-icon"> </i>
+                </div>
+                <div class="card-body">
+                    <canvas id="pedidosChart"></canvas>
+                </div>
+            </div>
         </div>
         <!-- notificaciones -->
-        <div class="col-md-6">
-
+        <div class="col-md-6 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bell ft-dark-icon"></i>
+                    <!-- <p class="card-title">Notificaciones</p> -->
+                </div>
+                <div class="card-body">
+                    Contenido
+                </div>
+            </div>
         </div>
     </div>
 
+    <script>
+    // Datos de pedidos
+    var pedidosData = {
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+        datasets: [{
+            label: 'Total de pedidos ($)',
+            data: [150, 200, 180, 220, 250, 300, 190], // Ventas de cada día
+            backgroundColor: 'rgba(0, 123, 255, 0.8)', // Color de las barras
+            borderColor: 'rgba(0, 123, 255, 1)', // Color del borde
+            borderWidth: 1
+        }]
+    };
+
+    // Opciones del gráfico
+    var pedidosOptions = {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 50
+                }
+            }
+        }
+    };
+
+    // Crear gráfico
+    var ctx = document.getElementById('pedidosChart').getContext('2d');
+    var pedidosChart = new Chart(ctx, {
+        type: 'bar', // Tipo de gráfico (barras)
+        data: pedidosData,
+        options: pedidosOptions
+    });
+    </script>
+
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 
 </main>
 <?php
