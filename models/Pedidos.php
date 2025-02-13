@@ -122,7 +122,10 @@ class Pedidos{
 		WHERE pedido_id='$idpedido'";
         return ejecutarConsulta($sql);
     }
-   
+   public function obtener_menu_autocompletado($nombre){
+        $sql="CALL SP_OBTENER_MENU_AUTOCOMPLETADO('$nombre')";
+        return ejecutarConsulta($sql);
+    }
 
 }
 ?>

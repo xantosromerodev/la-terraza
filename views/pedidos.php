@@ -26,6 +26,8 @@ if (strlen(session_id()) < 1)
     <link href="../public/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Bootstrap Select-->
     <link href="../public/bootstrap/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!--autocompletado menu-->
+    <link rel="stylesheet" href="../public/autocomplete/jquery-ui.min.css">
     <!-- Datatables -->
 
     <link href="../public/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -61,7 +63,8 @@ if (strlen(session_id()) < 1)
         font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
         font-size: 13px;
         font-weight: 400;
-        line-height: 1.471
+        line-height: 1.471;
+        background-color: #f2f5f7;
     }
     </style>
 </head>
@@ -104,25 +107,31 @@ if (strlen(session_id()) < 1)
 
         </div>
     </nav>
-    <div class="container-fluit mt-2 ml-1 mr-1">
-        <form name="form_detalle" id="form_detalle" method="post">
-            <input type="hidden" name="id_pedido" id="id_pedido">
-            <input type="hidden" name="id_mesa" id="id_mesa">
-            <div class="card">
-                <div class="card-header ">
-                    <button class="btn btn-info btn-sm" id="btn_comandar"><i class="fa fa-check-circle"
-                            aria-hidden="true"></i>
-                        Comandar</button>
-                    <button type="button" class="btn btn-warning btn-sm"  id="btn_precuenta"
-                    ><i class="fa fa-book" aria-hidden="true"></i>
-                        Pre Cuenta</button>
-                </div>
-                <div class="card-body">
-                    <div class="row">
+
+    <!-- contendor de pedidos -->
+    <div class="container-fluid mt-3 me-lg-3 me-md-3 me-sm-3 me-xs-3">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pedidos por Mesa</button>
+                <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button"
+                    role="tab" aria-controls="nav-profile" aria-selected="false">Pedidos por Delivery</button>
+                <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"
+                    role="tab" aria-controls="nav-contact" aria-selected="false">Lista de Pedidos</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <!---TAB DE PEDIDOS POR MESA-->
+                <form name="form_detalle" id="form_detalle" method="post">
+                    <input type="hidden" name="id_pedido" id="id_pedido">
+                    <input type="hidden" name="id_mesa" id="id_mesa">
+
+                    <div class="row mt-lg-2">
                         <!--primera columna para mesas-->
                         <div class="col-lg-6 col-md-6 col-sm-12" id="div_mesas">
                             <div class="card">
-                                <div class="card-header " style="background-color:#fb4e36; color: white;">
+                                <div class="card-header " style="background-color:#2A3F54; color:white">
                                     Mesa Seleccionada: <span class="badge badge-danger" id="mesa_select">Sin
                                         Seleccionar</span>
                                 </div>
@@ -153,7 +162,7 @@ if (strlen(session_id()) < 1)
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
                                                         class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
-                                                        <pre id="ticket"></pre>
+                                                <pre id="ticket"></pre>
                                             </div>
                                         </div>
 
@@ -188,9 +197,14 @@ if (strlen(session_id()) < 1)
                         <div class="col-lg-6 col-md-6 col-sm-12">
 
                             <div class="card">
-                                <div class="card-header " style="background-color:#fb4e36; color: white;">
-                                    Productos
+                                <div class="card-header " style="background-color:#2A3F54; color: white;">
+                                    <div class="text-right">
+                                        <button class="btn btn-info btn-sm" id="btn_comandar"><i
+                                                class="fa fa-paper-plane" aria-hidden="true"></i>
+                                            enviar Pedido</button>
+                                    </div>
                                 </div>
+
                                 <div class="card-body">
                                     <table class="table table-sm   " id="tb_detalle">
                                         <thead style="background-color:#2A3F54; color:white">
@@ -218,8 +232,79 @@ if (strlen(session_id()) < 1)
                             </div>
 
                         </div>
-        </form>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <!---TAB DE PEDIDOS POR DELIVERYY-->
+                <div class="container mt-3">
+                    <form action="" method="POST" name="frm_delivery">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:#2A3F54; color: white;">
+                                            <h5>Buscar Productos</h5>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for=""> Ingrese Nombre del Menu</label>
+                                                <input type="text" class="form-control form-control-sm" id="producto"
+                                                    name="producto">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:#2A3F54; color: white;">
+                                            <div class="text-right">
+                                                <button class="btn btn-info btn-sm" id="btn_comandar"><i
+                                                        class="fa fa-paper-plane" aria-hidden="true"></i>
+                                                    enviar Pedido</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <table class="table table-sm   " id="tb_detalle_delivery">
+                                                <thead style="background-color:#2A3F54; color:white">
+                                                    <th style="width:5%;">Cant.</th>
+                                                    <th style="width:30%;">Menu</th>
+                                                    <th style="width:5%;">Precio</th>
+                                                    <th style="width:5%;">Importe</th>
+                                                    <th style="width:3%;"></th>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-sm  " id="">
+                                                <tr>
+                                                    <td style="width:5%;"></td>
+                                                    <td style="width:30%;"></td>
+                                                    <td style="width:5%;"><label class="h5" for="total">Total:</label>
+                                                    </td>
+                                                    <td style="width:10%;"><input class="form-control form-control-sm"
+                                                            type="text" name="lbl_total_del" id="lbl_total_del" readonly>
+                                                    </td>
+                                                    <td style="width:3%;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+        </div>
     </div>
+
+
 
 
 
@@ -349,7 +434,8 @@ if (strlen(session_id()) < 1)
 
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <button type="button" class="btn btn-warning text-white" id="btn_imprimir_deta">Imprimir</button>
+                                    <button type="button" class="btn btn-warning text-white"
+                                        id="btn_imprimir_deta">Imprimir</button>
                                 </div>
                             </div>
                         </div>
@@ -432,19 +518,12 @@ if (strlen(session_id()) < 1)
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom Theme Scripts -->
+    <script src="../public/autocomplete/jquery-ui.min.js"></script>
     <script src="../public/build/js/custom.min.js"></script>
     <script src="scripts/pedidos.js"></script>
+    <script src="scripts/delivery.js"></script>
     <script src="scripts/webusb-receipt-printer.umd.js"></script>
-    <script>
-    const receiptPrinter = new WebUSBReceiptPrinter();
 
-    function conectar() {
-        console.log("sss");
-        receiptPrinter.connect();
-        console.log(receiptPrinter.connect());
-
-    }
-    </script>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ $id_pedido=isset($_POST["id_pedido"])?limpiarCadena($_POST["id_pedido"]):"";
 $idusuario=isset($_SESSION["id"])?limpiarCadena($_SESSION["id"]):"";
 $idmesa=isset($_POST["id_mesa"])?limpiarCadena($_POST["id_mesa"]):"";
 $total_pagar=isset($_POST["lbl_total"])?limpiarCadena($_POST["lbl_total"]):"";
-
+$total_pagar_del=isset($_POST["lbl_total_del"])?limpiarCadena($_POST["lbl_total_del"]):"";
 
 // datos del detalle pedido
 
@@ -155,7 +155,15 @@ switch ($_GET["op"]) {
           }
           echo json_encode($data);
           break;
-        
+          case 'auto_complete_menu':
+            $filtro=filter_input(INPUT_GET,trim('term',FILTER_SANITIZE_STRING));
+          $rpta=$pedido->obtener_menu_autocompletado($filtro);
+          $data=array();
+        while($reg=$rpta->fetch_object()){
+          $data[]=$reg;
+        }
+        echo json_encode($data,JSON_UNESCAPED_UNICODE);
+        break;
 }
 
 ?>
