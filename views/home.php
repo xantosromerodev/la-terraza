@@ -67,6 +67,7 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-bar-chart ft-dark-icon"> </i>
+                    <span class="h6 text-body font-weight-bold ml-2">Seguimiento de pedidos</span>
                 </div>
                 <div class="card-body">
                     <canvas id="pedidosChart"></canvas>
@@ -76,13 +77,35 @@
         <!-- notificaciones -->
         <div class="col-md-6 mt-4">
             <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-bell ft-dark-icon"></i>
-                    <!-- <p class="card-title">Notificaciones</p> -->
+                <div class="card-header d-flex">
+                    <i class="fa fa-bell ft-dark-icon"></i> <span class="h6 text-body font-weight-bold ml-2">Notificaciones</span>
                 </div>
-                <div class="card-body">
-                    Contenido
-                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Pedido entregado
+                        <span class="text-body">Hace 1 minuto</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Pedido entregado
+                        <span class="text-body">Hace 2 minutos</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Delivery entregado
+                        <span class="text-body">Hace 5 minutos</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Delivery entregado
+                        <span class="text-body">Hace 7 minutos</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Pedido entregado
+                        <span class="text-body">Hace 10 minutos</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-body">
+                        <i class="fa fa-inbox"></i> Pedido entregado
+                        <span class="text-body">Hace 15 minutos</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -92,7 +115,7 @@
     var pedidosData = {
         labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
         datasets: [{
-            label: 'Total de pedidos ($)',
+            label: 'Total ($)',
             data: [150, 200, 180, 220, 250, 300, 190], // Ventas de cada día
             backgroundColor: 'rgba(0, 123, 255, 0.8)', // Color de las barras
             borderColor: 'rgba(0, 123, 255, 1)', // Color del borde
