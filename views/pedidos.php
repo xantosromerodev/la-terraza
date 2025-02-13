@@ -523,16 +523,7 @@ if (strlen(session_id()) < 1)
     <script src="scripts/pedidos.js"></script>
     <script src="scripts/delivery.js"></script>
     <script src="scripts/webusb-receipt-printer.umd.js"></script>
-    <script>
-    const receiptPrinter = new WebUSBReceiptPrinter();
 
-    function conectar() {
-        console.log("sss");
-        receiptPrinter.connect();
-        console.log(receiptPrinter.connect());
-
-    }
-    </script>
 </body>
 
 </html>
