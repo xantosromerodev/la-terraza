@@ -99,6 +99,11 @@ class Pedidos{
     //	echo $sql;
     	return ejecutarConsulta($sql);
     }
+    public function detalle_pedido_categoria($idusuario, $idmesa, $idcategoria){
+        $sql="CALL SP_DETALLE_PEDIDO_CATEGORIA('$idusuario','$idmesa','$idcategoria')";
+        //echo $sql;
+        return ejecutarConsulta($sql);
+    }
     // function para obtener las subcategorias para el menu
     public function obtener_subcategorias($idcategoria){
         $sql="CALL sp_llenar_lista_categoria_menu('$idcategoria')";
