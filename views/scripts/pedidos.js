@@ -590,7 +590,7 @@ function generar_ticket_pedido( idcate){
              }
              //$pre.text(ticketText);
                 console.log(ticketText);
-                git _pedido(ticketText);
+                imprimirTicket_pedido(ticketText);
                 setTimeout(() => {
                   window.location.reload();
                 }, 5000);
