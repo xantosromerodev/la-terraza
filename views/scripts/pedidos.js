@@ -459,6 +459,7 @@ $("#btn_print_bebidas").on("click", function (e) {
 });
 function close_print_pedido(){
   $("#mdl_print").modal("hide");
+  location.reload();
 }
 
 function obtener_idpedido(mesa_id, mesa) {
