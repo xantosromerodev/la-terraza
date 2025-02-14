@@ -16,31 +16,39 @@ $("#ticket").hide();
 $("#btn_imprimir_deta").on("click", function (e) {
   e.preventDefault();
   imprimirTicket_cuenta(idMesa);
+  imprimirTicket_cuenta_categoria(idMesa,1)
   //imprimirMesa("")
  
 
 });
  function imprimirTicket_cuenta(id_mesa) {
+  console.log("imprimirTicket_cuenta " +id_mesa);
   $.post("../controller/pedidos.php?op=listar_pedido",{id_mesa: id_mesa},
     function(data, status){
       let $pre = $("<pre>").appendTo("body");
       jsonData=JSON.parse(data);
       console.log(jsonData)
-      let ticketText = nom_mesa +"\n";
-                
-                ticketText += "----------------------\n";
-                ticketText += "CANT  PRODUCTO            PRECIO           IMPORTE \n";
+
+          let ticketText= "";
+          ticketText+="--------------------------------------------------\n"
+                 ticketText+= "          "+ nom_mesa +"              \n"
+                ticketText += "-----------------------------------------------\n";
+                ticketText += "CANT.  DESCRIPCION                   PRECIO  IMPORTE\n";
           let total = 0;
           jsonData.forEach(element => {
+            let descripcionFormateada =element[1];
+            if (descripcionFormateada.length > 30) {
+              descripcionFormateada = descripcionFormateada.substring(0, 27) + '...'; // Limitar longitud de la descripción
+          }
             importe=element[0]*element[2];
-          let line=` ${element[0]}    ${element[1]}      ${element[2]}      ${importe} \n`;
+          let line=` ${element[0].toString().padEnd(4)}${descripcionFormateada.padEnd(30)}${element[2].padStart(7)}${importe.toFixed(2).padStart(7)} \n`;
           ticketText += line;
-          total += element[0]*element[2]; ;
+          total += element[0]*element[2]; 
         });
         ticketText += "----------------------\n";
                 ticketText += "Total: $" + total.toFixed(2) + "\n";
                 ticketText += "----------------------\n";
-                $pre.text(ticketText);
+               // $pre.text(ticketText);
                 console.log(ticketText);
                 imprimirTicket_c(ticketText)
     }
@@ -115,6 +123,40 @@ $("#btn_imprimir_deta").on("click", function (e) {
       }
    });
   */
+}
+function imprimirTicket_cuenta_categoria(id_mesa,id_categoria) {
+  console.log("imprimirTicket_cuenta " +id_mesa);
+  $.post("../controller/pedidos.php?op=listar_pedido_detalle_categoria",{id_mesa: id_mesa,id_cate: id_categoria},
+    function(data, status){
+      let $pre = $("<pre>").appendTo("body");
+      jsonData=JSON.parse(data);
+      console.log(jsonData)
+
+          let ticketText= "";
+          ticketText+="--------------------------------------------------\n"
+                 ticketText+= "          "+ nom_mesa +"              \n"
+                ticketText += "-----------------------------------------------\n";
+                ticketText += "CANT.  DESCRIPCION                   PRECIO  IMPORTE\n";
+          let total = 0;
+          jsonData.forEach(element => {
+            let descripcionFormateada =element[1];
+            if (descripcionFormateada.length > 30) {
+              descripcionFormateada = descripcionFormateada.substring(0, 27) + '...'; // Limitar longitud de la descripción
+          }
+            importe=element[0]*element[2];
+          let line=` ${element[0].toString().padEnd(4)}${descripcionFormateada.padEnd(30)}${element[2].padStart(7)}${importe.toFixed(2).padStart(7)} \n`;
+          ticketText += line;
+          total += element[0]*element[2]; 
+        });
+        ticketText += "----------------------\n";
+                ticketText += "Total: $" + total.toFixed(2) + "\n";
+                ticketText += "----------------------\n";
+               // $pre.text(ticketText);
+                console.log(ticketText);
+                imprimirTicket_c(ticketText)
+    }
+  )
+
 }
 function imprimirTicket_c(ticketText) {
   var S = "#Intent;scheme=rawbt;";
@@ -253,6 +295,7 @@ function mostrar_mesas() {
 var cont = 0;
 var detalles = 0;
 function obtener_menu(categoria) {
+  console.log("categoria");
   $.ajax({
     url: "../controller/pedidos.php?op=mostrar_menu",
     type: "POST",
@@ -381,7 +424,7 @@ function insertar_pedido(){
     processData: false,
     success: function (datos) {
       $.notify(datos, "success");
-      obtener_detalle_pedido();
+      generar_ticket_pedido();
       reset_form();
       cambiar_estado();
       limpiar();
@@ -533,12 +576,8 @@ function obtener_cabecra_pedido(){
     }
   )
 }
-$("#btn_precuenta").on("click",function(e){
-  alert("hola")
-  e.preventDefault();
-  obtener_detalle_pedido();
-});
-function obtener_detalle_pedido(){
+
+function generar_ticket_pedido(){
   $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
     function(data,status){
       dataJson=JSON.parse(data);
@@ -550,16 +589,16 @@ function obtener_detalle_pedido(){
                 ticketText += "----------------------\n";
                 ticketText += "CANT       DESCRIPCION   \n";
              for (var i = 0; i < dataJson.length; i++) {
-               let line=` ${dataJson[i][0]}       ${dataJson[i][1]} \n`;
+               let line=` ${dataJson[i][0]}          ${dataJson[i][1]} \n`;
                ticketText += line;
              }
-             $pre.text(ticketText);
+             //$pre.text(ticketText);
                 console.log(ticketText);
-              imprimirTicket(ticketText);
+                imprimirTicket_pedido(ticketText);
     }
   )
 }
-function imprimirTicket(ticketText) {
+function imprimirTicket_pedido(ticketText) {
   var S = "#Intent;scheme=rawbt;";
   var P =  "package=ru.a402d.rawbtprinter;end;";
   var textEncoded = encodeURI(ticketText);

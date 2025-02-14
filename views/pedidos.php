@@ -202,6 +202,8 @@ if (strlen(session_id()) < 1)
                                         <button class="btn btn-info btn-sm" id="btn_comandar"><i
                                                 class="fa fa-paper-plane" aria-hidden="true"></i>
                                             enviar Pedido</button>
+
+
                                     </div>
                                 </div>
 
@@ -238,33 +240,21 @@ if (strlen(session_id()) < 1)
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <!---TAB DE PEDIDOS POR DELIVERYY-->
                 <div class="container mt-3">
-                    <form action="" method="POST" name="frm_delivery">
-
+                    <form action="" method="POST" name="frm_delivery" id="frm_delivery">
+                        <input type="hidden" name="id_pedido_" id="id_pedido_">
                         <div class="container">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-header " style="background-color:#2A3F54; color: white;">
-                                            <h5>Buscar Productos</h5>
-                                        </div>
 
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for=""> Ingrese Nombre del Menu</label>
-                                                <input type="text" class="form-control form-control-sm" id="producto"
-                                                    name="producto">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header " style="background-color:#2A3F54; color: white;">
                                             <div class="text-right">
-                                                <button class="btn btn-info btn-sm" id="btn_comandar"><i
-                                                        class="fa fa-paper-plane" aria-hidden="true"></i>
+                                                <button class="btn btn-success btn-sm" type="button" id="btn_enviar_pedido">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
                                                     enviar Pedido</button>
+                                                <button class="btn btn-info btn-sm" type="button" id="btn_agregar_menu">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    Agregar Menu</button>
                                             </div>
                                         </div>
 
@@ -287,7 +277,8 @@ if (strlen(session_id()) < 1)
                                                     <td style="width:5%;"><label class="h5" for="total">Total:</label>
                                                     </td>
                                                     <td style="width:10%;"><input class="form-control form-control-sm"
-                                                            type="text" name="lbl_total_del" id="lbl_total_del" readonly>
+                                                            type="text" name="lbl_total_" id="lbl_total_"
+                                                            readonly>
                                                     </td>
                                                     <td style="width:3%;"></td>
                                                 </tr>
@@ -319,7 +310,65 @@ if (strlen(session_id()) < 1)
     <!-- Modal -->
 
     <!-- Button trigger modal -->
+    <div class="modal fade" id="modal_pedidos_delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#2A3F54; color:white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pedidos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row  ">
+                        <div class="col-lg-12 d-flex align-justify-content-center">
+                            <div class="button-group ">
+                                <button type="button" class="btn btn-info btn-sm " id="btn_platillos_dl">
+                                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                                    PLATILLOS</button>
+                                <button type="button" class="btn btn-warning btn-sm text-white" id="btn_bebidas_del"><i
+                                        class="fa fa-beer" aria-hidden="true"></i>
+                                    BEBIDAS</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-4" id="refresh">
 
+                            <div class="list-group scroll-list-group list-btn-group-sm" id="lcategorias_m_delivery"
+                                data-spy="scroll">
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="container" id=galeria>
+
+                            </div>
+                            <table class=" mt-1 table table-bordered table-sm" id="tb_menu_delivery">
+                                <thead style="background-color:#2A3F54; color:white">
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Opciones</th>
+
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        onclick="limpiarTabla()">Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="modal_pedidos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -361,7 +410,7 @@ if (strlen(session_id()) < 1)
                                 <thead style="background-color:#2A3F54; color:white">
                                     <th>Producto</th>
                                     <th>Precio</th>
-                                    <th>Opcines</th>
+                                    <th>Opciones</th>
 
                                 </thead>
                                 <tbody>
