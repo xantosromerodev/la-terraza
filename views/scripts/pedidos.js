@@ -6,7 +6,7 @@ var mesa="";
 function init() {
   mostrar_mesas();
   listar_subcategorias(2);
-  obtener_cabecra_pedido();
+  //obtener_cabecra_pedido();
   //obtener_detalle_pedido()
 $("#ticket").hide();
   //obtener_categoria_menu();
@@ -16,7 +16,7 @@ $("#ticket").hide();
 $("#btn_imprimir_deta").on("click", function (e) {
   e.preventDefault();
   imprimirTicket_cuenta(idMesa);
-  imprimirTicket_cuenta_categoria(idMesa,1)
+  //imprimirTicket_cuenta_categoria(idMesa,1)
   //imprimirMesa("")
  
 
@@ -424,11 +424,12 @@ function insertar_pedido(){
     processData: false,
     success: function (datos) {
       $.notify(datos, "success");
-      generar_ticket_pedido();
+      generar_ticket_pedido(2);
+      generar_ticket_pedido(1);
       reset_form();
       cambiar_estado();
       limpiar();
-      location.reload();
+     // location.reload();
       
     },
   });
@@ -567,21 +568,16 @@ function listar_subcategorias(id_categoria) {
 // funcion para autocompletar menus
 
 // funciones para craer ticket de pedidos
-function obtener_cabecra_pedido(){
-  $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",
-    function(data,status){
-      dataJson=JSON.parse(data);
-      mesa=dataJson.numero;
-      console.log(dataJson);
-    }
-  )
-}
 
-function generar_ticket_pedido(){
-  $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
+
+function generar_ticket_pedido( idcate){
+   var id_pedido= $("#id_pedido").val();
+  obtener_cabecra_pedido(id_pedido);
+  $.post("../controller/pedidos.php?op=obtener_pedido_detalle",{id_pedido:id_pedido,idcate:idcate},
     function(data,status){
       dataJson=JSON.parse(data);
       console.log(dataJson);
+     
       let $pre=$("<pre>").appendTo($("body"));
 
       let ticketText ="     "+ mesa + "\n";
@@ -595,6 +591,9 @@ function generar_ticket_pedido(){
              //$pre.text(ticketText);
                 console.log(ticketText);
                 imprimirTicket_pedido(ticketText);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 5000);
     }
   )
 }
@@ -603,5 +602,16 @@ function imprimirTicket_pedido(ticketText) {
   var P =  "package=ru.a402d.rawbtprinter;end;";
   var textEncoded = encodeURI(ticketText);
    window.location.href="intent:"+textEncoded+S+P;
+}
+function obtener_cabecra_pedido(id_pedido){
+ // console.log("id pedido obtenida " +id_pedido);
+  $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",{id_pedido:id_pedido},
+    function(data,status){
+      dataJson=JSON.parse(data);
+      mesa=dataJson.numero;
+     
+      console.log("mesa obtenida " +dataJson.numero);
+    }
+  )
 }
 init();

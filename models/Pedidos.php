@@ -116,15 +116,18 @@ class Pedidos{
     }
     public function obtener_pedido_cabecera($idpedido){
         $sql="CALL SP_OBTENER_PEDIDO_CABECERA('$idpedido')";
+        //echo $sql;
         return ejecutarConsultaSimpleFila($sql);
     }
-    public function obtener_detalle_pedido($idpedido){
+    public function obtener_detalle_pedido($idpedido,$idcategoria){
         $sql="SELECT menu.id AS id_menu, pedidos.id,detalles_pedido.cantidad ,menu.nombre,detalles_pedido.precio,
 		detalles_pedido.importe FROM pedidos INNER JOIN detalles_pedido
 		ON pedidos.id=detalles_pedido.pedido_id INNER JOIN mesas
 		ON pedidos.mesa_id=mesas.id INNER JOIN menu 
-		ON detalles_pedido.menu_id=menu.id
-		WHERE pedido_id='$idpedido'";
+		ON detalles_pedido.menu_id=menu.id INNER JOIN categorias_menu
+		ON menu.categoria_id=categorias_menu.id
+		WHERE pedido_id='$idpedido' AND categorias_menu.id_cate='$idcategoria'";
+        //echo $sql;
         return ejecutarConsulta($sql);
     }
    public function obtener_menu_autocompletado($nombre){

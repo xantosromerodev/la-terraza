@@ -77,7 +77,7 @@ function insertar_pedido_(){
       reset_form();
       cambiar_estado_();
       limpiar();
-      location.reload();
+      //location.reload();
       
     },
   });
@@ -137,6 +137,7 @@ cont_2=0;
 // funcion para obtener las subacategorias
 
 // funciones para craer ticket de pedidos
+/*
 function obtener_cabecra_pedido(){
   $.post("../controller/pedidos.php?op=obtener_pedido_cabecera",
     function(data,status){
@@ -146,7 +147,7 @@ function obtener_cabecra_pedido(){
     }
   )
 }
-
+*/
 function generar_ticket(){
   $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
     function(data,status){

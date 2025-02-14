@@ -155,11 +155,20 @@ switch ($_GET["op"]) {
         echo json_encode($data);
         break;
         case 'obtener_pedido_cabecera':
-          $rpta=$pedido->obtener_pedido_cabecera($idPedido);
+          if(empty($id_pedido)){
+            $rpta=$pedido->obtener_pedido_cabecera($idPedido);
+          }else{
+            $rpta=$pedido->obtener_pedido_cabecera($id_pedido);
+          } 
           echo json_encode($rpta);
           break;
         case 'obtener_pedido_detalle':
-          $rpta=$pedido->obtener_detalle_pedido($idPedido);
+          $idcate = $_POST['idcate'];
+          if(empty($id_pedido)){
+            $rpta=$pedido->obtener_detalle_pedido($idPedido,$idcate);
+          }else{
+            $rpta=$pedido->obtener_detalle_pedido($id_pedido,$idcate);
+          }
           $data = Array();
           while($reg = $rpta->fetch_object()){
             $data[] = array(

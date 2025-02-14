@@ -161,7 +161,7 @@ if (strlen(session_id()) < 1)
                                                         class="fa fa-book" aria-hidden="true"></i> Agregar Pedido</a>
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
-                                                        class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
+                                                        class="fa fa-pencil" aria-hidden="true"></i> Cuenta Cliente</a>
                                                 <pre id="ticket"></pre>
                                             </div>
                                         </div>
