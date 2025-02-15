@@ -161,7 +161,7 @@ if (strlen(session_id()) < 1)
                                                         class="fa fa-book" aria-hidden="true"></i> Agregar Pedido</a>
                                                 <a class="dropdown-item  " href="#"
                                                     onclick="mostrar_modalDetalle('<?php echo $mesa->id?>','<?php echo $mesa->numero?>')"><i
-                                                        class="fa fa-pencil" aria-hidden="true"></i> Listar Pedido</a>
+                                                        class="fa fa-pencil" aria-hidden="true"></i> Cuenta Cliente</a>
                                                 <pre id="ticket"></pre>
                                             </div>
                                         </div>
@@ -249,8 +249,9 @@ if (strlen(session_id()) < 1)
                                     <div class="card">
                                         <div class="card-header " style="background-color:#2A3F54; color: white;">
                                             <div class="text-right">
-                                                <button class="btn btn-success btn-sm" type="button" id="btn_enviar_pedido">
-                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                                <button class="btn btn-success btn-sm" type="button"
+                                                    id="btn_enviar_pedido">
+                                                    <i class="fa fa-print" aria-hidden="true"></i>
                                                     enviar Pedido</button>
                                                 <button class="btn btn-info btn-sm" type="button" id="btn_agregar_menu">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -277,8 +278,7 @@ if (strlen(session_id()) < 1)
                                                     <td style="width:5%;"><label class="h5" for="total">Total:</label>
                                                     </td>
                                                     <td style="width:10%;"><input class="form-control form-control-sm"
-                                                            type="text" name="lbl_total_" id="lbl_total_"
-                                                            readonly>
+                                                            type="text" name="lbl_total_" id="lbl_total_" readonly>
                                                     </td>
                                                     <td style="width:3%;"></td>
                                                 </tr>
@@ -310,8 +310,8 @@ if (strlen(session_id()) < 1)
     <!-- Modal -->
 
     <!-- Button trigger modal -->
-    <div class="modal fade" id="modal_pedidos_delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <div class="modal fade" id="modal_pedidos_delivery" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#2A3F54; color:white">
@@ -498,6 +498,34 @@ if (strlen(session_id()) < 1)
             </div>
         </div>
 
+    </div>
+
+    <!-- Button trigger modal -->
+ 
+
+    <!-- Modal -->
+    <div class="modal fade" id="mdl_print" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#2A3F54; color:white">
+                    <h5 class="modal-title" id="exampleModalLabel">Imprimir Pedido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-success" id="btn_cocina">COCINA</button>
+                        <button type="button" class="btn btn-info" id="btn_print_bebidas">BEBIDAS</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="close_print_pedido()">Cerrar</button>
+                   
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- FIN PRUEBA CARD CON ESTILO -->
