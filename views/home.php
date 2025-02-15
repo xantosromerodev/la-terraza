@@ -78,7 +78,8 @@
         <div class="col-md-6 mt-4">
             <div class="card">
                 <div class="card-header d-flex">
-                    <i class="fa fa-bell ft-dark-icon"></i> <span class="h6 text-body font-weight-bold ml-2">Notificaciones</span>
+                    <i class="fa fa-bell ft-dark-icon"></i> <span
+                        class="h6 text-body font-weight-bold ml-2">Notificaciones</span>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center text-body">
