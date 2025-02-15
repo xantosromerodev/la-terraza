@@ -60,7 +60,13 @@ if (strlen(session_id()) < 1)
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
-                            <!-- <h3>General</h3> -->
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="home.php">
+                                        <i class="fa fa-home"></i> Dashboard
+                                    </a>
+                                </li>
+                            </ul>
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-cog" aria-hidden="true"></i> Menú <span
                                             class="fa fa-chevron-down"></span></a>
