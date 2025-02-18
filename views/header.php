@@ -68,35 +68,29 @@ if (strlen(session_id()) < 1)
                                 </li>
                             </ul>
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-cog" aria-hidden="true"></i> Menú <span
+                                <li><a><i class="fa fa-cog" aria-hidden="true"></i> Configuración <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="empresa.php">Empresa</a></li>
                                         <li><a href="perfil.php">Perfiles</a></li>
                                         <li><a href="usuarios.php">Usuarios</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-edit"></i> Inventario <span
-                                            class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="form.html">Categorias</a></li>
-                                        <li><a href="form_advanced.html">Marcas</a></li>
-                                        <li><a href="form_validation.html">Productos</a></li>
-
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-cog"></i> Configuraciones <span
-                                            class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
                                         <li><a href="mesa.php">Mesas</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-edit"></i> Almacén <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
                                         <li><a href="categorias.php">Categorias</a></li>
-                                        <li><a href="menu.php">Platos</a></li>
-                                        <li><a href="icons.html">Icons</a></li>
-                                        <li><a href="glyphicons.html">Glyphicons</a></li>
-                                        <li><a href="widgets.html">Widgets</a></li>
-                                        <li><a href="invoice.html">Invoice</a></li>
-                                        <li><a href="inbox.html">Inbox</a></li>
-                                        <li><a href="calendar.html">Calendar</a></li>
+                                        <li><a href="menu.php">Productos</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-cog"></i> Ingresos <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        
+                                        <li><a href="categorias.php">Proveedores</a></li>
+                                        <li><a href="menu.php">Nuevo Ingreso</a></li>
+                                        
                                     </ul>
                                 </li>
                             </ul>

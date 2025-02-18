@@ -7,7 +7,7 @@
     $codigo_producto = isset($_POST["codigo_producto"])? limpiarCadena($_POST["codigo_producto"]):"";
     $idcategoria = isset($_POST["idcategoria"])? limpiarCadena($_POST["idcategoria"]):"";
     $nombre = isset($_POST["nombre"])? limpiarCadena($_POST["nombre"]):"";
-    $descripcion = isset($_POST["descripcion"])? limpiarCadena($_POST["descripcion"]):"";
+    $stk = isset($_POST["stk"])? limpiarCadena($_POST["stk"]):"";
     $precio = isset($_POST["precio"])? limpiarCadena($_POST["precio"]):"";
     
     
@@ -22,21 +22,21 @@
                    "0"=>$codigo_producto,
                    "1"=>$idcategoria,
                    "2"=>$nombre,
-                   "3"=>$descripcion,
+                   "3"=>$stk,
                    "4"=>$precio,
                    "5"=>"not found",
                    "6"=>"-"
                 );
                 $rspta = $menu->insertar($data);
-                echo $rspta ? "Menu registrado" : "Menu no se pudo registrar";
+                echo $rspta ? "Producto registrado" : "Producto no se pudo registrar";
             }else{
                 $rspta = $menu->editar($idmenu, $nombre, $precio, $idcategoria);
-                echo $rspta ? "Menu actualizado" : "Menu no se pudo actualizar";
+                echo $rspta ? "Producto actualizado" : "Producto no se pudo actualizar";
             }
             break;
         case 'eliminar':
             $rspta = $menu->eliminar($idmenu);
-            echo $rspta ? "Menu eliminado" : "Menu no se pudo eliminar";
+            echo $rspta ? "Producto eliminado" : "Producto no se pudo eliminar";
             break;
         case 'mostrar':
             $rspta = $menu->mostrar($idmenu);
@@ -45,11 +45,11 @@
         case 'llenar':
             $p_idcate=$_POST["p_idcate"];
             $rspta = $menu->llenarLista($p_idcate);
-            $data=array();
+           echo '<option value=0  >Seleccione</option>';
             while($reg = $rspta->fetch_object()){
-               $data[]=$reg;
+                echo '<option value=' . $reg->id . '>' . $reg->nombre . '</option>';
             }
-            echo json_encode($data,JSON_UNESCAPED_UNICODE);
+           // echo json_encode($data,JSON_UNESCAPED_UNICODE);
             break;
         case 'listar':
             $id_cate=$_GET["p_id_cate"];

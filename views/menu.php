@@ -41,7 +41,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home"
                                     type="button" role="tab" aria-controls="home"
-                                    aria-selected="true">Platillos</button>
+                                    aria-selected="true">Menú</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile"
@@ -51,7 +51,7 @@
                             <li class="nav-item " role="presentation">
                                 <button class="nav-link btn-outline-success" id="contact-tab" data-toggle="tab"
                                     data-target="#contact" type="button" role="tab" aria-controls="contact"
-                                    aria-selected="false">Contact</button>
+                                    aria-selected="false">Insumos</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -78,9 +78,10 @@
                                                    <th>N°</th>
                                                     <th>CODIGO</th>
                                                     <th>NOMBRE</th>
-                                                    <th>DESCRIPCION</th>
+                                                    <th>STK ACTUAL</th>
                                                     <th>PRECIO</th>
                                                     <th>CATEGORIA</th>
+                                                    <th>OPCIONES</th>
 
                                                 </tr>
                                             </thead>
@@ -115,9 +116,10 @@
                                                     <th>N°</th>
                                                     <th>CODIGO</th>
                                                     <th>NOMBRE</th>
-                                                    <th>DESCRIPCION</th>
+                                                    <th>STK. ACTUAL</th>
                                                     <th>PRECIO</th>
                                                     <th>CATEGORIA</th>
+                                                    <th>OPCIONES</th>
 
                                                 </tr>
                                             </thead>
@@ -130,7 +132,38 @@
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="row mt-1">
+                                    <div class="col-lg-12">
+                                    <div class="  form-group pull-right ">
+                                            <div class="input-group">
+                                                <button class="btn btn-primary btn-sm btn-round" id="btn_open_Modal"
+                                                    onclick="open_modal_menu(3)"><i class="fa fa-plus"
+                                                        aria-hidden="true"></i> Agregar Insumos</button>
+                                            </div>
+                                        </div>
+                                        <table id="tbl_insumos"
+                                            class="table table-striped table-bordered dt-responsive nowrap table-sm"
+                                            cellspacing="0" width="100%">
+                                            <thead style="background-color:#2A3F54; color:white">
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>CODIGO</th>
+                                                    <th>NOMBRE</th>
+                                                    <th>STOCK ACTUAL</th>
+                                                    <th>PRECIO</th>
+                                                    <th>CATEGORIA</th>
+                                                    <th>OPCIONES</th>   
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Aquí se llena desde la bd -->
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -158,20 +191,20 @@
 
                         <div class="form-group col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <label for="">Categoria</label>
-                            <select name="idcategoria" id="idcategoria"
-                                class="form-control form-control-sm " required>
+                            <select name="idcategoria" id="idcategoria" 
+                                class="form-control form-control-sm selectpicker" required>
                                 
                             </select>
                         </div>
 
                         <div class="form-group col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <input type="hidden" name="idmenu" id="idmenu">
-                            <label for="">Codigo Menú</label>
+                            <label for="">Codigo</label>
                             <input type="text" class="form-control form-control-sm " name="codigo_producto"
                                 id="codigo_producto" readonly>
                         </div>
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <label for="">Nombre Menú</label>
+                            <label for="">Nombre</label>
                             <input type="text" class="form-control form-control-sm " name="nombre"
                                 id="nombre">
                         </div>
@@ -184,10 +217,9 @@
                                 id="precio">
                         </div>
 
-                        <div class="form-group col-lg-10 col-md-12 col-sm-12 col-xs-12">
-                            <label for="">Descripción</label>
-                            <textarea name="descripcion" id="descripcion"
-                                class="form-control form-control-sm "></textarea>
+                        <div class="form-group col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                            <label for="">Cantidad</label>
+                            <input type="number"  name="stk" id="stk" class="form-control form-control-sm ">
 
                         </div>
 
