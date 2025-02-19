@@ -88,8 +88,8 @@ if (strlen(session_id()) < 1)
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         
-                                        <li><a href="categorias.php">Proveedores</a></li>
-                                        <li><a href="menu.php">Nuevo Ingreso</a></li>
+                                        <li><a href="proveedor.php">Proveedores</a></li>
+                                        <li><a href="ingreso.php">Nuevo Ingreso</a></li>
                                         
                                     </ul>
                                 </li>

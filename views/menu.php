@@ -192,7 +192,7 @@
                         <div class="form-group col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <label for="">Categoria</label>
                             <select name="idcategoria" id="idcategoria" 
-                                class="form-control form-control-sm selectpicker" required>
+                                class="form-control form-control-sm selectpicker" title="Seleccione" required>
                                 
                             </select>
                         </div>
@@ -205,7 +205,7 @@
                         </div>
                         <div class="form-group col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             <label for="">Nombre</label>
-                            <input type="text" class="form-control form-control-sm " name="nombre"
+                            <input type="text" class="form-control form-control-sm text-uppercase" name="nombre"
                                 id="nombre">
                         </div>
 

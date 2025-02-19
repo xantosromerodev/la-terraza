@@ -45,7 +45,7 @@
         case 'llenar':
             $p_idcate=$_POST["p_idcate"];
             $rspta = $menu->llenarLista($p_idcate);
-           echo '<option value=0  >Seleccione</option>';
+          // echo '<option value=0  >Seleccione</option>';
             while($reg = $rspta->fetch_object()){
                 echo '<option value=' . $reg->id . '>' . $reg->nombre . '</option>';
             }
@@ -62,7 +62,7 @@
                     "0" => $cont,
                     "1" => $reg->codigo_producto,
                     "2" => $reg->nombre,
-                    "3" => $reg->descripcion,
+                    "3" => $reg->stock,
                     "4" => $reg->precio,
                     "5" => $reg->categoria,
                     "6" => '<span class="badge  badge-primary  text-center"><a style="color:white;cursor:pointer"  onclick="mostrar('.$reg->id_menu.')"><i class="fa fa-edit"></i></a></span>'." ".

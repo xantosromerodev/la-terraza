@@ -2,6 +2,7 @@
 var tabla;
 //Función que se ejecuta al inicio
 function init(){
+	
     listar_platillos(2);
 	listar_bebidas(1);
 	listar_insumos(3);
@@ -16,7 +17,7 @@ function generar_codigo_producto(){
 }
 function llenar_combo_categoria(id_cate){
 	///$("#idcategoria").empty();
-	
+	//$('#miSelect').selectpicker('setStyle', 'noneSelectedText', 'Selecciona una opción');
 $.post("../controller/menu.php?op=llenar", { p_idcate :id_cate}, function (r) {
   //jsonData = JSON.parse(r);
   $("#idcategoria").html(r);
@@ -202,7 +203,7 @@ function actualizar(){
 		type: "POST",
 		data: data_menu,
 		success: function(data){
-			mensaje(data,"","success");
+			$notify(data,"success");
 			listar();
 			limpiar();
 		},
@@ -215,11 +216,19 @@ function mostrar(id){
 	$.post("../controller/menu.php?op=mostrar",{idmenu : id}, function(data, status){
 		data = JSON.parse(data);
 		console.log(data);	
+		var id = data.categoria_id; // ID
+		categoria= data.categoria;
+
+		llenar_combo_categoria(data.id_cate)
+		
 		$("#exampleModal").modal("show");
 		$("#idmenu").val(data.id);
 		$("#nombre").val(data.nombre);
         $("#precio").val(data.precio);
-		$("#idcategoria").val(data.categoria_id);
+		var opcion = $('<option></option>').val(id).text(categoria);
+		$('#idcategoria').append(opcion);
+		//$("#idcategoria").val(data.categoria_id);
+		$("#codigo_producto").val(data.codigo_producto);
 		$("#idcategoria").selectpicker('refresh');
 		/*$("#id").val(data.id);
 		$("#nombre").val(data.nombre);
