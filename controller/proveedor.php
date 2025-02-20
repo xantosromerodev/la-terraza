@@ -6,7 +6,7 @@ $proveedor=new Proveedor();
 
 $idproveedor=isset($_POST["idProveedor"])? limpiarCadena($_POST["idProveedor"]):"";
 $tipo_doc=isset($_POST["idTipoDoc"])? limpiarCadena($_POST["idTipoDoc"]):"";
-$num_documento=isset($_POST["nro_doc"])? limpiarCadena($_POST["nro_doc"]):"";
+$num_documento=isset($_POST["ruc"])? limpiarCadena($_POST["ruc"]):"";
 $razon_social=isset($_POST["razon_social"])? limpiarCadena($_POST["razon_social"]):"";
 $direccion=isset($_POST["direccion"])? limpiarCadena($_POST["direccion"]):"";
 $telefono=isset($_POST["telefono"])? limpiarCadena($_POST["telefono"]):"";
@@ -21,6 +21,8 @@ switch ($_GET["op"]){
     break;
     case 'guardar_proveedor':
         if(empty($idproveedor)){
+            $prv=$proveedor->verificar_existencia($num_documento);
+			$totalRows=mysqli_num_rows($prv);
             $data=array(
                 "0"=>$tipo_doc,
                 "1"=>$num_documento,
@@ -29,8 +31,13 @@ switch ($_GET["op"]){
                 "4"=>$telefono,
                 "5"=>$estado_sunat
             );
-            $rspta = $proveedor->insertar($data);
-            echo $rspta ?"Proveedor Registrado":"Ocurrio un error al registrar";
+            if($totalRows==0){
+                $rspta = $proveedor->insertar($data);
+                echo $rspta ?"Proveedor Registrado":"Ocurrio un error al registrar";
+            }else{
+                echo "El proveedor ya se enncuentra registrado";;
+            }
+          
         }else{
             $data=array(
                 "0"=>$idproveedor,

@@ -14,6 +14,7 @@ class Proveedor{
  }
  function insertar($datos){
   $sql="CALL SP_INSERTAR_PROVEEDOR('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]')";
+  //echo $sql;
   return ejecutarConsulta($sql);
  }
  function mostrar($idproveedor){
@@ -28,6 +29,10 @@ class Proveedor{
   $sql="CALL SP_ELIMINAR_PROVEEDOR('$idproveedor')";
   return ejecutarConsulta($sql);
  }
+ function verificar_existencia($num_doc){
+    $sql="SELECT * FROM proveedor WHERE  nro_documento='$num_doc'";
+    return ejecutarConsulta($sql);
+}
 
 }
 ?>

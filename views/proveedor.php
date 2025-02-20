@@ -80,7 +80,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header " style="background-color:#2A3F54; color:white">
-                <h6 class="modal-title" id="exampleModalLabel">EMPRESA</h6>
+                <h6 class="modal-title" id="exampleModalLabel">PROVEEDOR</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -92,7 +92,7 @@
                         <div class="col-lg-12 col-md-12-col-sm-12">
                             <label id="lbltipodoc">Tipo Documento</label>
                             <select id="idTipoDoc" name="idTipoDoc" class="form-control selectpicker"
-                                data-live-search="true" required></select>
+                               title="Seleccione" required></select>
                         </div>
                     </div>
 
