@@ -71,10 +71,10 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 col-sm-12">
                                     <label>PROVEEDOR (*) RUC/ DNI</label>
-                                    <label for="">RUC</label>
+                                    <input type="hidden" name="idproveedor" id="idproveedor">
                                     <div class="input-group">
                                         <input type="text" class="form-control text-uppercase form-control-sm"
-                                            name="ruc" id="ruc" require>
+                                            name="nro_documento" id="nro_documento" require>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary btn-sm" type="button"
                                                 id="btn_buscar_ruc_dni">Buscar</button>
@@ -146,7 +146,7 @@
                             </div>
                             <div class="row ">
                                 <div class="col-lg-12 d-flex justify-content-start">
-                                    <button type="button" class="btn btn-primary btn-sm">GUARDAR</button>
+                                    <button type="button" class="btn btn-primary btn-sm">Guardar</button>
                                     <button type="button" class="btn btn-danger btn-sm">Cancelar</button>
 
                                 </div>
@@ -190,8 +190,8 @@
                             <label for="">RUC</label>
 
                             <div class="input-group">
-                                <input type="text" class="form-control text-uppercase form-control-sm" name="ruc"
-                                    id="ruc" require>
+                                <input type="text" class="form-control text-uppercase form-control-sm" name="nro_doc"
+                                    id="nro_doc" require>
                                 <div class="input-group-append">
                                     <button class="btn btn-primary btn-sm" type="button"
                                         id="btn_buscar_ruc_dni">Buscar</button>
@@ -239,7 +239,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-round btn-sm" data-dismiss="modal"
                     onclick="limpiar()"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary btn-round btn-sm" id="btn-guardar"><i
+                <button type="button" class="btn btn-primary btn-round btn-sm" id="btn-guardar_prov"><i
                         class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
             </div>
             </form>

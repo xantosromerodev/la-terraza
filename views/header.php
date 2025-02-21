@@ -41,6 +41,7 @@ if (strlen(session_id()) < 1)
     <link href="../public/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../public/build/css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/autocomplete/jquery-ui.min.css">
 </head>
 
 <body class="nav-md">

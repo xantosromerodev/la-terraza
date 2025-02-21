@@ -6,7 +6,7 @@ $proveedor=new Proveedor();
 
 $idproveedor=isset($_POST["idProveedor"])? limpiarCadena($_POST["idProveedor"]):"";
 $tipo_doc=isset($_POST["idTipoDoc"])? limpiarCadena($_POST["idTipoDoc"]):"";
-$num_documento=isset($_POST["ruc"])? limpiarCadena($_POST["ruc"]):"";
+$num_documento=isset($_POST["nro_doc"])? limpiarCadena($_POST["nro_doc"]):"";
 $razon_social=isset($_POST["razon_social"])? limpiarCadena($_POST["razon_social"]):"";
 $direccion=isset($_POST["direccion"])? limpiarCadena($_POST["direccion"]):"";
 $telefono=isset($_POST["telefono"])? limpiarCadena($_POST["telefono"]):"";

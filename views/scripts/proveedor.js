@@ -49,7 +49,7 @@ function listar() {
   });
 }
 $("#btn_buscar_ruc_dni").click(function () {
-  var dni = $("#ruc").val();
+  var dni = $("#nro_doc").val();
   if (dni.length == 8) {
     $.ajax({
       type: "POST",
@@ -60,7 +60,7 @@ $("#btn_buscar_ruc_dni").click(function () {
         if (data.numeroDocumento == dni) {
           $("#idTipoDoc").val(data.tipoDocumento);
           $("#idTipoDoc").selectpicker("refresh");
-          $("#nroDoc").val(data.numeroDocumento);
+          //$("#nroDoc").val(data.numeroDocumento);
           $("#razon_social").val(data.nombre);
           $("#direccion").val(data.direccion);
           $("#estado_sunat").val(data.estado);
@@ -78,7 +78,7 @@ $("#btn_buscar_ruc_dni").click(function () {
         if (data.numeroDocumento == dni) {
           $("#idTipoDoc").val(data.tipoDocumento);
           $("#idTipoDoc").selectpicker("refresh");
-          $("#nroDoc").val(data.numeroDocumento);
+          //$("#nroDoc").val(data.numeroDocumento);
           $("#razon_social").val(data.nombre);
           $("#direccion").val(data.direccion);
           $("#estado_sunat").val(data.estado);

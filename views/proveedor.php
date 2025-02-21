@@ -102,8 +102,8 @@
                             <label for="">RUC</label>
                           
                             <div class="input-group">
-                                <input type="text" class="form-control text-uppercase form-control-sm" name="ruc"
-                                    id="ruc" require>
+                                <input type="text" class="form-control text-uppercase form-control-sm" name="nro_doc"
+                                    id="nro_doc" require>
                                 <div class="input-group-append">
                                     <button class="btn btn-primary btn-sm" type="button"
                                         id="btn_buscar_ruc_dni">Buscar</button>
