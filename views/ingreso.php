@@ -1,6 +1,27 @@
 <?php
  require 'header.php';
 ?>
+<style type="text/css">
+/* Agregando Inputs */
+.input-group {
+    width: 100%;
+}
+
+.input-group-addon {
+    min-width: 180px;
+    text-align: right;
+}
+
+.panel-title {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.derecha_text {
+    text-align: right;
+    font-size: 15;
+}
+</style>
 <div class="right_col" role="main">
     <div class="">
 
@@ -12,7 +33,7 @@
             <div class="title_right">
                 <div class="  form-group pull-right ">
                     <div class="input-group">
-                        <button class="btn btn-primary btn-sm btn-round" onclick="mostrar_form(true)"><i
+                        <button class="btn btn-primary btn-sm btn-round" id="btnagregar" onclick="mostrar_form(true)"><i
                                 class="fa fa-plus" aria-hidden="true"></i> Nuevo Ingreso</button>
                     </div>
                 </div>
@@ -42,7 +63,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content" id=lista_ingreso>
-                        <table id="tbl_proveedor" class="table table-bordered  dt-responsive nowrap table-sm"
+                        <table id="tbllistado" class="table table-bordered  dt-responsive nowrap table-sm"
                             cellspacing="0" width="100%">
                             <thead style="background-color:#2A3F54; color:white">
                                 <tr>
@@ -67,7 +88,7 @@
 
                     </div>
                     <div class="x_content" id="form_ingreso">
-                        <form action="" method="post">
+                        <form name="formulario" id="formulario" method="POST">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 col-sm-12">
                                     <label>PROVEEDOR (*) RUC/ DNI</label>
@@ -92,9 +113,10 @@
                                     <select name="tipo_comprobante" id="tipo_comprobante"
                                         class="form-control form-control-sm selectpicker" required=""
                                         title="Seleccione">
-                                        <option value="Boleta">Boleta</option>
-                                        <option value="Factura">Factura</option>
-                                        <option value="Ticket">Ticket</option>
+                                        <option value="BOLETA">BOLETA</option>
+                                        <option value="FACTURA">FACTURA</option>
+
+                                        <option value="TICKET">TICKET</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-2 col-md-2 col-sm-6 col-xs-12">
@@ -123,11 +145,11 @@
                                     <table id="detalles"
                                         class="table table-striped table-bordered table-condensed table-hover table-sm">
                                         <thead style="background-color:#A9D0F5">
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio </th>
-                                            <th>Total </th>
-                                            <th>Eliminar</th>
+                                            <th style="width:5%;">CANTIDAD</th>
+                                            <th style="width:60%;">PRODUCTO</th>
+                                            <th style="width:10%;">PRECIO </th>
+                                            <th style="width:10%;">TOTAL </th>
+                                            <th style="width:10%;">ELIMINAR</th>
                                         </thead>
 
                                         <tbody>
@@ -135,19 +157,24 @@
                                         </tbody>
                                     </table>
 
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-lg-12 d-flex justify-content-end">
-                                    <label for="">Total S/. 0.00</label>
 
                                 </div>
-
                             </div>
+
+                            <div class="form-group text-right">
+                                <span class="">TOTAL S/.</span>
+                                <input type="text"
+                                    class="form-control d-inline-block w-auto form-control-sm derecha_text"
+                                    placeholder="0.00" readonly name="total_a_pagar" id="total_a_pagar"
+                                    style="border:1px solid #ABB2B9;">
+                            </div>
+
                             <div class="row ">
                                 <div class="col-lg-12 d-flex justify-content-start">
-                                    <button type="button" class="btn btn-primary btn-sm">Guardar</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Cancelar</button>
+                                    <button type="button" class="btn btn-primary btn-sm "
+                                        id="btnGuardar">Guardar</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="cancelarform()">Cancelar</button>
 
                                 </div>
 
@@ -243,6 +270,89 @@
                         class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!--modal detalle de ingreso-->
+<div class="modal fade" id="mdl_detalle_ingreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color:#2A3F54; color:white">
+                <h6 class="modal-title text-center" id="exampleModalLabel">DETALLE DE INGRESO</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <label for="">PROVEEDOR: </label>
+                        <input type="text" class="form-control form-control-sm rounded-pill" readonly=""
+                        id="txt_proveedor">
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="">FECHA INGRESO: </label>
+                        <input type="text" class="form-control form-control-sm rounded-pill" readonly=""
+                        id="txt_fecha">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label for="">TIPO COMPROBANTE: </label>
+                        <input type="text" class="form-control form-control-sm rounded-pill" readonly=""
+                        id="txt_tipo_comprobante">
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="">SERIE: </label>
+                        <input type="text" class="form-control form-control-sm rounded-pill" readonly=""
+                        id="txt_serie">
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="">NUMERO: </label>
+                        <input type="text" class="form-control form-control-sm rounded-pill" readonly=""
+                        id="txt_numero">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                    <table id="detalles_ingreso"
+                                        class="table table-striped table-bordered table-condensed table-hover table-sm table-responsive">
+                                        <thead style="background-color:#A9D0F5">
+                                            <th style="width:5%;">CANTIDAD</th>
+                                            <th style="width:60%;">PRODUCTO</th>
+                                            <th style="width:10%;">PRECIO </th>
+                                            <th style="width:10%;">IMPORTE </th>
+                                           
+                                        </thead>
+
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                    </div>
+                </div>
+                <div class="form-group text-right">
+                                <span class="">TOTAL S/.</span>
+                                <input type="text"
+                                    class="form-control d-inline-block w-auto form-control-sm derecha_text"
+                                    placeholder="0.00" readonly name="txt_total" id="txt_total"
+                                    style="border:1px solid #ABB2B9;">
+                            </div>
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-round btn-sm" data-dismiss="modal"
+                    onclick="limpiar()"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary btn-round btn-sm" id="btn-guardar_prov"><i
+                        class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+            </div>
+
         </div>
     </div>
 </div>
