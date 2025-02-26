@@ -126,7 +126,7 @@ if (strlen(session_id()) < 1)
                 <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button"
                     role="tab" aria-controls="nav-profile" aria-selected="false">Lista de Comprobantes</button>
                 <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"
-                    role="tab" aria-controls="nav-contact" aria-selected="false">Cuadre de Caja</button>
+                    role="tab" aria-controls="nav-contact" aria-selected="false">ARQUEO de Caja</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
