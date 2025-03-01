@@ -78,6 +78,7 @@
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
      <!-- Custom Theme Scripts -->
+     <script src="../public/autocomplete/jquery-ui.min.js"></script>
      <script src="../public/build/js/custom.min.js"></script>
 
  </body>

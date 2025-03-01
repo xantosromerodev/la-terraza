@@ -2,8 +2,10 @@
 var tabla;
 //Función que se ejecuta al inicio
 function init(){
+	
     listar_platillos(2);
-	listar_bebidas(1)
+	listar_bebidas(1);
+	listar_insumos(3);
 //llenar_combo_categoria(1);
     
 }
@@ -14,12 +16,13 @@ function generar_codigo_producto(){
 	});
 }
 function llenar_combo_categoria(id_cate){
-	$("#idcategoria").empty();
-	
-	$("#idcategoria").append("<option value=0>Seleccione</option>");
+	///$("#idcategoria").empty();
+	//$('#miSelect').selectpicker('setStyle', 'noneSelectedText', 'Selecciona una opción');
 $.post("../controller/menu.php?op=llenar", { p_idcate :id_cate}, function (r) {
-  jsonData = JSON.parse(r);
-  for (var i = 0; i < jsonData.length; i++) {
+  //jsonData = JSON.parse(r);
+  $("#idcategoria").html(r);
+  $("#idcategoria").selectpicker('refresh');
+ /*for (var i = 0; i < jsonData.length; i++) {
     var option =
       "<option value='" +
       jsonData[i].id +
@@ -28,7 +31,9 @@ $.post("../controller/menu.php?op=llenar", { p_idcate :id_cate}, function (r) {
       "</option>";
     $("#idcategoria").append(option);
   }
+	*/
 });
+
 }
 
 function listar_platillos(id_cate)
@@ -95,6 +100,37 @@ function listar_bebidas(id_cate) {
     searching: true,
   });
 }
+function listar_insumos(id_cate) {
+	tabla = $("#tbl_insumos").DataTable({
+	  bLengthChange: true,
+	  autoWidth: false,
+	  bDestroy: true,
+	  language: {
+		search: "Buscar por",
+		lengthMenu: "Mostrar _MENU_ Elementos",
+		info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
+		infoEmpty: "Mostrando 0 registros de 0 registros encontrados",
+		paginate: {
+		  next: "<span><i class='fa fa-arrow-right' aria-hidden='true'></span>",
+		  previous:
+			"<span><i class='fa fa-arrow-left' aria-hidden='true'></i></span>",
+		},
+	  },
+  
+	  ajax: {
+		url: "../controller/menu.php?op=listar",
+		type: "GET",
+		data: { p_id_cate: id_cate },
+		datatype: "json",
+		error: function (e) {
+		  console.log(e.responseText);
+		},
+	  },
+  
+	  responsive: true,
+	  searching: true,
+	});
+  }
 $("#btn-guardar").click(function(e){
 	e.preventDefault();
 	if ($("#idcategoria").val() == 0) {
@@ -124,14 +160,14 @@ function guardar(){
 	var codigo_producto = $("#codigo_producto").val();
 	var idcategoria = $("#idcategoria").val();
 	var nombre = $("#nombre").val();
-	var descripcion = $("#descripcion").val();
+	var stk = $("#stk").val();
 	var precio = $("#precio").val();
 	
 	var data_menu={
 		codigo_producto:codigo_producto,
 		idcategoria:idcategoria,
 		nombre:nombre,
-		descripcion:descripcion,
+		stk:stk,
 		precio:precio,
 		
 	}
@@ -146,6 +182,7 @@ console.log(data_menu);
 			generar_codigo_producto();
 			listar_platillos(2);	
 			listar_bebidas(1);
+			listar_insumos(3);
 			limpiar();
 		}
 	});
@@ -166,7 +203,7 @@ function actualizar(){
 		type: "POST",
 		data: data_menu,
 		success: function(data){
-			mensaje(data,"","success");
+			$notify(data,"success");
 			listar();
 			limpiar();
 		},
@@ -179,12 +216,20 @@ function mostrar(id){
 	$.post("../controller/menu.php?op=mostrar",{idmenu : id}, function(data, status){
 		data = JSON.parse(data);
 		console.log(data);	
+		var id = data.categoria_id; // ID
+		categoria= data.categoria;
+
+		llenar_combo_categoria(data.id_cate)
+		
 		$("#exampleModal").modal("show");
 		$("#idmenu").val(data.id);
 		$("#nombre").val(data.nombre);
         $("#precio").val(data.precio);
-        $("#idcategoria").val(data.categoria_id);
-		$('#idcategoria').selectpicker('refresh');
+		var opcion = $('<option></option>').val(id).text(categoria);
+		$('#idcategoria').append(opcion);
+		//$("#idcategoria").val(data.categoria_id);
+		$("#codigo_producto").val(data.codigo_producto);
+		$("#idcategoria").selectpicker('refresh');
 		/*$("#id").val(data.id);
 		$("#nombre").val(data.nombre);
 		*/
