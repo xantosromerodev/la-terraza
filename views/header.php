@@ -128,9 +128,9 @@ if (strlen(session_id()) < 1)
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right mr-4">
                             <li class="nav-item dropdown open">
-                                <a href="javascript:;" class="user-profile" style="font-size: 20px;">
+                                <!-- <a href="javascript:;" class="user-profile" style="font-size: 20px;">
                                     <i class="fa fa-bell mr-2" style="font-size: 28px;"></i>
-                                </a>
+                                </a> -->
                                 <a href="javascript:;" class="user-profile" aria-haspopup="true" id="navbarDropdown"
                                     data-toggle="dropdown" aria-expanded="false" style="font-size: 20px;">
                                     <i class="fa fa-user" style="font-size: 28px;"></i>
