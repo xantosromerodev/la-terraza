@@ -40,7 +40,7 @@ $("#btn-ingresar").on("click", function (e) {
             } else if (data.rol == "AZAFATA") {
                 $(location).attr("href", "pedidos.php");
             } else if (data.rol == "CAJA") {
-                $(location).attr("href", "caja.php");
+                $(location).attr("href", "ventas.php");
             }
         });
     }

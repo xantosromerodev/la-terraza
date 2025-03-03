@@ -78,6 +78,14 @@ if (strlen(session_id()) < 1)
                                         <li><a href="mesa.php">Mesas</a></li>
                                     </ul>
                                 </li>
+                                <li><a><i class="fa fa-hdd-o" aria-hidden="true"></i> Cajas <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="cajas.php">Caja</a></li>
+                                        <li><a href="apertura_caja.php">Aperturar Caja</a></li>
+                                        
+                                    </ul>
+                                </li>
                                 <li><a><i class="fa fa-edit"></i> Almacén <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
