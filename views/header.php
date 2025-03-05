@@ -69,7 +69,7 @@ if (strlen(session_id()) < 1)
                                 </li>
                             </ul>
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-cog" aria-hidden="true"></i> Configuración <span
+                                <li><a><i class="fa fa-cog" aria-hidden="true"></i> Ajustes <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="empresa.php">Empresa</a></li>
@@ -78,29 +78,29 @@ if (strlen(session_id()) < 1)
                                         <li><a href="mesa.php">Mesas</a></li>
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-edit"></i> Almacén <span
+                                <li><a><i class="fa fa-archive"></i> Almacén <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="categorias.php">Categorias</a></li>
                                         <li><a href="menu.php">Productos</a></li>
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-cog"></i> Ingresos <span
+                                <li><a><i class="fa fa-arrow-down"></i> Ingresos <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        
+
                                         <li><a href="proveedor.php">Proveedores</a></li>
                                         <li><a href="ingreso.php">Nuevo Ingreso</a></li>
-                                        
+
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-cog"></i> Reporte de Ingresos <span
+                                <li><a><i class="fa fa-bar-chart"></i> Reportes <span
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        
-                                        <li><a href="reporte_general.php">Reportes General</a></li>
+
+                                        <li><a href="reporte_general.php">General</a></li>
                                         <li><a href="reporte_fecha.php">Reportes por Fecha</a></li>
-                                        
+
                                     </ul>
                                 </li>
                             </ul>
