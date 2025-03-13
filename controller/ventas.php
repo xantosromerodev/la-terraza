@@ -169,9 +169,25 @@ case 'ventas_del_dia':
 			echo json_encode($results,JSON_UNESCAPED_UNICODE);
 		
 	break;
+	case 'cuadre_caja':
+        $fecha_desde = isset($_POST["fecha_desde"]) ? limpiarCadena($_POST["fecha_desde"]) : "";
+        $fecha_hasta = isset($_POST["fecha_hasta"]) ? limpiarCadena($_POST["fecha_hasta"]) : "";
+        
+        $rspta = $ventas->cuadre_caja($fecha_desde, $fecha_hasta);
+        $data = array();
+        $cont = 1;
+        
+        while ($reg = $rspta->fetch_object()) {
+            $data[] = array(
+                "0" => $cont,
+                "1" => $reg->modo_pago_desc,
+                "2" => "S/. " . number_format($reg->total, 2)
+            );
+            $cont++;
+        }
+        
+    
+        echo json_encode($data);
+    break;
 }
-
-
-
-
 ?>

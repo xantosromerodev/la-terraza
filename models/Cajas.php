@@ -23,6 +23,11 @@ class Cajas{
         //echo $sql;
         return ejecutarConsulta($sql);
     }
+    function eliminar_caja($id){
+        $sql="CALL SP_ELIMINAR_CAJA('$id')";
+        return ejecutarConsulta($sql);
+        
+    }
 }
 
 ?>

@@ -221,10 +221,21 @@ class Ventas{
 		 WHERE idventa='$idventa'";
         return ejecutarConsulta($sql);
     }
-	   
+	public function cuadre_caja($fecha_desde, $fecha_hasta){
+		$sql = "SELECT modo_pago_desc, total FROM (
+				SELECT fp.modo_pago_desc, SUM(v.total_venta) AS total 
+				FROM venta v 
+				INNER JOIN modo_pago fp ON v.id_modo_pago = fp.id_modo_pago 
+				WHERE DATE(v.fecha_emision) BETWEEN '$fecha_desde' AND '$fecha_hasta'
+				GROUP BY fp.modo_pago_desc
+				UNION ALL
+				SELECT 'TOTAL GENERAL' as modo_pago_desc, SUM(total_venta) as total
+				FROM venta 
+				WHERE DATE(fecha_emision) BETWEEN '$fecha_desde' AND '$fecha_hasta'
+				) AS result
+				ORDER BY CASE WHEN modo_pago_desc = 'TOTAL GENERAL' THEN 1 ELSE 0 END";
+		return ejecutarConsulta($sql);
+	}
 }
-
-
-
 
 ?>

@@ -1,4 +1,3 @@
-
 var tabla;
 var id_mesa;
 function init() {
@@ -7,9 +6,20 @@ function init() {
   obtener_modo_pago();
   listar();
   fecha_actual();
- desahabilitar_controles(true)
-  //desahabilitar_botones();
-  //llenamos combo modo de pago
+  
+  // Set current date as default for date inputs
+  var now = new Date();
+  var day = ("0" + now.getDate()).slice(-2);
+  var month = ("0" + (now.getMonth() + 1)).slice(-2);
+  var today = now.getFullYear() + "-" + month + "-" + day;
+  
+  $("#fecha_desde").val(today);
+  $("#fecha_hasta").val(today);
+  
+  // Trigger cuadre_caja update with today's date
+  actualizarCuadreCaja();
+  
+  desahabilitar_controles(true);
 }
 //lista de comprobantes
 
@@ -87,12 +97,12 @@ function marcarImpuesto() {
 }
 }
   function obtener_generar_correlativo(serie_comprobante) {
-    console.log("metodod_generar " + serie_comprobante);
+    //console.log("metodod_generar " + serie_comprobante);
     $.post(
       "../controller/ventas.php?op=obtener_correlativo_venta",
       { serie_comprobante: serie_comprobante },
       function (data, status) {
-        console.log(data);
+       // console.log(data);
         numeracion = JSON.parse(data);
         $("#num_comprobante").val(numeracion.nuevo_numero_factura);
       }
@@ -428,5 +438,38 @@ function open_pdf_prueba(idventa) {
   */
   
 }
+
+// Función para actualizar el cuadre de caja
+function actualizarCuadreCaja() {
+    var fecha_desde = $("#fecha_desde").val();
+    var fecha_hasta = $("#fecha_hasta").val();
+    
+    if (!fecha_desde || !fecha_hasta) {
+        $.notify("Por favor seleccione ambas fechas", "error");
+        return;
+    }
+
+    $("#tb_cuadre tbody").empty(); // Limpiar tabla antes de agregar nuevos datos
+
+    $.post("../controller/ventas.php?op=cuadre_caja", { fecha_desde: fecha_desde, fecha_hasta: fecha_hasta }, 
+        function(response) {
+            dataJson = JSON.parse(response);
+            for(var i=0; i<dataJson.length; i++){
+                var fila = "<tr " + (dataJson[i][1] === 'TOTAL GENERAL' ? "class='table-danger font-weight-bold'" : "") + ">" +
+                    "<td>" + dataJson[i][0] + "</td>" +
+                    "<td>" + dataJson[i][1] + "</td>" +
+                    "<td>" + dataJson[i][2] + "</td>" +
+                    "</tr>";
+                $("#tb_cuadre tbody").append(fila);
+            }
+    });
+}
+
+// Event listeners para los inputs de fecha
+$("#fecha_desde, #fecha_hasta").change(function() {
+    if ($("#fecha_desde").val() && $("#fecha_hasta").val()) {
+        actualizarCuadreCaja();
+    }
+});
 
 init();

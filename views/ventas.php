@@ -57,24 +57,29 @@ if (strlen(session_id()) < 1)
         font-weight: 400;
         line-height: 1.471
     }
+
     .modal-dialog {
-            max-width: 90%;
-            height: 90%;
-        }
-        .modal-content {
-            height: 100%;
-        }
-        .modal-body {
-            height: calc(100% - 56px); /* Ajuste por el header */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+        max-width: 90%;
+        height: 90%;
+    }
+
+    .modal-content {
+        height: 100%;
+    }
+
+    .modal-body {
+        height: calc(100% - 56px);
+        /* Ajuste por el header */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
     .pdf-container {
-            width: 100%;
-            height: 100%;
-        }
+        width: 100%;
+        height: 100%;
+    }
     </style>
 </head>
 
@@ -126,7 +131,7 @@ if (strlen(session_id()) < 1)
                 <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button"
                     role="tab" aria-controls="nav-profile" aria-selected="false">Lista de Comprobantes</button>
                 <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"
-                    role="tab" aria-controls="nav-contact" aria-selected="false">ARQUEO de Caja</button>
+                    role="tab" aria-controls="nav-contact" aria-selected="false">Cuadre de Caja</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -270,7 +275,7 @@ if (strlen(session_id()) < 1)
                 </div>
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div class="row mt-3">
+                <div class="row mt-3">
                     <div class="col-lg-12">
                         <table class="table table-sm  table-hover " id="tb_comprobantes">
                             <thead style="background-color:#2A3F54; color:white">
@@ -286,10 +291,39 @@ if (strlen(session_id()) < 1)
                             </thead>
                         </table>
                     </div>
-                </div>                         
+                </div>
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                hola3...</div>
+
+                <div class="container mt-3">
+                    <div class="row ">
+                        <div class="col-lg-4">
+                            <label for="">Fecha Inicial: </label>
+                            <input type="date" class="form-control form-control-sm" name="fecha_desde" id="fecha_desde">
+                           
+                        </div>
+                        <div class="col-lg-4">
+                        <label for="">Fecha Final: </label>
+                        <input type="date" class="form-control form-control-sm" name="fecha_hasta" id="fecha_hasta">
+
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <table class="table table-sm table-hover table-striped table-bordered" id="tb_cuadre">
+                                <thead style="background-color:#2A3F54; color:white">
+                                    <th>N°</th>
+                                    <th>FORMA DE PAGO</th>
+                                    <th>MONTO TOTAL S/.</th>
+
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -414,28 +448,29 @@ if (strlen(session_id()) < 1)
     <!-- modal de vista previa en pdf      -->
 
     <!-- Modal -->
-   <!-- Button trigger modal -->
+    <!-- Button trigger modal -->
 
 
-<!-- Modal -->
-<div class="modal fade" id="mdl_pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">TICKET DE VENTA</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <iframe class="pdf-container" src="" id="pdf_container"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-      </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdl_pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">TICKET DE VENTA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe class="pdf-container" src="" id="pdf_container"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <!-- FIN PRUEBA CARD CON ESTILO -->

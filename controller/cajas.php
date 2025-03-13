@@ -38,6 +38,10 @@ switch ($_GET["op"]){
         $rpta=$cajas->mostrar_caja($idcaja);
         echo json_encode($rpta);
     break;
+    case 'eliminar_caja':
+        $rpta=$cajas->eliminar_caja($idcaja);
+        echo $rpta ?"Caja eliminada":"error al eliminar caja";
+    break;
     case 'listar_caja':
         $rspta=$cajas->listar_caja();
         $data=array();
@@ -48,7 +52,7 @@ switch ($_GET["op"]){
                 "1"=>$reg->nombre_caja,
                 "2"=>$reg->estado,
                 "3" => '<span class="badge  badge-primary  text-center"><a style="color:white;cursor:pointer"  onclick="mostrar('.$reg->id_caja.')"><i class="fa fa-edit"></i></a></span>'." ".
-                    '<span class="badge badge-danger  text-center"><a style="color:white;cursor:pointer"  onclick="eliminar('.$reg->id_caja.')"><i class="fa fa-trash" aria-hidden="true"></i></a></span>'
+                    '<span class="badge badge-danger  text-center"><a style="color:white;cursor:pointer"  onclick="eliminar_caja('.$reg->id_caja.')"><i class="fa fa-trash" aria-hidden="true"></i></a></span>'
             );
             $cont++;
         }

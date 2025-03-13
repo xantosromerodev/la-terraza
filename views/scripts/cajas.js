@@ -102,4 +102,31 @@ function mostrar(idcaja){
         }
     });
 }
+function eliminar_caja(idcaja){
+	Swal.fire({
+		title: 'Estas seguro de eliminar?',
+		text: "No podras revertir esto!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si, eliminar',
+		cancelButtonText: 'Cancelar'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: '../controller/cajas.php?op=eliminar_caja',
+				type: 'POST',
+				data: {idcaja:idcaja},
+				success: function(e){
+					$.notify(e,"success");
+					listar();
+				}
+			})
+		}else{
+			limpiar();
+		}
+	})
+	
+}
 init();
