@@ -13,7 +13,7 @@
             <div class="card shadow-sm">
                 <div class="card-body bg-primary text-white">
                     <h5 class="card-title font-weight-bold text-start">Total ventas hoy</h5>
-                    <h2 class="fw-bold h2 font-weight-bold text-right">350</h2>
+                    <h2 id="total_ventas_hoy" class="fw-bold h2 font-weight-bold text-right"></h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <i class="fa fa-cutlery ft-icon"></i>
                         <p class="card-text h6">+5% más que ayer</p>
@@ -26,7 +26,7 @@
             <div class="card shadow-sm">
                 <div class="card-body bg-success text-white">
                     <h5 class="card-title font-weight-bold">Total dinero hoy</h5>
-                    <h2 class="fw-bold text-right h2 font-weight-bold">$1,530</h2>
+                    <h2 id="total_dinero_hoy" class="fw-bold text-right h2 font-weight-bold"></h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <i class="fa fa-money ft-icon"></i>
                         <p class="card-text h6">+10% más que ayer</p>
@@ -40,7 +40,7 @@
             <div class="card shadow-sm">
                 <div class="card-body bg-danger text-white">
                     <h5 class="card-title font-weight-bold">Total delivery hoy</h5>
-                    <h2 class="fw-bold text-right h2 font-weight-bold">50</h2>
+                    <h2 id="total_delivery_hoy" class="fw-bold text-right h2 font-weight-bold"></h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <i class="fa fa-motorcycle ft-icon"></i>
                         <p class="card-text h6">+3% más que ayer</p>
@@ -195,3 +195,5 @@
 <?php
  include '../views/footer.php';
 ?>
+
+<script src="scripts/home.js"></script>
