@@ -134,6 +134,25 @@ class Pedidos{
         $sql="CALL SP_OBTENER_MENU_AUTOCOMPLETADO('$nombre')";
         return ejecutarConsulta($sql);
     }
+   function obtener_pedido_delyvery_cabecera($idpedido){
+    $sql="	SELECT pedidos.id,pedidos.fecha,pedidos.total,mesas.numero
+	FROM pedidos INNER JOIN mesas
+	ON pedidos.mesa_id=mesas.id INNER JOIN usuarios
+	ON pedidos.usuario_id=usuarios.id WHERE pedidos.id='$idpedido'
+	and mesas.id =17";
+    return ejecutarConsultaSimpleFila($sql);
+    
+   }
+   public function obtener_pedido_delyveryDetalle($idpedido){
+    $sql="SELECT menu.id AS id_menu, pedidos.id,detalles_pedido.cantidad ,menu.nombre,detalles_pedido.precio,
+    detalles_pedido.importe FROM pedidos INNER JOIN detalles_pedido
+    ON pedidos.id=detalles_pedido.pedido_id INNER JOIN mesas
+    ON pedidos.mesa_id=mesas.id INNER JOIN menu 
+    ON detalles_pedido.menu_id=menu.id INNER JOIN categorias_menu
+    ON menu.categoria_id=categorias_menu.id
+    WHERE pedido_id='$idpedido'";
+    return ejecutarConsulta($sql);
+   }
 
 }
 ?>
