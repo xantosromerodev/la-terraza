@@ -78,13 +78,13 @@ if (strlen(session_id()) < 1)
                                         <li><a href="mesa.php">Mesas</a></li>
                                     </ul>
                                 </li>
-<<<<<<< HEAD
+
                               
 
                                 <li><a><i class="fa fa-edit"></i> Almacén <span
-=======
+
                                 <li><a><i class="fa fa-archive"></i> Almacén <span
->>>>>>> 0523e927cdc5ac221019c24f00d53cd434dbdbb7
+
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="categorias.php">Categorias</a></li>
