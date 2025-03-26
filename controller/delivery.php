@@ -112,6 +112,22 @@ switch ($_GET["op"]) {
         }
         echo json_encode($data,JSON_UNESCAPED_UNICODE);
         break;
+        case 'obtener_pedido_delyvery_cabecera':
+          $rpta=$pedido->obtener_pedido_delyvery_cabecera($idPedido);
+          echo json_encode($rpta);
+          break;
+          case 'obtener_pedido_delyveryDetalle':
+            $rpta=$pedido->obtener_pedido_delyveryDetalle($idPedido);
+            $data = Array();
+            while($reg = $rpta->fetch_object()){
+              $data[] = array(
+                "0" => $reg->cantidad,
+                "1" => $reg->nombre,
+      
+              );
+            }
+            echo json_encode($data);
+            break;
 }
 
 ?>

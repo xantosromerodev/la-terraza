@@ -306,4 +306,5 @@ $(document).on("keyup", "#cantidad_", function () {
 $(document).on("keyup", "#precio_venta_", function () {
   calcular_totales_();
 });
+
 init();
