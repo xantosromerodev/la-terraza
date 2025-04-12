@@ -81,7 +81,7 @@ if (strlen(session_id()) < 1)
 
                               
 
-                                <li><a><i class="fa fa-edit"></i> Almacén <span
+                        
 
                                 <li><a><i class="fa fa-archive"></i> Almacén <span
 

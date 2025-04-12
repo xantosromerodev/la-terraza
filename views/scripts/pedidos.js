@@ -344,12 +344,15 @@ function agregar_detalle(idmenu, menu, precio) {
   importe = cantidad * precio;
   var nueva_fila = `<tr class="filas" id="fila_detalle ${cont_detalle}">
         <td><input class="form-control form-control-sm" type="text" name="cantidad[]" id="cantidad" value="${cantidad}"></td>
-        <td><input class="form-control form-control-sm" type="hidden" name="idmenu[]" value="${idmenu}">${menu}</td>
+        <td><input class="form-control form-control-sm" type="hidden" name="idmenu[]" value="${idmenu}">${menu}
+        </td>
         <td><input class="form-control form-control-sm"  type="text" name="precio_venta[]" id="precio_venta" value="${precio.toFixed(2)}"></td>
         <td><input class="form-control form-control-sm"  type="text" name="total[]" id="total[]" value="${importe.toFixed(2)}"></td>
         <td><button type="button" id="del"  class="btn btn-danger btn-sm"> <i class="fa fa-times" aria-hidden="true"></i></button></td>
         
-        </tr>`;
+        </tr>
+        
+        `;
   cont_detalle++;
   detalle_detalle_1 = detalle_detalle_1 + 1;
   $("#tb_detalle").append(nueva_fila);
