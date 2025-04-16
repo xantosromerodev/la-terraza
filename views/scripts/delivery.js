@@ -65,7 +65,7 @@ function reset_form(){
 function insertar_pedido_(){
   var formData = new FormData($("#frm_delivery")[0]);
   $.ajax({
-    url: "../controller/delivery.php?op=insertar_pedido",
+    url: "../controller/delivery.php?op=insertar_delivry",
     type: "POST",
     data: formData,
     contentType: false,
@@ -75,7 +75,7 @@ function insertar_pedido_(){
       $.notify(datos, "success");
       generar_ticket();
       reset_form();
-      cambiar_estado_();
+     // cambiar_estado_();
       limpiar();
       //location.reload();
       
@@ -111,7 +111,7 @@ function obtener_idpedido(mesa_id,mesa){
 function reset_form(){
   $("#form_detalle").get(0).reset(); 
   $("#tb_detalle_delivery tbody").empty();
-  $("#mesa_name").text("")
+  $("#lbl_total_").val("")
 }
 function pedido_cabecera(id_mesa){
 
@@ -149,13 +149,13 @@ function obtener_cabecra_pedido(){
 }
 */
 function generar_ticket(){
-  $.post("../controller/pedidos.php?op=obtener_pedido_detalle",
+  $.post("../controller/delivery.php?op=obtener_pedido_delyveryDetalle",
     function(data,status){
       dataJson=JSON.parse(data);
       console.log(dataJson);
       let $pre=$("<pre>").appendTo($("body"));
 
-      let ticketText ="     "+ mesa + "\n";
+      let ticketText ="     "+ "DELIVERY" + "\n";
                
                 ticketText += "----------------------\n";
                 ticketText += "CANT       DESCRIPCION   \n";
