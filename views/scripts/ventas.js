@@ -471,5 +471,13 @@ $("#fecha_desde, #fecha_hasta").change(function() {
         actualizarCuadreCaja();
     }
 });
-
+$("#customSwitch1").change(function() {
+  if(this.checked) {
+      alert("get up");
+  }
+});
+/*$("#opc_comp").click(function(){
+  alert("hola funciona correctamente")
+})
+  */
 init();

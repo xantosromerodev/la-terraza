@@ -177,6 +177,11 @@ if (strlen(session_id()) < 1)
                                     <button type="button" class="btn  btn-sm m-1 btn-info" id="btn_guardar_venta"><i
                                             class="fa fa-check-circle" aria-hidden="true"></i> Generar
                                         Comprobante</button>
+                                    <div class="custom-control custom-switch mt-2">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                        <label class="custom-control-label" for="customSwitch1">Factura
+                                            Manual</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -235,6 +240,13 @@ if (strlen(session_id()) < 1)
                                                 <option value="0">Seleccione</option>
                                             </select>
 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-8 col-md-12 col-sm-12 col-xs-6">
+                                        <label for="">Ingrese producto</label>
+                                        <input type="text" class="form-control text-uppercase form-control-sm"
+                                        name="nro_documento" id="nro_documento" require>
                                         </div>
                                     </div>
 
@@ -300,11 +312,11 @@ if (strlen(session_id()) < 1)
                         <div class="col-lg-4">
                             <label for="">Fecha Inicial: </label>
                             <input type="date" class="form-control form-control-sm" name="fecha_desde" id="fecha_desde">
-                           
+
                         </div>
                         <div class="col-lg-4">
-                        <label for="">Fecha Final: </label>
-                        <input type="date" class="form-control form-control-sm" name="fecha_hasta" id="fecha_hasta">
+                            <label for="">Fecha Final: </label>
+                            <input type="date" class="form-control form-control-sm" name="fecha_hasta" id="fecha_hasta">
 
                         </div>
                     </div>
