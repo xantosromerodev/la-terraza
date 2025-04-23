@@ -1,6 +1,19 @@
 var tabla;
 var id_mesa;
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Initializes the sales management interface by setting up the default state.
+ * - Hides the list of sales documents.
+ * - Fills the document type dropdown.
+ * - Retrieves available payment modes.
+ * - Populates the sales documents table.
+ * - Sets the current date for date inputs and updates the cash register balance.
+ * - Disables certain controls by default.
+ */
+
+/*******  7badb59a-77f8-43e9-b72a-59f3f4817841  *******/
 function init() {
+  $("#txt_producto").hide();
   mostrar_lista(false);
   llenar_combo_doc();
   obtener_modo_pago();
@@ -322,6 +335,41 @@ $("#nro_documento").autocomplete({
     console.log(ui.item.idc);
   },
 });
+//autocompletar productos
+$("#txt_producto").autocomplete({
+  source: function (request, response) {
+    $.ajax({
+      url: "../controller/ventas.php?op=auto_complete_producto",
+      type: "GET",
+      dataType: "JSON",
+      success: function (data) {
+        console.log(data);
+        aData = $.map(data, function (value, key) {
+          return {
+            label: value.nombre,
+            idm: value.menu_id,
+            mnu_name: value.nombre,
+            precio_menu: value.precio,
+          };
+        });
+        var result = $.ui.autocomplete.filter(aData, request.term);
+        response(result);
+      },
+    });
+  },
+  select: function (event, ui) {
+    agregarDetalle(ui.item.idm, 1, ui.item.mnu_name, ui.item.precio_menu);
+    $("#cantidad").prop("readonly", false);
+    setTimeout(function () {
+      $("#txt_producto").val("");
+    }, 500);
+    //$("#idcliente").val(ui.item.idm);
+    console.log(ui.item.idm);
+  },
+});
+
+// fin del autocompletar productos
+
 
 function obtener_cliente(nro_doc) {
   $.post(
@@ -375,9 +423,13 @@ function guardar_venta() {
     contentType: false,
     processData: false,
     success: function (data) {
-    $.notify(data, "success");
+    if($("#customSwitch1").is(":checked")){
+      $.notify(data, "success");
+    }else{
+      $.notify(data, "success");
+      liberar_mesa();
+    }
     open_pdf_prueba(0);
-    liberar_mesa();
     // location.reload();
      desahabilitar_controles(true);
     
@@ -439,6 +491,11 @@ function open_pdf_prueba(idventa) {
   
 }
 
+function cerrar_pdf() {
+  $("#mdl_pdf").modal("hide");
+  location.reload();
+}
+
 // Función para actualizar el cuadre de caja
 function actualizarCuadreCaja() {
     var fecha_desde = $("#fecha_desde").val();
@@ -473,8 +530,15 @@ $("#fecha_desde, #fecha_hasta").change(function() {
 });
 $("#customSwitch1").change(function() {
   if(this.checked) {
-      alert("get up");
+      $("#txt_producto").show();
+      desahabilitar_controles(false);
+  }else{
+      $("#txt_producto").hide();
+      desahabilitar_controles(true);
   }
+});
+$(document).on("keyup", "#cantidad", function () {
+  calcular_totales();
 });
 /*$("#opc_comp").click(function(){
   alert("hola funciona correctamente")

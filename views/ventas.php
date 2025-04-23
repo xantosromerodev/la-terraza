@@ -155,8 +155,8 @@ if (strlen(session_id()) < 1)
 					                ?>
 
                                 <div class="row float-left d-flex justify-content-center align-content-center m-1">
-
-                                    <div class="dropdown bg-info">
+                                <div id="miElemento"></div>
+                                    <div class="dropdown bg-info" id="refresh_element">
                                         <button class="btn btn-danger " type="button" id="dropdownMenuButton"
                                             onclick="mostrar_detalle(<?=  $mesa->id?>)">
                                             <?php echo $mesa->numero?>
@@ -179,8 +179,8 @@ if (strlen(session_id()) < 1)
                                         Comprobante</button>
                                     <div class="custom-control custom-switch mt-2">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label" for="customSwitch1">Factura
-                                            Manual</label>
+                                        <label class="custom-control-label" for="customSwitch1">VENTA
+                                            DIRECTA</label>
                                     </div>
                                 </div>
                             </div>
@@ -244,9 +244,9 @@ if (strlen(session_id()) < 1)
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-8 col-md-12 col-sm-12 col-xs-6">
-                                        <label for="">Ingrese producto</label>
+                                      
                                         <input type="text" class="form-control text-uppercase form-control-sm"
-                                        name="nro_documento" id="nro_documento" require>
+                                        name="txt_producto" id="txt_producto" require placeholder="Buscar Producto">
                                         </div>
                                     </div>
 
@@ -478,7 +478,7 @@ if (strlen(session_id()) < 1)
                     <iframe class="pdf-container" src="" id="pdf_container"></iframe>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="btn_cerrar_pdf" onclick="cerrar_pdf()">Cerrar</button>
                 </div>
             </div>
         </div>

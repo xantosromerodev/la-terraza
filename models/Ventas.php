@@ -122,9 +122,10 @@ class Ventas{
 		while ($num_elementos < count($idarticulo))
 		{
 		$sql_detalle = "INSERT INTO detalle_venta(idventa, idarticulo,cantidad,id_tipo_igv,precio_venta,total) VALUES ('$idventanew', '$idarticulo[$num_elementos]','$cantidad[$num_elementos]','1', ('$precio_venta[$num_elementos]'/1.18), ('$total[$num_elementos]'/1.18))";
+		$update_stk = "UPDATE menu set stock=stock-'$cantidad[$num_elementos]' where id='$idarticulo[$num_elementos]'";
 		//echo $sql_detalle;
 			ejecutarConsulta($sql_detalle) or $sw = false;
-			
+			ejecutarConsulta($update_stk);
 			$num_elementos=$num_elementos + 1;
 		}
 
@@ -234,6 +235,14 @@ class Ventas{
 				WHERE DATE(fecha_emision) BETWEEN '$fecha_desde' AND '$fecha_hasta'
 				) AS result
 				ORDER BY CASE WHEN modo_pago_desc = 'TOTAL GENERAL' THEN 1 ELSE 0 END";
+		return ejecutarConsulta($sql);
+	}
+	// autocompletado para busquedad de productos
+public function autocompletar_producto($nombre){
+		$sql="SELECT menu.id as menu_id,menu.nombre,menu.stock,precio FROM menu INNER JOIN categorias_menu
+			ON menu.categoria_id=categorias_menu.id INNER JOIN cate_gen_menu
+			ON categorias_menu.id_cate=cate_gen_menu.id_cate
+			WHERE categorias_menu.id_cate IN(1,2) and menu.nombre LIKE '%$nombre%' ORDER BY menu.id ASC";
 		return ejecutarConsulta($sql);
 	}
 }

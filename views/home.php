@@ -29,7 +29,7 @@
                     <h2 id="total_dinero_hoy" class="fw-bold text-right h2 font-weight-bold"></h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <i class="fa fa-money ft-icon"></i>
-                        <p class="card-text h6">+10% más que ayer</p>
+                        <p class="card-text h6" id="porcentaje_dinero"></p>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <h2 id="total_delivery_hoy" class="fw-bold text-right h2 font-weight-bold"></h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <i class="fa fa-motorcycle ft-icon"></i>
-                        <p class="card-text h6">+3% más que ayer</p>
+                        <p class="card-text h6" id="">+3% más que ayer</p>
                     </div>
                 </div>
             </div>

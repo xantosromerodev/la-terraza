@@ -15,7 +15,8 @@ function total_ventas_hoy() {
 function total_dinero_hoy() {
     $.post("../controller/home.php?op=total_dinero_hoy", function (data) {
         dataJson=JSON.parse(data);
-        $("#total_dinero_hoy").html('S/. ' + dataJson.TOTAL_DINERO);
+        $("#total_dinero_hoy").html('S/. ' + dataJson.total_ventas_hoy);
+        $("#porcentaje_dinero").html(dataJson.comparacion_ventas);
     }
   );
 }

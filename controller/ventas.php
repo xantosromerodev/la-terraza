@@ -189,5 +189,14 @@ case 'ventas_del_dia':
     
         echo json_encode($data);
     break;
+	case 'auto_complete_producto':
+			$filtro=filter_input(INPUT_GET,trim('term',FILTER_SANITIZE_STRING));
+			$rpta=$ventas->autocompletar_producto($filtro);
+			$data=array();
+	while($reg=$rpta->fetch_object()){
+		$data[]=$reg;
+	}
+	echo json_encode($data,JSON_UNESCAPED_UNICODE);
+	break;
 }
 ?>
