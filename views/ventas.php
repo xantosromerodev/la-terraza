@@ -327,7 +327,6 @@ if (strlen(session_id()) < 1)
                                     <th>N°</th>
                                     <th>FORMA DE PAGO</th>
                                     <th>MONTO TOTAL S/.</th>
-
                                 </thead>
                                 <tbody>
                                 </tbody>

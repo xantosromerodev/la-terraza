@@ -245,6 +245,20 @@ public function autocompletar_producto($nombre){
 			WHERE categorias_menu.id_cate IN(1,2) and menu.nombre LIKE '%$nombre%' ORDER BY menu.id ASC";
 		return ejecutarConsulta($sql);
 	}
+	function reporte_general_ventas($fecha_desde,$fecha_hasta){
+		$sql="SELECT * FROM venta WHERE fecha_emision BETWEEN '$fecha_desde' AND '$fecha_hasta'";
+		return ejecutarConsulta($sql);
+	}
+	// total general de  ventas 
+	function total_general_ventas(){
+		$sql="SELECT SUM(total_venta) AS total FROM venta";
+		return ejecutarConsultaSimpleFila($sql);
+	}
+	function total_general_ventas_periodo($fecha_desde,$fecha_hasta){
+		$sql="SELECT SUM(total_venta) AS total FROM venta WHERE fecha_emision BETWEEN '$fecha_desde' AND '$fecha_hasta'";
+		return ejecutarConsultaSimpleFila($sql);
+	}
+
 }
 
 ?>

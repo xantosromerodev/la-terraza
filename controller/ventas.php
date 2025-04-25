@@ -198,5 +198,11 @@ case 'ventas_del_dia':
 	}
 	echo json_encode($data,JSON_UNESCAPED_UNICODE);
 	break;
+	case 'total_general_ventas':
+		$rpta=$ventas->total_general_ventas();
+		echo json_encode($rpta);
+		break;
+		case 'reporte_general_ventas':
+		$fecha_desde = isset($_POST["fecha_desde"]) ? limpiarCadena($_POST["fecha_desde"]) : "";
 }
 ?>
