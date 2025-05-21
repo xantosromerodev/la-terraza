@@ -56,11 +56,11 @@ body {
                 <form class="form-inline">
                     <div class="form-group mb-2">
                         <label for="staticEmail2" class="">Fecha Inicial</label>
-                        <input type="date" class="form-control form-control-sm ml-1" id="fecha_inicial" placeholder="Password">
+                        <input type="date" class="form-control form-control-sm ml-1" name="fecha_inicial" id="fecha_inicial" >
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
                     <label for="staticEmail2" class="">Fecha Final</label>
-                        <input type="date" class="form-control form-control-sm ml-1" id="fecha_final" placeholder="Password">
+                        <input type="date" class="form-control form-control-sm ml-1" name="fecha_final" id="fecha_final" >
                     </div>
                     
                 </form>
@@ -70,7 +70,7 @@ body {
             <div class="col-md-12 col-sm-12  ">
                 <div class="x_panel">
                     <div class="x_title bg-danger">
-                        <h2 class="text-center" style="color:white">REPORTE GENERAL DE VENTAS</h2>
+                        <h2 class="text-center" style="color:white">REPORTE GENERAL DE VENTAS POR FECHA</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>

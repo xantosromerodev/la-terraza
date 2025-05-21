@@ -12,7 +12,19 @@ function init() {
   $("#fecha_inicial").val(today);
   $("#fecha_final").val(today);
 }
+$("#fecha_inicial, #fecha_final").change(function() {
+  if ($("#fecha_inicial").val() && $("#fecha_final").val()) {
+      listar();
+  }
+});
 function listar() {
+  var fecha_inicial = $("#fecha_inicial").val();
+  var fecha_final = $("#fecha_final").val();
+  
+  if (!fecha_inicial || !fecha_final) {
+      $.notify("Por favor seleccione ambas fechas", "error");
+      return;
+  }
     tabla = $("#datatable-responsive").DataTable({
       bLengthChange: true,
       autoWidth: false,
@@ -29,10 +41,12 @@ function listar() {
         },
       },
       ajax: {
-        url: "../controller/ventas.php?op=ventas_del_dia",
+        url: "../controller/ventas.php?op=reporte_por_fechas",
+        data:{fecha_inicial:fecha_inicial,fecha_final:fecha_final},
         type: "get",
         dataType: "json",
         error: function (e) {
+          //alert(fecha_inicial);
           console.log(e);
         },
       },

@@ -198,11 +198,42 @@ case 'ventas_del_dia':
 	}
 	echo json_encode($data,JSON_UNESCAPED_UNICODE);
 	break;
+	case 'reporte_por_fechas':
+
+
+	 $fecha_inicial = $_REQUEST["fecha_inicial"];
+     $fecha_final = $_REQUEST["fecha_final"];
+	$rpta=$ventas->reporte_general_ventas_fechas($fecha_inicial,$fecha_final);
+	//print_r("FECHA INICIAL ".$fecha_inincial);
+	$data=array();
+	$cont =1;
+	while($reg=$rpta->fetch_object()){
+		$data[]=array(
+			'0'=>$cont,
+			'1'=>$reg->fecha_emision,
+			'2'=>$reg->nombre_tipo_doc,
+			'3'=>'<span class="badge bg-info"><a class="" style="color:white;cursor:pointer"  onclick="mostrar('.$reg->idventa.')">'.$reg->comprobante.'</a></span>',
+			'4'=>$reg->razon_social,
+			'5'=>$reg->modo_pago_desc,
+			'6'=>$reg->total_venta,	
+			'7'=>$reg->estado,
+			'8'=>'<span class="badge bg-danger"><a  style="color:white;cursor:pointer" onclick="open_pdf_prueba('.$reg->idventa.')"><i class="fa fa-print" aria-hidden="true"></i></a></span>'					
+			);
+			$cont++;
+		}
+		$results = array(
+			"sEcho"=>1,
+			"iTotalRecords"=>count($data),
+			"iTotalDisplayRecords"=>count($data),
+			"aaData"=>$data);
+			echo json_encode($results,JSON_UNESCAPED_UNICODE);
+		
+	break;
 	case 'total_general_ventas':
 		$rpta=$ventas->total_general_ventas();
 		echo json_encode($rpta);
 		break;
-		case 'reporte_general_ventas':
-		$fecha_desde = isset($_POST["fecha_desde"]) ? limpiarCadena($_POST["fecha_desde"]) : "";
+		
+		
 }
 ?>

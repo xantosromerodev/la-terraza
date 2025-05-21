@@ -245,8 +245,14 @@ public function autocompletar_producto($nombre){
 			WHERE categorias_menu.id_cate IN(1,2) and menu.nombre LIKE '%$nombre%' ORDER BY menu.id ASC";
 		return ejecutarConsulta($sql);
 	}
-	function reporte_general_ventas($fecha_desde,$fecha_hasta){
-		$sql="SELECT * FROM venta WHERE fecha_emision BETWEEN '$fecha_desde' AND '$fecha_hasta'";
+	function reporte_general_ventas_fechas($fecha_desde,$fecha_hasta){
+		$sql="SELECT venta.idventa,DATE_FORMAT(venta.fecha_emision,'%d/%m/%Y') AS fecha_emision,type_doc.nombre_tipo_doc,CONCAT(venta.serie,'-',venta.numero) AS comprobante, clientes.razon_social,modo_pago.modo_pago_desc,
+	venta.total_venta,venta.estado FROM  venta INNER JOIN clientes
+	ON venta.idcliente=clientes.idcliente INNER JOIN modo_pago
+	ON venta.id_modo_pago=modo_pago.id_modo_pago INNER JOIN tipo_documento
+	ON venta.idtipo_documento=tipo_documento.idtipo_documento INNER JOIN type_doc
+	ON tipo_documento.idtipo_doc=type_doc.idtipo_doc WHERE fecha_emision BETWEEN '$fecha_desde' AND '$fecha_hasta'";
+		//echo $sql;
 		return ejecutarConsulta($sql);
 	}
 	// total general de  ventas 
